@@ -1,0 +1,18 @@
+<div *ngIf="!isFetching" class="items-list">
+    <div *ngFor="let test of tests">
+        <app-test-item
+            [test]="test"
+            (deleteTestEvent)="onDeleteTest($event)"
+            (changePublishedStatusEvent)="onChangePublishedStatus($event)"/>
+
+    </div>
+
+    <app-paginator *ngIf="pagedList != null"
+                   [length]="pagedList.totalCount"
+                   [pageIndex]="pagedList.page - 1"
+                   [pageSize]="pagedList.pageSize"
+                   (pageChangedEvent)="onPageChangedEvent($event)"
+    />
+</div>
+
+<mat-spinner *ngIf="isFetching"/>

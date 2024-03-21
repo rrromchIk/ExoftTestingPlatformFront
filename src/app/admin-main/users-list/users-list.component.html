@@ -1,0 +1,18 @@
+<div *ngIf="!isFetching" class="items-list">
+    <div *ngFor="let user of users">
+        <app-user-item [user]="user" (deleteUserEvent)="onDeleteUser($event)"></app-user-item>
+    </div>
+
+    <app-paginator *ngIf="pagedListOfUsers != null"
+                   [length]="pagedListOfUsers.totalCount"
+                   [pageIndex]="pagedListOfUsers.page - 1"
+                   [pageSize]="pagedListOfUsers.pageSize"
+                   (pageChangedEvent)="onPageChangedEvent($event)"
+    />
+</div>
+
+<div class="spinner-container" *ngIf="isFetching">
+    <mat-spinner class="spinner"></mat-spinner>
+</div>
+
+
