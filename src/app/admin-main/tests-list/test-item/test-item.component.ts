@@ -4,7 +4,7 @@ import {TestResponseDto} from "../../../shared/models/test-response.dto";
 @Component({
     selector: 'app-test-item',
     templateUrl: './test-item.component.html',
-    styleUrls: ['./test-item.component.scss', '../../../shared/styles/global.scss']
+    styleUrls: ['./test-item.component.scss']
 })
 export class TestItemComponent {
     @Input() test!: TestResponseDto;

@@ -8,7 +8,7 @@ import {TestService} from "../../shared/services/test.service";
 @Component({
     selector: 'app-tests-list',
     templateUrl: './tests-list.component.html',
-    styleUrls: ['./tests-list.component.scss', '../../shared/styles/global.scss']
+    styleUrls: ['./tests-list.component.scss']
 })
 export class TestsListComponent implements OnInit {
     tests: TestResponseDto[] = [];

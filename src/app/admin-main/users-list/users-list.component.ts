@@ -7,7 +7,7 @@ import {UserService} from "../../shared/services/user.service";
 @Component({
     selector: 'app-users-list',
     templateUrl: './users-list.component.html',
-    styleUrls: ['./users-list.component.scss', '../../shared/styles/global.scss']
+    styleUrls: ['./users-list.component.scss']
 })
 export class UsersListComponent {
     pagedListOfUsers: PagedListDto<UserResponseDto> | null = null;

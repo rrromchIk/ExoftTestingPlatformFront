@@ -4,7 +4,7 @@ import {UserResponseDto} from "../../../shared/models/user-response.dto";
 @Component({
     selector: 'app-user-item',
     templateUrl: './user-item.component.html',
-    styleUrls: ['./user-item.component.scss', '../../../shared/styles/global.scss']
+    styleUrls: ['./user-item.component.scss']
 
 })
 export class UserItemComponent {
