@@ -1,0 +1,14 @@
+<div class="page-content">
+    <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" animationDuration="0ms">
+        <mat-tab label="All tests">
+            <ng-template matTabContent>
+                <app-tests-to-pass-list/>
+            </ng-template>
+        </mat-tab>
+        <mat-tab label="Started tests">
+            <ng-template matTabContent>
+                <app-started-tests-list/>
+            </ng-template>
+        </mat-tab>
+    </mat-tab-group>
+</div>
