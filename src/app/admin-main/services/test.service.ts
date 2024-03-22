@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams, HttpResponse} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {TestResponseDto} from '../models/test-response.dto';
-import {PagedListDto} from "../models/paged-list.dto";
-import {PagingSettings} from "../models/paging-settings";
+import {TestResponseDto} from '../../shared/models/test-response.dto';
+import {PagedListDto} from "../../shared/models/paged-list.dto";
+import {PagingSettings} from "../../shared/models/paging-settings";
 
 @Injectable({
     providedIn: 'root'

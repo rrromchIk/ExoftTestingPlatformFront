@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {TestResponseDto} from "../../shared/models/test-response.dto";
 import {PagedListDto} from "../../shared/models/paged-list.dto";
 import {PagingSettings} from "../../shared/models/paging-settings";
-import {TestService} from "../../shared/services/test.service";
+import {TestService} from "../services/test.service";
 
 
 @Component({
