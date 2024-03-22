@@ -1,23 +1,26 @@
-<mat-card>
-    <mat-card-title>{{ user.email }}</mat-card-title>
-    <mat-divider></mat-divider>
-    <mat-card-content>
-        <p><strong>First Name:</strong> {{ user.firstName }}</p>
-        <p><strong>Last Name:</strong> {{ user.lastName }}</p>
-        <p><strong>Role:</strong> {{ user.userRole }}</p>
-    </mat-card-content>
-    <mat-card-footer>
-        <div class="footer-content">
-            <mat-card-actions>
-                <button mat-raised-button color="primary">Edit</button>
-                <button mat-raised-button color="warn" (click)="onDeleteUser(user)">Delete</button>
-            </mat-card-actions>
-            <div class="metadata">
-                <mat-card-subtitle>Created on: {{ user.createdTimestamp | date: "dd.MM.YYYY hh:mm"}}</mat-card-subtitle>
-                <mat-card-subtitle *ngIf="user.modifiedTimestamp">
-                    Last Modified: {{ user.modifiedTimestamp | date: "dd.MM.YYYY hh:mm" }}
-                </mat-card-subtitle>
+<div class="list-item">
+    <mat-card>
+        <mat-card-title>{{ user.email }}</mat-card-title>
+        <mat-divider></mat-divider>
+        <mat-card-content>
+            <p><strong>First Name:</strong> {{ user.firstName }}</p>
+            <p><strong>Last Name:</strong> {{ user.lastName }}</p>
+            <p><strong>Role:</strong> {{ user.userRole }}</p>
+        </mat-card-content>
+        <mat-card-footer>
+            <div class="footer-content">
+                <mat-card-actions>
+                    <button mat-raised-button color="primary" [routerLink]="[user.id, 'edit']">Edit</button>
+                    <button mat-raised-button color="warn" (click)="onDeleteUser(user)">Delete</button>
+                </mat-card-actions>
+                <div class="metadata">
+                    <mat-card-subtitle>Created on: {{ user.createdTimestamp | date: "dd.MM.YYYY hh:mm"}}</mat-card-subtitle>
+                    <mat-card-subtitle *ngIf="user.modifiedTimestamp">
+                        Last Modified: {{ user.modifiedTimestamp | date: "dd.MM.YYYY hh:mm" }}
+                    </mat-card-subtitle>
+                </div>
             </div>
-        </div>
-    </mat-card-footer>
-</mat-card>
+        </mat-card-footer>
+    </mat-card>
+</div>
+
