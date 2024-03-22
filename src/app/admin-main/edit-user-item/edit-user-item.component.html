@@ -1,1 +1,45 @@
-<p>edit-user-item works!</p>
+<div class="content-container">
+    <div>
+        <button mat-stroked-button>
+            <mat-icon>arrow_back</mat-icon>
+            Back
+        </button>
+    </div>
+    <mat-card>
+        <mat-card-title>Edit user</mat-card-title>
+        <mat-card-content>
+            <div class="avatar-upload-container">
+                <label>
+                    <form method="post" action="" enctype="multipart/form-data">
+                        <input class="fileInput" type="file" value="Change avatar" name="file" onchange="this.form.submit()" accept="image/*">
+                    </form>
+                    <figure class="avatar-figure">
+                        <img src="./assets/images/defaultAvatar.png"
+                             class="avatar-image" alt="userAvatar"
+                        />
+                        <figcaption class="avatar-action-caption">
+                            <img src="https://raw.githubusercontent.com/ThiagoLuizNunes/angular-boilerplate/master/src/assets/imgs/camera-white.png">
+                        </figcaption>
+                    </figure>
+                </label>
+            </div>
+
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                <mat-form-field class="full-width-input">
+                    <input matInput placeholder="First Name" formControlName="firstName" required>
+                    <mat-error *ngIf="isFieldInvalid('email')">
+                        Please inform your email
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="full-width-input">
+                    <input matInput placeholder="Last Name" formControlName="lastName" required>
+                    <mat-error *ngIf="isFieldInvalid('email')">
+                        Please inform your email
+                    </mat-error>
+                </mat-form-field>
+
+                <button mat-raised-button color="primary" type="submit">Submit</button>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>
