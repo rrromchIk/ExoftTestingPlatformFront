@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {UserService} from "../../shared/services/user.service";
-import {UserResponseDto} from "../../shared/models/user-response.dto";
+import {UserModel} from "../../shared/models/user.model";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
@@ -9,7 +9,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
     styleUrl: './edit-user-item.component.scss'
 })
 export class EditUserItemComponent implements OnInit {
-    user: UserResponseDto | null = null;
+    user: UserModel | null = null;
     // @ts-ignore
     form: FormGroup;
     private formSubmitAttempt: boolean = false;

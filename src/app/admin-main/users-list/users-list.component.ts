@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
-import {PagedListDto} from "../../shared/models/paged-list.dto";
-import {UserResponseDto} from "../../shared/models/user-response.dto";
+import {PagedListModel} from "../../shared/models/paged-list.model";
+import {UserModel} from "../../shared/models/user.model";
 import {PagingSettings} from "../../shared/models/paging-settings";
 import {UserService} from "../../shared/services/user.service";
 
@@ -10,8 +10,8 @@ import {UserService} from "../../shared/services/user.service";
     styleUrls: ['./users-list.component.scss']
 })
 export class UsersListComponent {
-    pagedListOfUsers: PagedListDto<UserResponseDto> | null = null;
-    users: UserResponseDto[] = [];
+    pagedListOfUsers: PagedListModel<UserModel> | null = null;
+    users: UserModel[] = [];
     isFetching: boolean = false;
     pagingSettings: PagingSettings = {
         page: 1,

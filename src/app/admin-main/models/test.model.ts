@@ -1,6 +1,6 @@
-import {BaseResponseDto} from "./base-response.dto";
+import {BaseModel} from "../../shared/models/base.model";
 
-export interface TestResponseDto extends BaseResponseDto {
+export interface TestModel extends BaseModel {
     name: string;
     subject: string;
     duration: number;

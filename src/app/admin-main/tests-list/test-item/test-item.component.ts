@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {TestResponseDto} from "../../../shared/models/test-response.dto";
+import {TestModel} from "../../models/test.model";
 
 @Component({
     selector: 'app-test-item',
@@ -7,15 +7,15 @@ import {TestResponseDto} from "../../../shared/models/test-response.dto";
     styleUrls: ['./test-item.component.scss']
 })
 export class TestItemComponent {
-    @Input() test!: TestResponseDto;
+    @Input() test!: TestModel;
     @Output() deleteTestEvent: EventEmitter<string> = new EventEmitter<string>();
     @Output() changePublishedStatusEvent: EventEmitter<string> = new EventEmitter<string>();
 
-    onDeleteTest(test: TestResponseDto) {
+    onDeleteTest(test: TestModel) {
         this.deleteTestEvent.emit(test.id);
     }
 
-    onUpdatePublishedStatus(test: TestResponseDto) {
+    onUpdatePublishedStatus(test: TestModel) {
         console.log("emit change status event");
         this.changePublishedStatusEvent.emit(test.id)
     }

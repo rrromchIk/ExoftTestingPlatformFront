@@ -1,6 +1,6 @@
-import {BaseResponseDto} from "./base-response.dto";
+import {BaseModel} from "./base.model";
 
-export interface UserResponseDto extends BaseResponseDto {
+export interface UserModel extends BaseModel {
     firstName: string;
     lastName: string;
     email: string;

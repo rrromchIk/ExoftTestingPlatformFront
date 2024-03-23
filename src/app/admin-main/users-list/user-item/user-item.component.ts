@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {UserResponseDto} from "../../../shared/models/user-response.dto";
+import {UserModel} from "../../../shared/models/user.model";
 
 @Component({
     selector: 'app-user-item',
@@ -8,10 +8,10 @@ import {UserResponseDto} from "../../../shared/models/user-response.dto";
 
 })
 export class UserItemComponent {
-    @Input() user!: UserResponseDto;
+    @Input() user!: UserModel;
     @Output() deleteUserEvent: EventEmitter<string> = new EventEmitter<string>();
 
-    onDeleteUser(user: UserResponseDto) {
+    onDeleteUser(user: UserModel) {
         this.deleteUserEvent.emit(user.id);
     }
 }

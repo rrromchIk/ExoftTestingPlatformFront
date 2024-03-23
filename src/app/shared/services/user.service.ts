@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {PagedListDto} from "../models/paged-list.dto";
-import {UserResponseDto} from "../models/user-response.dto";
+import {PagedListModel} from "../models/paged-list.model";
+import {UserModel} from "../models/user.model";
 import {PagingSettings} from "../models/paging-settings";
 
 @Injectable({
@@ -16,12 +16,12 @@ export class UserService {
     constructor(private http: HttpClient) {
     }
 
-    getAllUsers(pagingSettings: PagingSettings): Observable<PagedListDto<UserResponseDto>> {
+    getAllUsers(pagingSettings: PagingSettings): Observable<PagedListModel<UserModel>> {
         let queryParams = new HttpParams();
         queryParams = queryParams.append("page", pagingSettings.page);
         queryParams = queryParams.append("pageSize", pagingSettings.pageSize);
 
-        return this.http.get<PagedListDto<UserResponseDto>>(
+        return this.http.get<PagedListModel<UserModel>>(
             this.usersEndpoint,
             {
                 params: queryParams
@@ -34,7 +34,7 @@ export class UserService {
     }
 
     getUserById(userId: string) {
-        return this.http.get<UserResponseDto>(
+        return this.http.get<UserModel>(
             this.usersEndpoint + `/${userId}`
         );
     }

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {TestToPassDto} from "../../shared/models/test-to-pass.dto";
-import {PagedListDto} from "../../shared/models/paged-list.dto";
+import {TestToPassModel} from "../../shared/models/test-to-pass.model";
+import {PagedListModel} from "../../shared/models/paged-list.model";
 import {PagingSettings} from "../../shared/models/paging-settings";
 import {UserTestService} from "../services/user-test.service";
 
@@ -10,8 +10,8 @@ import {UserTestService} from "../services/user-test.service";
   styleUrl: './started-tests-list.component.scss'
 })
 export class StartedTestsListComponent implements OnInit {
-    tests: TestToPassDto[] = [];
-    pagedList: PagedListDto<TestToPassDto> | null = null;
+    tests: TestToPassModel[] = [];
+    pagedList: PagedListModel<TestToPassModel> | null = null;
     isFetching: boolean = false;
     pagingSettings: PagingSettings = {
         page: 1,

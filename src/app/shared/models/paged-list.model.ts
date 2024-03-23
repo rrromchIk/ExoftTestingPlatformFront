@@ -1,4 +1,4 @@
-export interface PagedListDto<T> {
+export interface PagedListModel<T> {
     items: T[];
     page: number;
     pageSize: number;

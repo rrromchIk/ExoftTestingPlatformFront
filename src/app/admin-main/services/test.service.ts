@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams, HttpResponse} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {TestResponseDto} from '../../shared/models/test-response.dto';
-import {PagedListDto} from "../../shared/models/paged-list.dto";
+import {PagedListModel} from "../../shared/models/paged-list.model";
 import {PagingSettings} from "../../shared/models/paging-settings";
+import {TestModel} from "../models/test.model";
 
 @Injectable({
     providedIn: 'root'
@@ -13,12 +13,12 @@ export class TestService {
 
     constructor(private http: HttpClient) {}
 
-    getAllTests(pagingSettings: PagingSettings): Observable<PagedListDto<TestResponseDto>> {
+    getAllTests(pagingSettings: PagingSettings): Observable<PagedListModel<TestModel>> {
         let queryParams = new HttpParams();
         queryParams = queryParams.append("page", pagingSettings.page);
         queryParams = queryParams.append("pageSize", pagingSettings.pageSize);
 
-        return this.http.get<PagedListDto<TestResponseDto>>(
+        return this.http.get<PagedListModel<TestModel>>(
             this.testsEndpoint,
             {
                 params: queryParams

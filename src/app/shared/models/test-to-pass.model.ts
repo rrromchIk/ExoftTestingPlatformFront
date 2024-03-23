@@ -1,4 +1,4 @@
-export interface TestToPassDto {
+export interface TestToPassModel {
     id: string,
     name: string,
     subject: string,
