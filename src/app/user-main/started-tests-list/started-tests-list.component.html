@@ -1,9 +1,8 @@
 <div *ngIf="!isFetching" class="items-list">
-    <div *ngFor="let test of tests">
-        <app-test-to-pass-item
-            [testToPass]="test"
-            (passTestEvent)="onPassTestEvent($event)"/>
-
+    <div *ngFor="let test of startedTests">
+        <app-started-test-item
+            [startedTest]="test"
+            (checkOutResultEvent)="onCheckOutTestResultsEvent($event)"/>
     </div>
 
     <app-paginator *ngIf="pagedList != null"

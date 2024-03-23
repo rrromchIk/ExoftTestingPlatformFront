@@ -1,0 +1,26 @@
+<div class="list-item">
+    <mat-card>
+        <mat-card-title>{{ startedTest.test.name }}</mat-card-title>
+
+        <mat-divider></mat-divider>
+        <mat-card-content>
+            <p><strong>Subject:</strong> {{ startedTest.test.subject }}</p>
+            <p><strong>Difficulty:</strong> {{ startedTest.test.difficulty }}</p>
+            <p><strong>Starting time:</strong> {{ startedTest.startingTime | date: "dd.MM.YYYY hh:mm:ss" }}</p>
+            <p><strong>Ending time:</strong> {{ startedTest.userTestStatus == 'Completed' ? startedTest.endingTime : 'Not completed' }}</p>
+            <p><strong>Result:</strong> {{ startedTest.userScore }}/{{startedTest.totalScore}}</p>
+        </mat-card-content>
+
+        <mat-card-footer *ngIf="startedTest.userTestStatus == 'Completed'">
+            <div class="footer-content">
+                <mat-card-actions>
+                    <button mat-raised-button color="primary"
+                            (click)="checkOutResult(startedTest)">
+                        Check out results
+                    </button>
+                </mat-card-actions>
+            </div>
+        </mat-card-footer>
+
+    </mat-card>
+</div>

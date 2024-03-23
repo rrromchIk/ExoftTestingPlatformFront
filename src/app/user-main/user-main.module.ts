@@ -6,6 +6,7 @@ import { TestsToPassListComponent } from './tests-to-pass-list/tests-to-pass-lis
 import {AppComponentsModule} from "../shared/modules/app-components/app-components.module";
 import { TestToPassItemComponent } from './tests-to-pass-list/test-to-pass-item/test-to-pass-item.component';
 import { StartedTestsListComponent } from './started-tests-list/started-tests-list.component';
+import { StartedTestItemComponent } from './started-tests-list/started-test-item/started-test-item.component';
 
 
 @NgModule({
@@ -14,6 +15,7 @@ import { StartedTestsListComponent } from './started-tests-list/started-tests-li
         TestsToPassListComponent,
         TestToPassItemComponent,
         StartedTestsListComponent,
+        StartedTestItemComponent,
     ],
     imports: [
         CommonModule,

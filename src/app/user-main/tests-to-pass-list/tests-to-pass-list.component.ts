@@ -22,14 +22,14 @@ export class TestsToPassListComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.loadTests();
+        this.loadTestsToPass();
     }
 
     onPassTestEvent(testId: string) {
         console.log("Pass test event handled")
     }
 
-    loadTests(): void {
+    loadTestsToPass(): void {
         this.isFetching = true;
         this.userTestService.getAllTestsToPassForUser("933c09e3-4116-4cde-d331-08dc45be50ce", this.pagingSettings)
             .subscribe(responseData => {
@@ -42,6 +42,6 @@ export class TestsToPassListComponent implements OnInit {
 
     onPageChangedEvent(pagingSetting: PagingSettings) {
         this.pagingSettings = pagingSetting;
-        this.loadTests();
+        this.loadTestsToPass();
     }
 }

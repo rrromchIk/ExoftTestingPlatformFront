@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {TestToPassModel} from "../../shared/models/test-to-pass.model";
 import {PagedListModel} from "../../shared/models/paged-list.model";
 import {PagingSettings} from "../../shared/models/paging-settings";
 import {UserTestService} from "../services/user-test.service";
+import {StartedTestModel} from "../models/started-test.model";
 
 @Component({
   selector: 'app-started-tests-list',
@@ -10,8 +10,8 @@ import {UserTestService} from "../services/user-test.service";
   styleUrl: './started-tests-list.component.scss'
 })
 export class StartedTestsListComponent implements OnInit {
-    tests: TestToPassModel[] = [];
-    pagedList: PagedListModel<TestToPassModel> | null = null;
+    startedTests: StartedTestModel[] = [];
+    pagedList: PagedListModel<StartedTestModel> | null = null;
     isFetching: boolean = false;
     pagingSettings: PagingSettings = {
         page: 1,
@@ -22,26 +22,26 @@ export class StartedTestsListComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.loadTests();
+        this.loadStartedTests();
     }
 
-    onPassTestEvent(testId: string) {
-        console.log("Pass test event handled")
+    onCheckOutTestResultsEvent(testId: string) {
+        console.log("onCheckOutTestResultsEvent handled")
     }
 
-    loadTests(): void {
+    loadStartedTests(): void {
         this.isFetching = true;
-        this.userTestService.getAllTestsToPassForUser("933c09e3-4116-4cde-d331-08dc45be50ce", this.pagingSettings)
+        this.userTestService.getAllStartedTestsForUser("933c09e3-4116-4cde-d331-08dc45be50ce", this.pagingSettings)
             .subscribe(responseData => {
                 console.log(responseData);
                 this.pagedList = responseData;
-                this.tests = responseData.items;
+                this.startedTests = responseData.items;
                 this.isFetching = false;
             })
     }
 
     onPageChangedEvent(pagingSetting: PagingSettings) {
         this.pagingSettings = pagingSetting;
-        this.loadTests();
+        this.loadStartedTests();
     }
 }
