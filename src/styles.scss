@@ -57,4 +57,20 @@ button {
 }
 
 
+a {
+    color: #007bff;
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+        color: #0056b3;
+    }
+}
+
+p {
+    margin: 0 0 5px 0 !important;
+}
+
+
+
 

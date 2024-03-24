@@ -6,9 +6,21 @@ import {AdminMainModule} from "./admin-main/admin-main.module";
 
 const routes: Routes = [
     {
+        path: '',
+        component: UserMainComponent,
+    },
+    {
         path: 'login',
         component: LoginComponent
     },
+    {
+        path: 'signup',
+        component: SignupComponent
+    },
+    // {
+    //     path: 'admin',
+    //     loadChildren: () => import('./admin-main/admin-main.module').then(m => m.AdminMainModule)
+    // },
     {
         path: 'admin',
         //loadChildren: () => import('./admin-main/admin-main.module').then(m => m.AdminMainModule)
@@ -16,8 +28,9 @@ const routes: Routes = [
     },
     {
         path: '**',
-        redirectTo: 'login'
-    } //Not Found Page
+        redirectTo: 'login',
+        pathMatch: 'full'
+    }
 ];
 
 @NgModule({
