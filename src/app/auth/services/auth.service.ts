@@ -4,7 +4,7 @@ import {TokenModel} from "../models/token.model";
 import {catchError, throwError} from "rxjs";
 import {UserLoginDto} from "../models/user-login.dto";
 import {UserSignupDto} from "../models/user-signup.dto";
-import {UserModel} from "../models/user.model";
+import {UserModel} from "../../shared/models/user.model";
 
 @Injectable({
     providedIn: 'root'
