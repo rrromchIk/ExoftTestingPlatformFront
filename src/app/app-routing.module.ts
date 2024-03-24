@@ -7,7 +7,27 @@ import {AdminMainModule} from "./admin-main/admin-main.module";
 const routes: Routes = [
     {
         path: '',
+        redirectTo: '/user-main',
+        pathMatch: 'full'
+    },
+    {
+        path: 'user-main',
         component: UserMainComponent,
+        children: [
+            {
+                path: '',
+                redirectTo: 'all-tests',
+                pathMatch: 'full'
+            },
+            {
+                path: 'all-tests',
+                component: TestsToPassListComponent
+            },
+            {
+                path: 'started-tests',
+                component: StartedTestsListComponent
+            }
+        ]
     },
     {
         path: 'login',
