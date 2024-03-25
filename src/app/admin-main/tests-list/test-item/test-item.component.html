@@ -1,6 +1,13 @@
 <div class="list-item">
     <mat-card>
-        <mat-card-title>{{ test.name }}</mat-card-title>
+        <div class="card-header">
+            <mat-card-title>{{ test.name }}</mat-card-title>
+
+            <button mat-raised-button *ngIf="test.templateId" class="orange-button" routerLink="../test-templates">
+                <mat-icon>bookmark</mat-icon>
+                From template
+            </button>
+        </div>
 
         <mat-divider></mat-divider>
         <mat-card-content>
