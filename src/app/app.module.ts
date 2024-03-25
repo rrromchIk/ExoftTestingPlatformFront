@@ -7,6 +7,9 @@ import {AppComponent} from './app.component';
 import {AuthInterceptorService} from "./core/interceptors/auth.interceptor.service";
 import {AppComponentsModule} from "./shared/modules/app-components/app-components.module";
 import {ReactiveFormsModule} from "@angular/forms";
+import {AdminMainModule} from "./admin-main/admin-main.module";
+import {UserMainModule} from "./user-main/user-main.module";
+import {AuthModule} from "./auth/auth.module";
 
 
 @NgModule({
@@ -18,7 +21,10 @@ import {ReactiveFormsModule} from "@angular/forms";
         HttpClientModule,
         AppRoutingModule,
         AppComponentsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        AdminMainModule,
+        UserMainModule,
+        AuthModule
     ],
     providers: [
         {
