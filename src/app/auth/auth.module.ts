@@ -20,13 +20,7 @@ import { SignupComponent } from './signup/signup.component';
         RouterLink
     ],
     providers: [
-        {
-            provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
-            useValue: {
-                appearance: 'outline',
-                subscriptSizing: 'dynamic'
-            }
-        }
+
     ]
 })
 export class AuthModule {
