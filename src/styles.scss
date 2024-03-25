@@ -40,6 +40,10 @@ button {
             align-items: center;
         }
 
+        mat-divider {
+            margin-bottom: 10px;
+        }
+
         .metadata {
             display: flex;
             flex-direction: column;
@@ -47,7 +51,7 @@ button {
         }
 
         mat-card-content {
-            padding: 10px 0;
+            padding: 0;
         }
 
         mat-card-actions {
