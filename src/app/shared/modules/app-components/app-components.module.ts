@@ -3,12 +3,14 @@ import {CommonModule} from '@angular/common';
 import {PaginatorComponent} from "../../components/paginator/paginator.component";
 import {HeaderComponent} from "../../components/header/header.component";
 import {AppMaterialModule} from "../app-material/app-material.module";
+import {BackButtonDirective} from "../../directives/back-button.directive";
 
 
 @NgModule({
     declarations: [
         PaginatorComponent,
-        HeaderComponent
+        HeaderComponent,
+        BackButtonDirective
     ],
     imports: [
         CommonModule,
@@ -16,7 +18,8 @@ import {AppMaterialModule} from "../app-material/app-material.module";
     ],
     exports: [
         PaginatorComponent,
-        HeaderComponent
+        HeaderComponent,
+        BackButtonDirective
     ]
 })
 export class AppComponentsModule {
