@@ -1,7 +1,12 @@
-.page-content {
-    padding: {
-        top: 1%;
-        left: 15%;
-        right: 15%;
-    }
+.app-container {
+    height: 89%;
+    margin: 0;
+}
+
+mat-sidenav {
+    width: 200px;
+}
+
+mat-expansion-panel-header {
+    font-size: 18px;
 }
