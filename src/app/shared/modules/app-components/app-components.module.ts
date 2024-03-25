@@ -4,13 +4,15 @@ import {PaginatorComponent} from "../../components/paginator/paginator.component
 import {HeaderComponent} from "../../components/header/header.component";
 import {AppMaterialModule} from "../app-material/app-material.module";
 import {BackButtonDirective} from "../../directives/back-button.directive";
+import {UserAvatarUploaderComponent} from "../../components/user-avatar-uploader/user-avatar-uploader.component";
 
 
 @NgModule({
     declarations: [
         PaginatorComponent,
         HeaderComponent,
-        BackButtonDirective
+        BackButtonDirective,
+        UserAvatarUploaderComponent
     ],
     imports: [
         CommonModule,
@@ -19,7 +21,8 @@ import {BackButtonDirective} from "../../directives/back-button.directive";
     exports: [
         PaginatorComponent,
         HeaderComponent,
-        BackButtonDirective
+        BackButtonDirective,
+        UserAvatarUploaderComponent
     ]
 })
 export class AppComponentsModule {
