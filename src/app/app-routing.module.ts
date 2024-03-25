@@ -37,15 +37,28 @@ const routes: Routes = [
         path: 'signup',
         component: SignupComponent
     },
-    // {
-    //     path: 'admin',
-    //     loadChildren: () => import('./admin-main/admin-main.module').then(m => m.AdminMainModule)
-    // },
     {
         path: 'admin',
-        //loadChildren: () => import('./admin-main/admin-main.module').then(m => m.AdminMainModule)
-        component: AdminMainComponent
+        loadChildren: () => import('./admin-main/admin-main.module').then(m => m.AdminMainModule)
     },
+    // {
+    //     path: 'admin',
+    //     component: AdminMainComponent,
+    //     children: [
+    //         {
+    //             path: 'tests',
+    //             component: TestsListComponent
+    //         },
+    //         {
+    //             path: 'users',
+    //             component: UsersListComponent
+    //         },
+    //         {
+    //             path: 'users/:id/edit',
+    //             component: EditUserItemComponent
+    //         }
+    //     ]
+    // },
     {
         path: '**',
         redirectTo: 'login',
@@ -56,8 +69,7 @@ const routes: Routes = [
 @NgModule({
     imports: [RouterModule.forRoot(routes, {
         bindToComponentInputs: true
-    }),
-        AdminMainModule],
+    })],
     exports: [RouterModule],
 })
 export class AppRoutingModule {
