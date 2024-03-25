@@ -1,6 +1,6 @@
 <div class="content-container">
     <div>
-        <button mat-stroked-button>
+        <button mat-stroked-button backButton>
             <mat-icon>arrow_back</mat-icon>
             Back
         </button>
@@ -11,14 +11,23 @@
             <div class="avatar-upload-container">
                 <label>
                     <form method="post" action="" enctype="multipart/form-data">
-                        <input class="fileInput" type="file" value="Change avatar" name="file" onchange="this.form.submit()" accept="image/*">
+                        <input class="fileInput"
+                               type="file"
+                               value="Change avatar"
+                               name="file"
+                               accept="image/*"
+                               (change)="onFileChange($event)">
+<!--                               onchange="this.form.submit()">-->
+
                     </form>
                     <figure class="avatar-figure">
-                        <img src="./assets/images/defaultAvatar.png"
-                             class="avatar-image" alt="userAvatar"
-                        />
+<!--                        <img src="./assets/images/default-avatar.png"-->
+<!--                             class="avatar-image" alt="userAvatar"/>-->
+
+                        <img [src]="getImageUrl()" class="avatar-image" alt="userAvatar" />
                         <figcaption class="avatar-action-caption">
-                            <img src="https://raw.githubusercontent.com/ThiagoLuizNunes/angular-boilerplate/master/src/assets/imgs/camera-white.png">
+                            <img
+                                src="./assets/images/camera-white.png">
                         </figcaption>
                     </figure>
                 </label>
