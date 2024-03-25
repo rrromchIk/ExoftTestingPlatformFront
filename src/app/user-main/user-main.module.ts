@@ -7,7 +7,8 @@ import {AppComponentsModule} from "../shared/modules/app-components/app-componen
 import { TestToPassItemComponent } from './tests-to-pass-list/test-to-pass-item/test-to-pass-item.component';
 import { StartedTestsListComponent } from './started-tests-list/started-tests-list.component';
 import { StartedTestItemComponent } from './started-tests-list/started-test-item/started-test-item.component';
-import {RouterLink, RouterLinkActive, RouterOutlet} from "@angular/router";
+import {UserMainRoutingModule} from "./user-main-routing.module";
+import {ReactiveFormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -20,11 +21,10 @@ import {RouterLink, RouterLinkActive, RouterOutlet} from "@angular/router";
     ],
     imports: [
         CommonModule,
+        UserMainRoutingModule,
         AppMaterialModule,
         AppComponentsModule,
-        RouterLink,
-        RouterLinkActive,
-        RouterOutlet,
+        ReactiveFormsModule,
     ]
 })
 export class UserMainModule {}
