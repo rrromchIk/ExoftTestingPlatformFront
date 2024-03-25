@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {PagedListModel} from "../../shared/models/paged-list.model";
 import {PagingSettings} from "../../shared/models/paging-settings";
-import {TestToPassModel} from "../models/test-to-pass.model";
-import {UserTestService} from "../services/user-test.service";
+import {TestToPassModel} from "../../core/interfaces/test-to-pass.model";
+import {UserTestService} from "../../core/services/api/user-test.api.service";
 
 @Component({
   selector: 'app-tests-to-pass-list',

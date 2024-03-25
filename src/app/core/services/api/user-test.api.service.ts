@@ -1,9 +1,9 @@
 import {Injectable} from "@angular/core";
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {PagedListModel} from "../../shared/models/paged-list.model";
-import {PagingSettings} from "../../shared/models/paging-settings";
-import {TestToPassModel} from "../models/test-to-pass.model";
-import {StartedTestModel} from "../models/started-test.model";
+import {PagedListModel} from "../../../shared/models/paged-list.model";
+import {PagingSettings} from "../../../shared/models/paging-settings";
+import {TestToPassModel} from "../../interfaces/test-to-pass.model";
+import {StartedTestModel} from "../../interfaces/started-test.model";
 
 @Injectable({
     providedIn: 'root'

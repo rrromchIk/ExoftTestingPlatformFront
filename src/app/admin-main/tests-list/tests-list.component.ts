@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {TestModel} from "../models/test.model";
+import {TestModel} from "../../core/interfaces/test.model";
 import {PagedListModel} from "../../shared/models/paged-list.model";
 import {PagingSettings} from "../../shared/models/paging-settings";
-import {TestService} from "../services/test.service";
+import {TestService} from "../../core/services/api/test.api.service";
 
 
 @Component({

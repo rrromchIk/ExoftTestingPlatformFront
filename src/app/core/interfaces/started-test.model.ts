@@ -1,4 +1,4 @@
-import {TestModel} from "../../admin-main/models/test.model";
+import {TestModel} from "./test.model";
 
 export interface StartedTestModel {
 

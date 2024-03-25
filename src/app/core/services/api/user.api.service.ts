@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {PagedListModel} from "../models/paged-list.model";
-import {UserModel} from "../models/user.model";
-import {PagingSettings} from "../models/paging-settings";
-import {UpdatedUserDto} from "../models/updated-user.dto";
+import {PagedListModel} from "../../../shared/models/paged-list.model";
+import {UserModel} from "../../../shared/models/user.model";
+import {PagingSettings} from "../../../shared/models/paging-settings";
+import {UpdatedUserDto} from "../../../shared/models/updated-user.dto";
 
 @Injectable({
     providedIn: 'root'

@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {PagedListModel} from "../../shared/models/paged-list.model";
 import {UserModel} from "../../shared/models/user.model";
 import {PagingSettings} from "../../shared/models/paging-settings";
-import {UserService} from "../../shared/services/user.service";
+import {UserService} from "../../core/services/api/user.api.service";
 
 @Component({
     selector: 'app-users-list',

@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {UserService} from "../../shared/services/user.service";
+import {UserService} from "../../core/services/api/user.api.service";
 import {UserModel} from "../../shared/models/user.model";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UpdatedUserDto} from "../../shared/models/updated-user.dto";
