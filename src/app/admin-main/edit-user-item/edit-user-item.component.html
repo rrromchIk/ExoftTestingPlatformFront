@@ -24,19 +24,48 @@
                 </label>
             </div>
 
-            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <form [formGroup]="editUserForm" (ngSubmit)="onSubmit()">
                 <mat-form-field class="full-width-input">
+                    <mat-label>First name</mat-label>
                     <input matInput placeholder="First Name" formControlName="firstName" required>
-                    <mat-error *ngIf="isFieldInvalid('email')">
-                        Please inform your email
+
+                    <mat-error *ngIf="getFormControl('firstName')?.hasError('pattern') &&
+                                !getFormControl('firstName')?.hasError('required')">
+                        Last name can only contain letters, numbers, and spaces
+                    </mat-error>
+
+                    <mat-error *ngIf="getFormControl('firstName')?.hasError('required')">
+                        First name is <strong>required</strong>
                     </mat-error>
                 </mat-form-field>
+
                 <mat-form-field class="full-width-input">
+                    <mat-label>Last name</mat-label>
                     <input matInput placeholder="Last Name" formControlName="lastName" required>
-                    <mat-error *ngIf="isFieldInvalid('email')">
-                        Please inform your email
+
+                    <mat-error *ngIf="getFormControl('lastName')?.hasError('pattern') &&
+                                !getFormControl('lastName')?.hasError('required')">
+                        Last name can only contain letters, numbers, and spaces
+                    </mat-error>
+
+                    <mat-error *ngIf="getFormControl('lastName')?.hasError('required')">
+                        Last name is <strong>required</strong>
                     </mat-error>
                 </mat-form-field>
+
+                <mat-form-field class="full-width-input">
+                    <mat-label>Email</mat-label>
+                    <input matInput readonly placeholder="Email" formControlName="email">
+                </mat-form-field>
+
+                <mat-form-field class="full-width-input">
+                    <mat-label>Role</mat-label>
+                    <input matInput placeholder="Role" formControlName="role" readonly>
+                </mat-form-field>
+
+                <div class="form-text-field">
+                    Email confirmed:<strong> {{getFormControl('emailConfirmed')?.value }}</strong>
+                </div>
 
                 <button mat-raised-button color="primary" type="submit">Submit</button>
             </form>

@@ -4,6 +4,7 @@ import {Observable} from 'rxjs';
 import {PagedListModel} from "../models/paged-list.model";
 import {UserModel} from "../models/user.model";
 import {PagingSettings} from "../models/paging-settings";
+import {UpdatedUserDto} from "../models/updated-user.dto";
 
 @Injectable({
     providedIn: 'root'
@@ -37,5 +38,13 @@ export class UserService {
         return this.http.get<UserModel>(
             this.usersEndpoint + `/${userId}`
         );
+    }
+
+    update(userId: string, updatedUser: UpdatedUserDto) {
+        return this.http.put(
+            this.usersEndpoint + `/${userId}`,
+            updatedUser,
+            { observe: 'response' }
+        )
     }
 }
