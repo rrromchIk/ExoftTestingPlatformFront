@@ -11,6 +11,8 @@ import {AppMaterialModule} from "../shared/modules/app-material/app-material.mod
 import {EditUserItemComponent} from "./edit-user-item/edit-user-item.component";
 import {AppComponentsModule} from "../shared/modules/app-components/app-components.module";
 import {ReactiveFormsModule} from "@angular/forms";
+import { TestTemplatesListComponent } from './test-templates-list/test-templates-list.component';
+import { TestTemplateItemComponent } from './test-templates-list/test-template-item/test-template-item.component';
 
 @NgModule({
     declarations: [
@@ -20,6 +22,8 @@ import {ReactiveFormsModule} from "@angular/forms";
         TestItemComponent,
         UserItemComponent,
         EditUserItemComponent,
+        TestTemplatesListComponent,
+        TestTemplateItemComponent,
     ],
     imports: [
         CommonModule,
