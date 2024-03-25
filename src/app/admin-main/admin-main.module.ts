@@ -10,6 +10,7 @@ import {UserItemComponent} from "./users-list/user-item/user-item.component";
 import {AppMaterialModule} from "../shared/modules/app-material/app-material.module";
 import {EditUserItemComponent} from "./edit-user-item/edit-user-item.component";
 import {AppComponentsModule} from "../shared/modules/app-components/app-components.module";
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
     declarations: [
@@ -24,7 +25,8 @@ import {AppComponentsModule} from "../shared/modules/app-components/app-componen
         CommonModule,
         AdminMainRoutingModule,
         AppMaterialModule,
-        AppComponentsModule
+        AppComponentsModule,
+        ReactiveFormsModule,
     ]
 })
 export class AdminMainModule {
