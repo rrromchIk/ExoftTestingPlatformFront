@@ -16,28 +16,26 @@
         <p><strong>Published:</strong> {{ test.isPublished }}</p>
     </mat-card-content>
 
-    <mat-card-footer>
-        <div class="list-item-card-footer">
-            <mat-card-actions class="list-item-card-actions">
-                <button mat-raised-button color="primary">Edit</button>
-                <button mat-raised-button color="warn" (click)="onDeleteTest(test)">Delete</button>
-                <button *ngIf="!test.isPublished" mat-raised-button class="green-button"
-                        (click)="onUpdatePublishedStatus(test)">
-                    Publish
-                    <mat-icon>public</mat-icon>
-                </button>
-                <button *ngIf="test.isPublished" mat-raised-button class="green-button"
-                        (click)="onUpdatePublishedStatus(test)">
-                    Hide
-                    <mat-icon>public</mat-icon>
-                </button>
-            </mat-card-actions>
-            <div class="list-item-card-metadata">
-                <mat-card-subtitle align='end'>Created
-                    on: {{ test.createdTimestamp | date: "dd.MM.YYYY HH:mm"}}</mat-card-subtitle>
-                <mat-card-subtitle align='end' *ngIf="test.modifiedTimestamp">Last
-                    Modified: {{ test.modifiedTimestamp | date: "dd.MM.YYYY HH:mm" }}</mat-card-subtitle>
-            </div>
+    <mat-card-footer class="list-item-card-footer">
+        <mat-card-actions class="list-item-card-actions">
+            <button mat-raised-button color="primary">Edit</button>
+            <button mat-raised-button color="warn" (click)="onDeleteTest(test)">Delete</button>
+            <button *ngIf="!test.isPublished" mat-raised-button class="green-button"
+                    (click)="onUpdatePublishedStatus(test)">
+                Publish
+                <mat-icon>public</mat-icon>
+            </button>
+            <button *ngIf="test.isPublished" mat-raised-button class="green-button"
+                    (click)="onUpdatePublishedStatus(test)">
+                Hide
+                <mat-icon>public</mat-icon>
+            </button>
+        </mat-card-actions>
+        <div class="list-item-card-metadata">
+            <mat-card-subtitle align='end'>Created
+                on: {{ test.createdTimestamp | date: "dd.MM.YYYY HH:mm"}}</mat-card-subtitle>
+            <mat-card-subtitle align='end' *ngIf="test.modifiedTimestamp">Last
+                Modified: {{ test.modifiedTimestamp | date: "dd.MM.YYYY HH:mm" }}</mat-card-subtitle>
         </div>
     </mat-card-footer>
 </mat-card>
