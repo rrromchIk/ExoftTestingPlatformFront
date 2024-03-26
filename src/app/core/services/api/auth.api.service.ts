@@ -5,6 +5,7 @@ import {catchError, throwError} from "rxjs";
 import {UserLoginDto} from "../../interfaces/user-login.dto";
 import {UserSignupDto} from "../../interfaces/user-signup.dto";
 import {UserModel} from "../../../shared/models/user.model";
+import {ResetPasswordDto} from "../../interfaces/reset-password.dto";
 
 @Injectable({
     providedIn: 'root'
@@ -50,10 +51,25 @@ export class AuthService {
             }, {
                 observe: 'response'
             }).pipe(catchError(err => {
-                console.log(err);
+            console.log(err);
 
-                let errMsg = err.error.detail;
-                return throwError(() => new Error(errMsg));
-            }))
+            let errMsg = err.error.detail;
+            return throwError(() => new Error(errMsg));
+        }))
+    }
+
+
+    resetPassword(resetPasswordDto: ResetPasswordDto) {
+        return this.http.post<HttpResponse<any>>(
+            "https://localhost:7297/api/auth/password/reset",
+            resetPasswordDto,
+            {
+                observe: 'response'
+            }).pipe(catchError(err => {
+            console.log(err);
+
+            let errMsg = err.error.detail;
+            return throwError(() => new Error(errMsg));
+        }))
     }
 }
