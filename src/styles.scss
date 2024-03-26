@@ -3,9 +3,6 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-
-
-
 .green-button {
     background-color: #4CAF50 !important;
 }
@@ -13,10 +10,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .orange-button {
     background-color: orange !important;
     color: white !important;
-}
-
-.full-width-input {
-    width: 100%;
 }
 
 .items-list {
@@ -38,6 +31,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
         margin-bottom: 5px;
     }
 
+    .list-item-card-content {
+        padding: 0;
+    }
+
     .list-item-card-footer {
         display: flex;
         justify-content: space-between;
@@ -54,10 +51,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
         align-items: end;
     }
 
-    .list-item-card-content {
-        padding: 0;
-    }
-
     .list-item-card-actions {
         padding: 0;
 
@@ -69,7 +62,65 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     }
 }
 
-a {
+.form-card {
+    max-width: 400px;
+    margin: 0 auto;
+    text-align: center;
+    border-radius: 15px;
+
+    .form-card-header {
+        justify-content: center;
+        margin-bottom: 16px;
+
+        .form-card-tittle {
+            font-size: 24px;
+        }
+    }
+
+    .full-width-button {
+        width: 100%;
+    }
+
+    .full-width-input {
+        width: 100%;
+    }
+
+    .form-card-hints {
+        margin-top: 10px;
+    }
+
+    .password-requirements {
+        li {
+            margin-left: 10px;
+        }
+    }
+
+    .form-card-field {
+        margin-bottom: 15px;
+    }
+
+    .form-text-field {
+        text-align: start;
+        padding: 0 16px;
+        font-size: 16px !important;
+    }
+
+    .form-actions {
+        .button-bottom-margin {
+            margin-bottom: 10px;
+        }
+
+        .button-right-margin {
+            margin-right: 10px;
+        }
+    }
+}
+
+p {
+    margin: 0 0 5px 0 !important;
+}
+
+.link {
     color: #007bff;
     text-decoration: none;
 
@@ -78,15 +129,3 @@ a {
         color: #0056b3;
     }
 }
-
-p {
-    margin: 0 0 5px 0 !important;
-}
-
-mat-form-field {
-    margin-bottom: 15px;
-}
-
-
-
-

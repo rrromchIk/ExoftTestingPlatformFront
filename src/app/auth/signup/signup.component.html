@@ -1,12 +1,14 @@
 <div class="page-content">
-    <mat-card>
+    <mat-card class="form-card">
+        <mat-card-header class="form-card-header">
+            <mat-card-title class="form-card-tittle">Sign up</mat-card-title>
+        </mat-card-header>
+
         <mat-card-content>
             <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
-                <h1>Sign up</h1>
-
                 <p *ngIf="errorMessage != null">{{errorMessage}}</p>
 
-                <mat-form-field class="full-width-input" appearance="outline">
+                <mat-form-field class="full-width-input form-card-field" appearance="outline">
                     <mat-label>First name</mat-label>
                     <input matInput placeholder="First name" formControlName="firstName">
 
@@ -20,7 +22,7 @@
                     </mat-error>
                 </mat-form-field>
 
-                <mat-form-field class="full-width-input" appearance="outline">
+                <mat-form-field class="full-width-input form-card-field" appearance="outline">
                     <mat-label>Last name</mat-label>
                     <input matInput placeholder="Last name" formControlName="lastName">
 
@@ -34,7 +36,7 @@
                     </mat-error>
                 </mat-form-field>
 
-                <mat-form-field class="full-width-input" appearance="outline">
+                <mat-form-field class="full-width-input form-card-field" appearance="outline">
                     <mat-label>Email</mat-label>
                     <input matInput placeholder="example@gmail.com" type="email" formControlName="email">
 
@@ -48,7 +50,7 @@
                     </mat-error>
                 </mat-form-field>
 
-                <mat-form-field class="full-width-input">
+                <mat-form-field class="full-width-input form-card-field">
                     <mat-label>Create password</mat-label>
                     <input matInput type="password" placeholder="Password" formControlName="password">
 
@@ -66,7 +68,7 @@
                     </mat-error>
                 </mat-form-field>
 
-                <mat-form-field class="full-width-input">
+                <mat-form-field class="full-width-input form-card-field">
                     <mat-label>Confirm password</mat-label>
                     <input matInput [type]="hidePassword ? 'password' : 'text'" placeholder="Password" formControlName="confirmPassword">
 
@@ -85,15 +87,12 @@
                     </mat-error>
                 </mat-form-field>
 
-                <button mat-raised-button color="primary" type="submit">Sign up</button>
+                <button mat-raised-button color="primary" type="submit" class="full-width-button">Sign up</button>
 
-                <div class="signup-hints">
-                    <p>Already have an account? <a routerLink="/login">Log in</a></p>
+                <div class="form-card-hints">
+                    <p>Already have an account? <a class="link" routerLink="/login">Log in</a></p>
                 </div>
             </form>
         </mat-card-content>
     </mat-card>
 </div>
-
-
-

@@ -5,8 +5,11 @@
             Back
         </button>
     </div>
-    <mat-card>
-        <mat-card-title>Edit user</mat-card-title>
+    <mat-card class="form-card">
+        <mat-card-header class="form-card-header">
+            <mat-card-title class="form-card-tittle">Edit user</mat-card-title>
+        </mat-card-header>
+
         <mat-card-content>
             <div class="avatar-upload-container">
                 <label>
@@ -34,7 +37,7 @@
             </div>
 
             <form [formGroup]="editUserForm" (ngSubmit)="onSubmit()">
-                <mat-form-field class="full-width-input">
+                <mat-form-field class="full-width-input form-card-field">
                     <mat-label>First name</mat-label>
                     <input matInput placeholder="First Name" formControlName="firstName" required>
 
@@ -48,7 +51,7 @@
                     </mat-error>
                 </mat-form-field>
 
-                <mat-form-field class="full-width-input">
+                <mat-form-field class="full-width-input form-card-field">
                     <mat-label>Last name</mat-label>
                     <input matInput placeholder="Last Name" formControlName="lastName" required>
 
@@ -62,21 +65,36 @@
                     </mat-error>
                 </mat-form-field>
 
-                <mat-form-field class="full-width-input">
+                <mat-form-field class="full-width-input form-card-field">
                     <mat-label>Email</mat-label>
                     <input matInput readonly placeholder="Email" formControlName="email">
                 </mat-form-field>
 
-                <mat-form-field class="full-width-input">
+                <mat-form-field class="full-width-input form-card-field">
                     <mat-label>Role</mat-label>
                     <input matInput placeholder="Role" formControlName="role" readonly>
                 </mat-form-field>
 
-                <div class="form-text-field">
+                <div class="form-card-field form-text-field">
                     Email confirmed:<strong> {{getFormControl('emailConfirmed')?.value }}</strong>
                 </div>
 
-                <button mat-raised-button color="primary" type="submit">Submit</button>
+                <div class="form-actions">
+                    <button mat-stroked-button
+                            color="warn"
+                            [disabled]="!anyChanges"
+                            (click)="setUserDataToFormFields()"
+                            class="button-right-margin">
+                        Reset
+                    </button>
+
+                    <button mat-raised-button
+                            color="primary"
+                            type="submit"
+                            [disabled]="!anyChanges">
+                        Submit
+                    </button>
+                </div>
             </form>
         </mat-card-content>
     </mat-card>

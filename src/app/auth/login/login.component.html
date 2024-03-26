@@ -1,12 +1,14 @@
 <div class="page-content">
-    <mat-card>
+    <mat-card class="form-card">
+        <mat-card-header class="form-card-header">
+            <mat-card-title class="form-card-tittle">Login</mat-card-title>
+        </mat-card-header>
+
+        <p *ngIf="errorMessage != null">{{errorMessage}}</p>
+
         <mat-card-content>
             <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-                <h1>Login</h1>
-
-                <p *ngIf="errorMessage != null">{{errorMessage}}</p>
-
-                <mat-form-field class="full-width-input" appearance="outline">
+                <mat-form-field class="full-width-input form-card-field" appearance="outline">
                     <mat-label>Email</mat-label>
                     <input matInput placeholder="example@gmail.com" type="email" formControlName="email">
 
@@ -20,7 +22,7 @@
                     </mat-error>
                 </mat-form-field>
 
-                <mat-form-field class="full-width-input">
+                <mat-form-field class="full-width-input form-card-field">
                     <mat-label>Password</mat-label>
                     <input matInput [type]="hidePassword ? 'password' : 'text'" placeholder="Password" formControlName="password">
 
@@ -34,16 +36,13 @@
                     </mat-error>
                 </mat-form-field>
 
-                <button mat-raised-button color="primary" type="submit">Login</button>
+                <button mat-raised-button color="primary" type="submit" class="full-width-button">Login</button>
 
-                <div class="login-hints">
-                    <p>Don't have an account? <a routerLink="/signup">Sign up</a></p>
-                    <p>Forgot your password? <a routerLink="/forgot-password">Reset</a></p>
+                <div class="form-card-hints">
+                    <p>Don't have an account? <a class="link" routerLink="/signup">Sign up</a></p>
+                    <p>Forgot your password? <a class="link" routerLink="/forgot-password">Reset</a></p>
                 </div>
             </form>
         </mat-card-content>
     </mat-card>
 </div>
-
-
-
