@@ -7,10 +7,10 @@
     <mat-card-content class="list-item-card-content">
         <p><strong>Subject:</strong> {{ startedTest.test.subject }}</p>
         <p><strong>Difficulty:</strong> {{ startedTest.test.difficulty }}</p>
-        <p><strong>Starting time:</strong> {{ startedTest.startingTime | date: "dd.MM.YYYY HH:mm:ss" }}</p>
+        <p><strong>Starting time:</strong> {{ startedTest.startingTime | dateTimeFormat }}</p>
         <p><strong>Ending
             time:</strong> {{ startedTest.userTestStatus == 'Completed'
-            ? (startedTest.endingTime | date: "dd.MM.YYYY HH:mm:ss")
+            ? (startedTest.endingTime | dateTimeFormat )
                 : 'Not completed' }}
         </p>
         <p><strong>Result:</strong> {{ startedTest.userScore }}/{{startedTest.totalScore}}</p>
