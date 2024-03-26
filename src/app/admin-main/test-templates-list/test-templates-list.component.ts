@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {PagedListModel} from "../../shared/models/paged-list.model";
-import {PagingSettings} from "../../shared/models/paging-settings";
+import {PagedListModel} from "../../core/interfaces/paged-list.model";
+import {PagingSettings} from "../../core/interfaces/paging-settings";
 import {TestTemplateModel} from "../../core/interfaces/test-template.model";
 import {TestTmplService} from "../../core/services/api/test-tmpl.api.service";
 

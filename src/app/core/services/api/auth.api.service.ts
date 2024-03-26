@@ -4,7 +4,7 @@ import {TokenModel} from "../../interfaces/token.model";
 import {catchError, throwError} from "rxjs";
 import {UserLoginDto} from "../../interfaces/user-login.dto";
 import {UserSignupDto} from "../../interfaces/user-signup.dto";
-import {UserModel} from "../../../shared/models/user.model";
+import {UserModel} from "../../interfaces/user.model";
 import {ResetPasswordDto} from "../../interfaces/reset-password.dto";
 
 @Injectable({

@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {PagedListModel} from "../../../shared/models/paged-list.model";
-import {UserModel} from "../../../shared/models/user.model";
-import {PagingSettings} from "../../../shared/models/paging-settings";
-import {UpdatedUserDto} from "../../../shared/models/updated-user.dto";
+import {PagedListModel} from "../../interfaces/paged-list.model";
+import {UserModel} from "../../interfaces/user.model";
+import {PagingSettings} from "../../interfaces/paging-settings";
+import {UpdatedUserDto} from "../../interfaces/updated-user.dto";
 
 @Injectable({
     providedIn: 'root'
@@ -47,4 +47,21 @@ export class UserService {
             { observe: 'response' }
         )
     }
+
+    updateAvatar(userId: string, file: File) {
+        const formData = new FormData();
+        formData.append('profilePicture', file);
+
+        return this.http.patch(
+            this.usersEndpoint + `/${userId}/avatar`,
+            formData,
+            { observe: 'response' })
+    }
+
+    // getUserAvatar(userId: string) {
+    //     return this.http.get<Blob>(
+    //         this.usersEndpoint + `/${userId}/avatar/download`,
+    //         { responseType: 'blob' }
+    //     );
+    // }
 }

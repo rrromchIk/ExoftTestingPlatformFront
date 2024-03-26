@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
-import {PagedListModel} from "../../shared/models/paged-list.model";
-import {UserModel} from "../../shared/models/user.model";
-import {PagingSettings} from "../../shared/models/paging-settings";
+import {PagedListModel} from "../../core/interfaces/paged-list.model";
+import {UserModel} from "../../core/interfaces/user.model";
+import {PagingSettings} from "../../core/interfaces/paging-settings";
 import {UserService} from "../../core/services/api/user.api.service";
 
 @Component({

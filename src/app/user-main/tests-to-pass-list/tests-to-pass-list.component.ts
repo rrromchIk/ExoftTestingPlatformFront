@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {PagedListModel} from "../../shared/models/paged-list.model";
-import {PagingSettings} from "../../shared/models/paging-settings";
+import {PagedListModel} from "../../core/interfaces/paged-list.model";
+import {PagingSettings} from "../../core/interfaces/paging-settings";
 import {TestToPassModel} from "../../core/interfaces/test-to-pass.model";
 import {UserTestService} from "../../core/services/api/user-test.api.service";
 
@@ -31,7 +31,7 @@ export class TestsToPassListComponent implements OnInit {
 
     loadTestsToPass(): void {
         this.isFetching = true;
-        this.userTestService.getAllTestsToPassForUser("933c09e3-4116-4cde-d331-08dc45be50ce", this.pagingSettings)
+        this.userTestService.getAllTestsToPassForUser("f9884071-88d7-46af-d332-08dc45be50ce", this.pagingSettings)
             .subscribe(responseData => {
                 console.log(responseData);
                 this.pagedList = responseData;
