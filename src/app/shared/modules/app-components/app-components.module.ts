@@ -5,6 +5,7 @@ import {HeaderComponent} from "../../components/header/header.component";
 import {AppMaterialModule} from "../app-material/app-material.module";
 import {BackButtonDirective} from "../../directives/back-button.directive";
 import {UserAvatarUploaderComponent} from "../../components/user-avatar-uploader/user-avatar-uploader.component";
+import {DateTimeFormatPipe} from "../../pipes/date-time-format.pipe";
 
 
 @NgModule({
@@ -12,7 +13,8 @@ import {UserAvatarUploaderComponent} from "../../components/user-avatar-uploader
         PaginatorComponent,
         HeaderComponent,
         BackButtonDirective,
-        UserAvatarUploaderComponent
+        UserAvatarUploaderComponent,
+        DateTimeFormatPipe
     ],
     imports: [
         CommonModule,
@@ -22,7 +24,8 @@ import {UserAvatarUploaderComponent} from "../../components/user-avatar-uploader
         PaginatorComponent,
         HeaderComponent,
         BackButtonDirective,
-        UserAvatarUploaderComponent
+        UserAvatarUploaderComponent,
+        DateTimeFormatPipe
     ]
 })
 export class AppComponentsModule {
