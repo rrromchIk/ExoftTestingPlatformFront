@@ -4,11 +4,7 @@ html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 
-button {
-    &:not(:last-child) {
-        margin-right: 10px;
-    }
-}
+
 
 .green-button {
     background-color: #4CAF50 !important;
@@ -27,44 +23,51 @@ button {
     padding: 10px;
 }
 
-.list-item {
-    mat-card {
-        border: 1px solid #ccc;
-        border-radius: 10px;
-        padding: 10px 10px 10px 20px;
-        margin-bottom: 20px;
-        opacity: 94%;
+.list-item-card {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 10px 10px 10px 20px;
+    margin-bottom: 20px;
+    opacity: 94%;
 
-        &:hover {
-            transform: scale(1.01);
-        }
+    &:hover {
+        transform: scale(1.01);
+    }
 
-        .footer-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+    .list-item-card-header {
+        margin-bottom: 5px;
+    }
 
-        mat-divider {
-            margin-bottom: 10px;
-        }
+    .list-item-card-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 
-        .metadata {
-            display: flex;
-            flex-direction: column;
-            align-items: end;
-        }
+    .list-item-card-divider {
+        margin-bottom: 10px;
+    }
 
-        mat-card-content {
-            padding: 0;
-        }
+    .list-item-card-metadata {
+        display: flex;
+        flex-direction: column;
+        align-items: end;
+    }
 
-        mat-card-actions {
-            padding: 0;
+    .list-item-card-content {
+        padding: 0;
+    }
+
+    .list-item-card-actions {
+        padding: 0;
+
+        button {
+            &:not(:last-child) {
+                margin-right: 10px;
+            }
         }
     }
 }
-
 
 a {
     color: #007bff;

@@ -1,35 +1,35 @@
-<div class="list-item">
-    <mat-card>
+<mat-card class="list-item-card">
+    <div class="list-item-card-header">
         <mat-card-title>{{ testToPass.name }}</mat-card-title>
+    </div>
 
-        <mat-divider></mat-divider>
-        <mat-card-content>
-            <p><strong>Subject:</strong> {{ testToPass.subject }}</p>
-            <p><strong>Difficulty:</strong> {{ testToPass.difficulty }}</p>
-            <p><strong>Duration:</strong> {{ testToPass.duration }} min</p>
-            <p><strong>Status:</strong> {{ testToPass.userTestStatus }}</p>
-        </mat-card-content>
+    <mat-divider class="list-item-card-divider"></mat-divider>
+    <mat-card-content class="list-item-card-content">
+        <p><strong>Subject:</strong> {{ testToPass.subject }}</p>
+        <p><strong>Difficulty:</strong> {{ testToPass.difficulty }}</p>
+        <p><strong>Duration:</strong> {{ testToPass.duration }} min</p>
+        <p><strong>Status:</strong> {{ testToPass.userTestStatus }}</p>
+    </mat-card-content>
 
-        <mat-card-footer>
-            <div class="footer-content">
-                <mat-card-actions [ngSwitch]="testToPass.userTestStatus">
-                    <button *ngSwitchCase="'NotStarted'" mat-raised-button class="green-button" (click)="onPassTest(testToPass)">
-                        Start
-                    </button>
-                    <button *ngSwitchCase="'InProcess'" mat-raised-button color="primary" (click)="onPassTest(testToPass)">
-                        Continue
-                    </button>
-                    <button *ngSwitchCase="'Completed'" mat-raised-button disabled="true">
-                        Completed
-                    </button>
-                </mat-card-actions>
+    <mat-card-footer>
+        <div class="list-item-card-footer">
+            <mat-card-actions [ngSwitch]="testToPass.userTestStatus" class="list-item-card-actions">
+                <button *ngSwitchCase="'NotStarted'" mat-raised-button class="green-button"
+                        (click)="onPassTest(testToPass)">
+                    Start
+                </button>
+                <button *ngSwitchCase="'InProcess'" mat-raised-button color="primary" (click)="onPassTest(testToPass)">
+                    Continue
+                </button>
+                <button *ngSwitchCase="'Completed'" mat-raised-button disabled="true">
+                    Completed
+                </button>
+            </mat-card-actions>
 
-                <div class="metadata">
-                    <mat-card-subtitle align='end'>Created
-                        on: {{ testToPass.createdTimestamp | date: "dd.MM.YYYY hh:mm"}}</mat-card-subtitle>
-                </div>
+            <div class="list-item-card-metadata">
+                <mat-card-subtitle align='end'>Created
+                    on: {{ testToPass.createdTimestamp | date: "dd.MM.YYYY hh:mm"}}</mat-card-subtitle>
             </div>
-        </mat-card-footer>
-
-    </mat-card>
-</div>
+        </div>
+    </mat-card-footer>
+</mat-card>

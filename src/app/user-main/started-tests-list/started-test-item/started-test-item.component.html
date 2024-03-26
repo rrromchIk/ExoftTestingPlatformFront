@@ -1,26 +1,29 @@
-<div class="list-item">
-    <mat-card>
+<mat-card class="list-item-card">
+    <div class="list-item-card-header">
         <mat-card-title>{{ startedTest.test.name }}</mat-card-title>
+    </div>
 
-        <mat-divider></mat-divider>
-        <mat-card-content>
-            <p><strong>Subject:</strong> {{ startedTest.test.subject }}</p>
-            <p><strong>Difficulty:</strong> {{ startedTest.test.difficulty }}</p>
-            <p><strong>Starting time:</strong> {{ startedTest.startingTime | date: "dd.MM.YYYY hh:mm:ss" }}</p>
-            <p><strong>Ending time:</strong> {{ startedTest.userTestStatus == 'Completed' ? startedTest.endingTime : 'Not completed' }}</p>
-            <p><strong>Result:</strong> {{ startedTest.userScore }}/{{startedTest.totalScore}}</p>
-        </mat-card-content>
+    <mat-divider class="list-item-card-divider"></mat-divider>
+    <mat-card-content class="list-item-card-content">
+        <p><strong>Subject:</strong> {{ startedTest.test.subject }}</p>
+        <p><strong>Difficulty:</strong> {{ startedTest.test.difficulty }}</p>
+        <p><strong>Starting time:</strong> {{ startedTest.startingTime | date: "dd.MM.YYYY HH:mm:ss" }}</p>
+        <p><strong>Ending
+            time:</strong> {{ startedTest.userTestStatus == 'Completed'
+            ? (startedTest.endingTime | date: "dd.MM.YYYY HH:mm:ss")
+                : 'Not completed' }}
+        </p>
+        <p><strong>Result:</strong> {{ startedTest.userScore }}/{{startedTest.totalScore}}</p>
+    </mat-card-content>
 
-        <mat-card-footer *ngIf="startedTest.userTestStatus == 'Completed'">
-            <div class="footer-content">
-                <mat-card-actions>
-                    <button mat-raised-button color="primary"
-                            (click)="checkOutResult(startedTest)">
-                        Check out results
-                    </button>
-                </mat-card-actions>
-            </div>
-        </mat-card-footer>
-
-    </mat-card>
-</div>
+    <mat-card-footer *ngIf="startedTest.userTestStatus == 'Completed'">
+        <div class="list-item-card-footer">
+            <mat-card-actions class="list-item-card-actions">
+                <button mat-raised-button color="primary"
+                        (click)="checkOutResult(startedTest)">
+                    Check out results
+                </button>
+            </mat-card-actions>
+        </div>
+    </mat-card-footer>
+</mat-card>

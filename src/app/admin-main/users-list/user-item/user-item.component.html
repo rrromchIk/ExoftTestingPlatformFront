@@ -1,27 +1,29 @@
-<div class="list-item">
-    <mat-card>
+<mat-card class="list-item-card">
+    <div class="list-item-card-header">
         <mat-card-title>{{ user.email }}</mat-card-title>
-        <mat-divider></mat-divider>
-        <mat-card-content>
-            <p><strong>First name:</strong> {{ user.firstName }}</p>
-            <p><strong>Last name:</strong> {{ user.lastName }}</p>
-            <p><strong>Role:</strong> {{ user.userRole }}</p>
-            <p><strong>Email confirmed:</strong> {{ user.emailConfirmed }}</p>
-        </mat-card-content>
-        <mat-card-footer>
-            <div class="footer-content">
-                <mat-card-actions>
-                    <button mat-raised-button color="primary" [routerLink]="[user.id, 'edit']">Edit</button>
-                    <button mat-raised-button color="warn" (click)="onDeleteUser(user)">Delete</button>
-                </mat-card-actions>
-                <div class="metadata">
-                    <mat-card-subtitle>Created on: {{ user.createdTimestamp | date: "dd.MM.YYYY HH:mm"}}</mat-card-subtitle>
-                    <mat-card-subtitle *ngIf="user.modifiedTimestamp">
-                        Last Modified: {{ user.modifiedTimestamp | date: "dd.MM.YYYY HH:mm" }}
-                    </mat-card-subtitle>
-                </div>
+    </div>
+
+    <mat-divider class="list-item-card-divider"></mat-divider>
+    <mat-card-content class="list-item-card-content">
+        <p><strong>First name:</strong> {{ user.firstName }}</p>
+        <p><strong>Last name:</strong> {{ user.lastName }}</p>
+        <p><strong>Role:</strong> {{ user.userRole }}</p>
+        <p><strong>Email confirmed:</strong> {{ user.emailConfirmed }}</p>
+    </mat-card-content>
+    <mat-card-footer>
+        <div class="list-item-card-footer">
+            <mat-card-actions class="list-item-card-actions">
+                <button mat-raised-button color="primary" [routerLink]="[user.id, 'edit']">Edit</button>
+                <button mat-raised-button color="warn" (click)="onDeleteUser(user)">Delete</button>
+            </mat-card-actions>
+            <div class="list-item-card-metadata">
+                <mat-card-subtitle>Created on: {{ user.createdTimestamp | date: "dd.MM.YYYY HH:mm"}}</mat-card-subtitle>
+                <mat-card-subtitle *ngIf="user.modifiedTimestamp">
+                    Last Modified: {{ user.modifiedTimestamp | date: "dd.MM.YYYY HH:mm" }}
+                </mat-card-subtitle>
             </div>
-        </mat-card-footer>
-    </mat-card>
-</div>
+        </div>
+    </mat-card-footer>
+</mat-card>
+
 
