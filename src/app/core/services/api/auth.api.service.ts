@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {HttpClient, HttpStatusCode} from "@angular/common/http";
+import {HttpClient, HttpResponse, HttpStatusCode} from "@angular/common/http";
 import {TokenModel} from "../../interfaces/token.model";
 import {catchError, throwError} from "rxjs";
 import {UserLoginDto} from "../../interfaces/user-login.dto";
@@ -35,11 +35,24 @@ export class AuthService {
                 console.log(err);
                 let errMsg = "An error occurred";
 
-                if (err.error.status == HttpStatusCode.Unauthorized)
-                    errMsg = "Invalid password";
-                else
-                    errMsg = err.error.detail
+                errMsg = err.error.detail
 
+                return throwError(() => new Error(errMsg));
+            }))
+    }
+
+
+    forgotPassword(email: string) {
+        return this.http.post<HttpResponse<any>>(
+            "https://localhost:7297/api/auth/password/forgot",
+            {
+                email
+            }, {
+                observe: 'response'
+            }).pipe(catchError(err => {
+                console.log(err);
+
+                let errMsg = err.error.detail;
                 return throwError(() => new Error(errMsg));
             }))
     }
