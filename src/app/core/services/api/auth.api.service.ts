@@ -6,17 +6,20 @@ import {UserLoginDto} from "../../interfaces/user-login.dto";
 import {UserSignupDto} from "../../interfaces/user-signup.dto";
 import {UserModel} from "../../interfaces/user.model";
 import {ResetPasswordDto} from "../../interfaces/reset-password.dto";
+import {environment} from "../../../../environments/environment";
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthService {
+    private apiUrl: string = environment.apiUrl;
+    private authEndpoint: string = `${environment.securityUrl}/api/auth`
 
     constructor(private http: HttpClient) {
     }
 
     logIn(userLoginDto: UserLoginDto) {
-        return this.http.post<TokenModel>("https://localhost:7297/api/auth/login", userLoginDto)
+        return this.http.post<TokenModel>(this.authEndpoint+ "/login", userLoginDto)
             .pipe(catchError(err => {
                 console.log(err);
                 let errMsg = "An error occurred";
@@ -31,7 +34,7 @@ export class AuthService {
     }
 
     signUp(userSignUpDto: UserSignupDto) {
-        return this.http.post<UserModel>("https://localhost:7237/api/users/register", userSignUpDto)
+        return this.http.post<UserModel>(`${this.apiUrl}/api/users/register`, userSignUpDto)
             .pipe(catchError(err => {
                 console.log(err);
                 let errMsg = "An error occurred";
@@ -45,7 +48,7 @@ export class AuthService {
 
     forgotPassword(email: string) {
         return this.http.post<HttpResponse<any>>(
-            "https://localhost:7297/api/auth/password/forgot",
+            this.authEndpoint + "/password/forgot",
             {
                 email
             }, {
@@ -61,7 +64,7 @@ export class AuthService {
 
     resetPassword(resetPasswordDto: ResetPasswordDto) {
         return this.http.post<HttpResponse<any>>(
-            "https://localhost:7297/api/auth/password/reset",
+            this.authEndpoint + "/password/reset",
             resetPasswordDto,
             {
                 observe: 'response'

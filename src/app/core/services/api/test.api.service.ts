@@ -4,12 +4,13 @@ import {Observable, of} from 'rxjs';
 import {PagedListModel} from "../../interfaces/paged-list.model";
 import {PagingSettings} from "../../interfaces/paging-settings";
 import {TestModel} from "../../interfaces/test.model";
+import {environment} from "../../../../environments/environment";
 
 @Injectable({
     providedIn: 'root'
 })
 export class TestService {
-    private testsEndpoint = 'https://localhost:7237/api/tests';
+    private testsEndpoint = `${environment.apiUrl}/api/tests`;
 
     constructor(private http: HttpClient) {}
 

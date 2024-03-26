@@ -5,12 +5,13 @@ import {PagedListModel} from "../../interfaces/paged-list.model";
 import {UserModel} from "../../interfaces/user.model";
 import {PagingSettings} from "../../interfaces/paging-settings";
 import {UpdatedUserDto} from "../../interfaces/updated-user.dto";
+import {environment} from "../../../../environments/environment";
 
 @Injectable({
     providedIn: 'root'
 })
 export class UserService {
-    private usersEndpoint = 'https://localhost:7237/api/users';
+    private usersEndpoint = `${environment.apiUrl}/api/users`;
 
     //private filters = "?page=1&pageSize=9&sortColumn=name&sortOrder=asc"
 
