@@ -13,6 +13,7 @@ import {AppComponentsModule} from "../shared/modules/app-components/app-componen
 import {ReactiveFormsModule} from "@angular/forms";
 import { TestTemplatesListComponent } from './test-templates-list/test-templates-list.component';
 import { TestTemplateItemComponent } from './test-templates-list/test-template-item/test-template-item.component';
+import { TestCreateComponent } from './test-create/test-create.component';
 
 @NgModule({
     declarations: [
@@ -24,6 +25,7 @@ import { TestTemplateItemComponent } from './test-templates-list/test-template-i
         EditUserItemComponent,
         TestTemplatesListComponent,
         TestTemplateItemComponent,
+        TestCreateComponent,
     ],
     imports: [
         CommonModule,

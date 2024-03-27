@@ -5,6 +5,7 @@ import {PagedListModel} from "../../interfaces/paged-list.model";
 import {PagingSettings} from "../../interfaces/paging-settings";
 import {TestModel} from "../../interfaces/test.model";
 import {environment} from "../../../../environments/environment";
+import {TestCreateDto} from "../../interfaces/test-create.dto";
 
 @Injectable({
     providedIn: 'root'
@@ -42,6 +43,10 @@ export class TestService {
                 params: queryParams
             }
         );
+    }
+
+    createTest(testCreateDto: TestCreateDto) {
+        return this.http.post(this.testsEndpoint, testCreateDto)
     }
 
     // getAllTests(pagingSettings: PagingSettings): Observable<PagedListModel<TestModel>> {
