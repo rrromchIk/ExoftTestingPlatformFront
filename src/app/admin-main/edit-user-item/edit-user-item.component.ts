@@ -3,6 +3,7 @@ import {UserService} from "../../core/services/api/user.api.service";
 import {UserModel} from "../../core/interfaces/user.model";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UpdatedUserDto} from "../../core/interfaces/updated-user.dto";
+import {environment} from "../../../environments/environment";
 
 @Component({
     selector: 'app-edit-user-item',
@@ -12,7 +13,11 @@ import {UpdatedUserDto} from "../../core/interfaces/updated-user.dto";
 export class EditUserItemComponent implements OnInit {
     user!: UserModel;
     editUserForm!: FormGroup;
-    selectedImage: File | null = null;
+    avatarLinkToDisplay: string | null = null;
+    uploadedUserAvatar: File | null = null;
+    userDataChanges: boolean = false;
+    userAvatarChanges: boolean = false;
+    initialFormValues: any;
 
     constructor(
         private userService: UserService,
@@ -24,14 +29,18 @@ export class EditUserItemComponent implements OnInit {
     set id(userId: string) {
         this.userService.getUserById(userId).subscribe(response => {
             this.user = response;
-            this.editUserForm.patchValue({
-                firstName: this.user.firstName,
-                lastName: this.user.lastName,
-                email: this.user.email,
-                emailConfirmed: this.user.emailConfirmed,
-                role: this.user.userRole
-            })
+            console.log(this.user);
+            this.setUserDataToFormFields();
+
+            this.initialFormValues = { ...this.editUserForm.value };
+
+            this.editUserForm.valueChanges.subscribe(() => {
+                this.userDataChanges = this.isFormChanged();
+            });
         });
+
+
+        this.avatarLinkToDisplay = `${environment.apiUrl}/api/users/${userId}/avatar/download`
     }
 
     ngOnInit() {
@@ -49,36 +58,51 @@ export class EditUserItemComponent implements OnInit {
     }
 
     onSubmit() {
-        if (this.editUserForm.valid) {
+        if (this.editUserForm.valid && this.userDataChanges) {
             const userToUpdate: UpdatedUserDto = {
                 firstName: this.editUserForm.value.firstName,
                 lastName: this.editUserForm.value.lastName
             }
 
-            if (this.user) {
-                this.userService.update(this.user.id, userToUpdate).subscribe(
-                    res => {
-                        console.log(res);
-                        this.user.firstName = userToUpdate.firstName;
-                        this.user.lastName = userToUpdate.lastName;
-                    }
-                )
-            }
+            this.userService.update(this.user.id, userToUpdate).subscribe(
+                res => {
+                    console.log(res);
+                    this.user.firstName = userToUpdate.firstName;
+                    this.user.lastName = userToUpdate.lastName;
+                    this.userDataChanges = false;
+                }
+            )
         }
+
+        if(this.uploadedUserAvatar && this.userAvatarChanges)
+            this.userService.updateAvatar(this.user.id, this.uploadedUserAvatar).subscribe(
+                res => {
+                    console.log(res);
+                    this.userAvatarChanges = false;
+                }
+            )
     }
 
-
-    onFileChange(event: Event) {
-        const inputElement = event.target as HTMLInputElement;
-        if (inputElement.files && inputElement.files.length) {
-            this.selectedImage = inputElement.files[0];
-        }
+    setUserDataToFormFields() {
+        this.editUserForm.patchValue({
+            firstName: this.user.firstName,
+            lastName: this.user.lastName,
+            email: this.user.email,
+            emailConfirmed: this.user.emailConfirmed,
+            role: this.user.userRole
+        })
+        this.uploadedUserAvatar = null;
+        this.avatarLinkToDisplay = `${environment.apiUrl}/api/users/${this.user.id}/avatar/download`
     }
 
-    getImageUrl() {
-        if (this.selectedImage) {
-            return URL.createObjectURL(this.selectedImage);
-        }
-        return './assets/images/default-avatar.png';
+    isFormChanged() {
+        return JSON.stringify(this.initialFormValues) !== JSON.stringify(this.editUserForm.value);
+    }
+
+    onImageUploadedEvent(file: File) {
+        this.userAvatarChanges = true;
+        this.uploadedUserAvatar = file;
+
+        this.avatarLinkToDisplay = URL.createObjectURL(this.uploadedUserAvatar);
     }
 }

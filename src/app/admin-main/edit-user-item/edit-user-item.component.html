@@ -12,7 +12,7 @@
 
         <mat-card-content>
             <app-user-avatar-uploader
-                [image]="userAvatar"
+                [imageUrl]="avatarLinkToDisplay"
                 (imageUploadedEvent)="onImageUploadedEvent($event)"/>
 
             <form [formGroup]="editUserForm" (ngSubmit)="onSubmit()">
@@ -61,7 +61,7 @@
                 <div class="form-actions">
                     <button mat-stroked-button
                             color="warn"
-                            [disabled]="!anyChanges"
+                            [disabled]="!userDataChanges && !userAvatarChanges"
                             (click)="setUserDataToFormFields()"
                             class="button-right-margin">
                         Reset
@@ -70,7 +70,7 @@
                     <button mat-raised-button
                             color="primary"
                             type="submit"
-                            [disabled]="!anyChanges">
+                            [disabled]="!userDataChanges && !userAvatarChanges">
                         Submit
                     </button>
                 </div>

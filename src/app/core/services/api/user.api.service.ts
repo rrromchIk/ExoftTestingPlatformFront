@@ -58,11 +58,4 @@ export class UserService {
             formData,
             { observe: 'response' })
     }
-
-    // getUserAvatar(userId: string) {
-    //     return this.http.get<Blob>(
-    //         this.usersEndpoint + `/${userId}/avatar/download`,
-    //         { responseType: 'blob' }
-    //     );
-    // }
 }
