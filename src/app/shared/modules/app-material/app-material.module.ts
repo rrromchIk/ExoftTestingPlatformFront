@@ -16,6 +16,7 @@ import {MatMenuModule} from "@angular/material/menu";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatSelectModule} from "@angular/material/select";
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
         MatExpansionModule,
         MatTooltipModule,
         MatInputModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        MatSelectModule
     ],
     providers: [
         provideAnimationsAsync(),
