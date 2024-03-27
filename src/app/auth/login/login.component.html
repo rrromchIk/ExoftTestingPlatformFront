@@ -8,7 +8,7 @@
 
         <mat-card-content>
             <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-                <mat-form-field class="full-width-input form-card-field" appearance="outline">
+                <mat-form-field class="form-card-field full-width-field field-bottom-margin" appearance="outline">
                     <mat-label>Email</mat-label>
                     <input matInput placeholder="example@gmail.com" type="email" formControlName="email">
 
@@ -22,7 +22,7 @@
                     </mat-error>
                 </mat-form-field>
 
-                <mat-form-field class="full-width-input form-card-field">
+                <mat-form-field class="form-card-field full-width-field field-bottom-margin">
                     <mat-label>Password</mat-label>
                     <input matInput [type]="hidePassword ? 'password' : 'text'" placeholder="Password" formControlName="password">
 
