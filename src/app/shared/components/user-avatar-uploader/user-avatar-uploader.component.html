@@ -10,7 +10,10 @@
 
         </form>
         <figure class="avatar-figure">
-            <img [src]="getImageUrl()" class="avatar-image" alt="userAvatar" />
+            <img *ngIf="!showDefaultImage" [src]="imageUrl" class="avatar-image" (error)="showDefault()" alt="userAvatar" />
+
+            <img *ngIf="showDefaultImage" src="./assets/images/default-avatar.png" class="avatar-image" alt="userAvatar" />
+
             <figcaption class="avatar-action-caption">
                 <img
                     src="./assets/images/camera-white.png">

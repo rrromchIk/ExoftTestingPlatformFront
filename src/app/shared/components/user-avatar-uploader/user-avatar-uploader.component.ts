@@ -6,8 +6,10 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
   styleUrl: './user-avatar-uploader.component.scss'
 })
 export class UserAvatarUploaderComponent {
-    @Input() image: File | null = null;
+    @Input() imageUrl: string | null = null;
     @Output() imageUploadedEvent: EventEmitter<File> = new EventEmitter<File>();
+    showDefaultImage: boolean = false;
+
 
     onFileChange(event: Event) {
         const inputElement = event.target as HTMLInputElement;
@@ -16,10 +18,8 @@ export class UserAvatarUploaderComponent {
         }
     }
 
-    getImageUrl() {
-        if (this.image) {
-            return URL.createObjectURL(this.image);
-        }
-        return './assets/images/default-avatar.png';
+    showDefault() {
+        console.log("error loading image file");
+        this.showDefaultImage = true;
     }
 }
