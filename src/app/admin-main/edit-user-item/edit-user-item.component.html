@@ -18,7 +18,7 @@
             <form [formGroup]="editUserForm" (ngSubmit)="onSubmit()">
                 <mat-form-field class="form-card-field full-width-field field-bottom-margin">
                     <mat-label>First name</mat-label>
-                    <input matInput placeholder="First Name" formControlName="firstName" required>
+                    <input matInput placeholder="First Name" formControlName="firstName">
 
                     <mat-error *ngIf="getFormControl('firstName')?.hasError('pattern') &&
                                 !getFormControl('firstName')?.hasError('required')">
@@ -32,7 +32,7 @@
 
                 <mat-form-field class="form-card-field full-width-field field-bottom-margin">
                     <mat-label>Last name</mat-label>
-                    <input matInput placeholder="Last Name" formControlName="lastName" required>
+                    <input matInput placeholder="Last Name" formControlName="lastName">
 
                     <mat-error *ngIf="getFormControl('lastName')?.hasError('pattern') &&
                                 !getFormControl('lastName')?.hasError('required')">
