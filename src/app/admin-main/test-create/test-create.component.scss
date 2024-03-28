@@ -11,6 +11,11 @@
 
     .form-card-header {
         justify-content: start;
+        margin-bottom: 25px;
+
+        .form-card-tittle {
+            font-size: 28px;
+        }
     }
 
     .form-card-field {
