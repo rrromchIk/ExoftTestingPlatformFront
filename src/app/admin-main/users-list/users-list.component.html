@@ -1,4 +1,11 @@
 <div *ngIf="!isFetching" class="items-list">
+
+    <app-filters
+        [selectFilters]="selectFilters"
+        [sortCriterias]="sortCriterias"
+        (filterChange)="onFilterChange($event)">
+    </app-filters>
+
     <div *ngFor="let user of users">
         <app-user-item [user]="user" (deleteUserEvent)="onDeleteUser($event)"></app-user-item>
     </div>

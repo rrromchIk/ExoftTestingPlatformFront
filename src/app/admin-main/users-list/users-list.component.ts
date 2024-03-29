@@ -3,6 +3,14 @@ import {PagedListModel} from "../../core/interfaces/paged-list.model";
 import {UserModel} from "../../core/interfaces/user.model";
 import {PagingSettings} from "../../core/interfaces/paging-settings";
 import {UserService} from "../../core/services/api/user.api.service";
+import {SelectFilter} from "../../shared/interfaces/select-filter";
+import {SortCriteria} from "../../shared/interfaces/sort-criteria";
+import {FiltersDto} from "../../shared/interfaces/filters-dto";
+import {
+    CREATION_DATE_SORT_CRITERIA,
+    EMAIL_CONFIRMED_FILTER, MODIFICATION_DATE_SORT_CRITERIA,
+    USER_ROLE_FILTER
+} from "../../core/constants";
 
 @Component({
     selector: 'app-users-list',
@@ -17,6 +25,9 @@ export class UsersListComponent {
         page: 1,
         pageSize: 3
     }
+
+    selectFilters: SelectFilter[] = Array.of(USER_ROLE_FILTER, EMAIL_CONFIRMED_FILTER);
+    sortCriterias: SortCriteria[] = Array.of(CREATION_DATE_SORT_CRITERIA, MODIFICATION_DATE_SORT_CRITERIA);
 
     constructor(private usersService: UserService) {
     }
@@ -49,5 +60,9 @@ export class UsersListComponent {
     onPageChangedEvent(pagingSetting: PagingSettings) {
         this.pagingSettings = pagingSetting;
         this.loadUsers();
+    }
+
+    onFilterChange(filtersDto: FiltersDto) {
+        console.log('Filter change event:', filtersDto);
     }
 }

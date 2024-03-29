@@ -3,6 +3,15 @@ import {PagedListModel} from "../../core/interfaces/paged-list.model";
 import {PagingSettings} from "../../core/interfaces/paging-settings";
 import {TestTemplateModel} from "../../core/interfaces/test-template.model";
 import {TestTmplService} from "../../core/services/api/test-tmpl.api.service";
+import {SelectFilter} from "../../shared/interfaces/select-filter";
+import {SortCriteria} from "../../shared/interfaces/sort-criteria";
+import {FiltersDto} from "../../shared/interfaces/filters-dto";
+import {
+    CREATION_DATE_SORT_CRITERIA,
+    DIFFICULTY_FILTER,
+    DURATION_SORT_CRITERIA,
+    MODIFICATION_DATE_SORT_CRITERIA
+} from "../../core/constants";
 
 @Component({
   selector: 'app-test-templates-list',
@@ -17,6 +26,9 @@ export class TestTemplatesListComponent implements OnInit {
         page: 1,
         pageSize: 3
     }
+
+    selectFilters: SelectFilter[] = Array.of(DIFFICULTY_FILTER);
+    sortCriterias: SortCriteria[] = Array.of(DURATION_SORT_CRITERIA, CREATION_DATE_SORT_CRITERIA, MODIFICATION_DATE_SORT_CRITERIA);
 
     constructor(private testTmplService: TestTmplService) {
     }
@@ -51,5 +63,9 @@ export class TestTemplatesListComponent implements OnInit {
     onPageChangedEvent(pagingSetting: PagingSettings) {
         this.pagingSettings = pagingSetting;
         this.loadTestTemplates();
+    }
+
+    onFilterChange(filtersDto: FiltersDto) {
+        console.log('Filter change event:', filtersDto);
     }
 }

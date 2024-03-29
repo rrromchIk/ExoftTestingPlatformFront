@@ -3,6 +3,15 @@ import {PagedListModel} from "../../core/interfaces/paged-list.model";
 import {PagingSettings} from "../../core/interfaces/paging-settings";
 import {UserTestService} from "../../core/services/api/user-test.api.service";
 import {StartedTestModel} from "../../core/interfaces/started-test.model";
+import {SelectFilter} from "../../shared/interfaces/select-filter";
+import {SortCriteria} from "../../shared/interfaces/sort-criteria";
+import {FiltersDto} from "../../shared/interfaces/filters-dto";
+import {
+    DIFFICULTY_FILTER,
+    DURATION_SORT_CRITERIA,
+    SCORE_SORT_CRITERIA, STARTING_TIME_SORT_CRITERIA,
+    USER_TEST_STATUS_FILTER
+} from "../../core/constants";
 
 @Component({
   selector: 'app-started-tests-list',
@@ -18,6 +27,9 @@ export class StartedTestsListComponent implements OnInit {
         pageSize: 3
     }
 
+    selectFilters: SelectFilter[] = Array.of(DIFFICULTY_FILTER, USER_TEST_STATUS_FILTER);
+    sortCriterias: SortCriteria[] = Array.of(DURATION_SORT_CRITERIA, STARTING_TIME_SORT_CRITERIA, SCORE_SORT_CRITERIA);
+
     constructor(private userTestService: UserTestService) {
     }
 
@@ -31,7 +43,7 @@ export class StartedTestsListComponent implements OnInit {
 
     loadStartedTests(): void {
         this.isFetching = true;
-        this.userTestService.getAllStartedTestsForUser("933c09e3-4116-4cde-d331-08dc45be50ce", this.pagingSettings)
+        this.userTestService.getAllStartedTestsForUser("f9884071-88d7-46af-d332-08dc45be50ce", this.pagingSettings)
             .subscribe(responseData => {
                 console.log(responseData);
                 this.pagedList = responseData;
@@ -43,5 +55,9 @@ export class StartedTestsListComponent implements OnInit {
     onPageChangedEvent(pagingSetting: PagingSettings) {
         this.pagingSettings = pagingSetting;
         this.loadStartedTests();
+    }
+
+    onFilterChange(filtersDto: FiltersDto) {
+        console.log('Filter change event:', filtersDto);
     }
 }

@@ -1,4 +1,10 @@
 <div *ngIf="!isFetching" class="items-list">
+    <app-filters
+        [selectFilters]="selectFilters"
+        [sortCriterias]="sortCriterias"
+        (filterChange)="onFilterChange($event)">
+    </app-filters>
+
     <div *ngFor="let test of tests">
         <app-test-to-pass-item
             [testToPass]="test"

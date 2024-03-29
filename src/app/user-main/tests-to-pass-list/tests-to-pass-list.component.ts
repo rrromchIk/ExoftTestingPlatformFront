@@ -3,6 +3,14 @@ import {PagedListModel} from "../../core/interfaces/paged-list.model";
 import {PagingSettings} from "../../core/interfaces/paging-settings";
 import {TestToPassModel} from "../../core/interfaces/test-to-pass.model";
 import {UserTestService} from "../../core/services/api/user-test.api.service";
+import {SelectFilter} from "../../shared/interfaces/select-filter";
+import {SortCriteria} from "../../shared/interfaces/sort-criteria";
+import {FiltersDto} from "../../shared/interfaces/filters-dto";
+import {
+    CREATION_DATE_SORT_CRITERIA,
+    DIFFICULTY_FILTER,
+    DURATION_SORT_CRITERIA,
+} from "../../core/constants";
 
 @Component({
   selector: 'app-tests-to-pass-list',
@@ -17,6 +25,9 @@ export class TestsToPassListComponent implements OnInit {
         page: 1,
         pageSize: 3
     }
+
+    selectFilters: SelectFilter[] = Array.of(DIFFICULTY_FILTER);
+    sortCriterias: SortCriteria[] = Array.of(DURATION_SORT_CRITERIA, CREATION_DATE_SORT_CRITERIA);
 
     constructor(private userTestService: UserTestService) {
     }
@@ -43,5 +54,9 @@ export class TestsToPassListComponent implements OnInit {
     onPageChangedEvent(pagingSetting: PagingSettings) {
         this.pagingSettings = pagingSetting;
         this.loadTestsToPass();
+    }
+
+    onFilterChange(filtersDto: FiltersDto) {
+        console.log('Filter change event:', filtersDto);
     }
 }
