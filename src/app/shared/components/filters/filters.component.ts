@@ -12,9 +12,7 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 export class FiltersComponent {
     @Input() sortCriterias: SortCriteria[] = [];
     @Input() selectFilters: SelectFilter[] = [];
-
     @Output() filterChange: EventEmitter<FiltersDto> = new EventEmitter<FiltersDto>();
-
     filterForm!: FormGroup;
 
     constructor(private fb: FormBuilder) {}
@@ -32,14 +30,44 @@ export class FiltersComponent {
 
         formGroupConfig['searchTerm'] = [''];
         formGroupConfig['sortColumn'] = [''];
+        formGroupConfig['sortDirection'] = ['none'];
 
         this.filterForm = this.fb.group(formGroupConfig);
     }
 
     onSortButtonClick(sortColumn: string) {
-        this.filterForm.get('sortColumn')?.setValue(sortColumn);
+        const previousSortColumn = this.filterForm.get('sortColumn')?.value;
+        let newSortDirection: string;
+
+        if(sortColumn === previousSortColumn) {
+            const currentDirection = this.filterForm.get('sortDirection')?.value;
+            switch (currentDirection) {
+                case 'asc':
+                    newSortDirection = 'desc';
+                    break;
+                case 'desc':
+                    newSortDirection = 'none';
+                    break;
+                default:
+                    newSortDirection = 'asc'
+            }
+        } else {
+            newSortDirection = 'asc';
+        }
+
+        if(newSortDirection === 'none') {
+            this.filterForm.patchValue({
+                sortColumn: '',
+                sortDirection: newSortDirection
+            });
+        } else {
+            this.filterForm.patchValue({
+                sortColumn: sortColumn,
+                sortDirection: newSortDirection
+            });
+        }
+
         this.emitFilterChangeEvent();
-        this.filterForm.get('sortColumn')?.setValue('');
     }
 
     emitFilterChangeEvent() {
@@ -50,11 +78,10 @@ export class FiltersComponent {
         });
 
         const sortColumn = this.filterForm.get('sortColumn')?.value;
+        const sortDirection = this.filterForm.get('sortDirection')?.value;
         const searchTerm = this.filterForm.get('searchTerm')?.value;
 
-       // this.filterChange.emit({ sortColumn, selectFilters });
-
-        console.log({ sortColumn, selectFilters, searchTerm })
+        this.filterChange.emit({ sortColumn, sortDirection, selectFilters, searchTerm });
     }
 
     clearSearchInput() {

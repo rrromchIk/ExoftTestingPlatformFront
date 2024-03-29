@@ -2,7 +2,6 @@
     <mat-expansion-panel-header>
         <mat-panel-title>
             <mat-icon>tune</mat-icon>
-            Filters
         </mat-panel-title>
     </mat-expansion-panel-header>
 
@@ -36,7 +35,14 @@
                     [title]="criteria.label"
                     (click)="onSortButtonClick(criteria.value)">
                 {{ criteria.label }}
-                <mat-icon iconPositionEnd>arrow_downward</mat-icon>
+                <mat-icon iconPositionEnd *ngIf="filterForm.get('sortColumn')?.value === criteria.value &&
+                                                filterForm.get('sortDirection')?.value === 'asc'">
+                    arrow_upward
+                </mat-icon>
+                <mat-icon iconPositionEnd *ngIf="filterForm.get('sortColumn')?.value === criteria.value &&
+                                                filterForm.get('sortDirection')?.value === 'desc'">
+                    arrow_downward
+                </mat-icon>
             </button>
         </mat-card-content>
     </mat-card>
