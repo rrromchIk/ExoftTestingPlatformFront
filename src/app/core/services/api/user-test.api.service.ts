@@ -5,6 +5,8 @@ import {PagingSettings} from "../../interfaces/paging-settings";
 import {TestToPassModel} from "../../interfaces/test-to-pass.model";
 import {StartedTestModel} from "../../interfaces/started-test.model";
 import {environment} from "../../../../environments/environment";
+import {HttpParamsHelper} from "../../helpers/http-params.helper";
+import {Filters} from "../../../shared/interfaces/filters";
 
 @Injectable({
     providedIn: 'root'
@@ -15,10 +17,10 @@ export class UserTestService {
     constructor(private http: HttpClient) {
     }
 
-    getAllTestsToPassForUser(userId: string, pagingSettings: PagingSettings) {
+    getAllTestsToPassForUser(userId: string, pagingSettings: PagingSettings, filters: Filters) {
         let queryParams = new HttpParams();
-        queryParams = queryParams.append("page", pagingSettings.page);
-        queryParams = queryParams.append("pageSize", pagingSettings.pageSize);
+        queryParams = HttpParamsHelper.applyPaging(queryParams, pagingSettings);
+        queryParams = HttpParamsHelper.applyFilters(queryParams, filters);
 
         const url = `${this.apiUrl}/api/users/${userId}/tests`
         return this.http.get<PagedListModel<TestToPassModel>>(
@@ -29,10 +31,10 @@ export class UserTestService {
         );
     }
 
-    getAllStartedTestsForUser(userId: string, pagingSettings: PagingSettings) {
+    getAllStartedTestsForUser(userId: string, pagingSettings: PagingSettings, filters: Filters) {
         let queryParams = new HttpParams();
-        queryParams = queryParams.append("page", pagingSettings.page);
-        queryParams = queryParams.append("pageSize", pagingSettings.pageSize);
+        queryParams = HttpParamsHelper.applyPaging(queryParams, pagingSettings);
+        queryParams = HttpParamsHelper.applyFilters(queryParams, filters);
 
         const url = `${this.apiUrl}/api/users/${userId}/tests/started`
         return this.http.get<PagedListModel<StartedTestModel>>(

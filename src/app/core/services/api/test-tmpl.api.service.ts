@@ -5,6 +5,8 @@ import {Observable} from "rxjs";
 import {PagedListModel} from "../../interfaces/paged-list.model";
 import {TestTemplateModel} from "../../interfaces/test-template.model";
 import {environment} from "../../../../environments/environment";
+import {Filters} from "../../../shared/interfaces/filters";
+import {HttpParamsHelper} from "../../helpers/http-params.helper";
 
 @Injectable({
     providedIn: 'root'
@@ -14,10 +16,10 @@ export class TestTmplService {
 
     constructor(private http: HttpClient) {}
 
-    getAllTestTemplates(pagingSettings: PagingSettings): Observable<PagedListModel<TestTemplateModel>> {
+    getAllTestTemplates(pagingSettings: PagingSettings, filters: Filters): Observable<PagedListModel<TestTemplateModel>> {
         let queryParams = new HttpParams();
-        queryParams = queryParams.append("page", pagingSettings.page);
-        queryParams = queryParams.append("pageSize", pagingSettings.pageSize);
+        queryParams = HttpParamsHelper.applyPaging(queryParams, pagingSettings);
+        queryParams = HttpParamsHelper.applyFilters(queryParams, filters);
 
         return this.http.get<PagedListModel<TestTemplateModel>>(
             this.testTemplatesEndpoint,

@@ -6,6 +6,8 @@ import {PagingSettings} from "../../interfaces/paging-settings";
 import {TestModel} from "../../interfaces/test.model";
 import {environment} from "../../../../environments/environment";
 import {TestCreateDto} from "../../interfaces/test-create.dto";
+import {HttpParamsHelper} from "../../helpers/http-params.helper";
+import {Filters} from "../../../shared/interfaces/filters";
 
 @Injectable({
     providedIn: 'root'
@@ -15,10 +17,10 @@ export class TestService {
 
     constructor(private http: HttpClient) {}
 
-    getAllTests(pagingSettings: PagingSettings): Observable<PagedListModel<TestModel>> {
+    getAllTests(pagingSettings: PagingSettings, filters: Filters): Observable<PagedListModel<TestModel>> {
         let queryParams = new HttpParams();
-        queryParams = queryParams.append("page", pagingSettings.page);
-        queryParams = queryParams.append("pageSize", pagingSettings.pageSize);
+        queryParams = HttpParamsHelper.applyPaging(queryParams, pagingSettings);
+        queryParams = HttpParamsHelper.applyFilters(queryParams, filters);
 
         return this.http.get<PagedListModel<TestModel>>(
             this.testsEndpoint,

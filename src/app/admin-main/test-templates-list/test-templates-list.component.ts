@@ -22,13 +22,21 @@ export class TestTemplatesListComponent implements OnInit {
     testTemplates: TestTemplateModel[] = [];
     pagedList: PagedListModel<TestTemplateModel> | null = null;
     isFetching: boolean = false;
+
+    selectFilters: SelectFilter[] = Array.of(DIFFICULTY_FILTER);
+    sortCriterias: SortCriteria[] = Array.of(DURATION_SORT_CRITERIA, CREATION_DATE_SORT_CRITERIA, MODIFICATION_DATE_SORT_CRITERIA);
+
     pagingSettings: PagingSettings = {
         page: 1,
         pageSize: 3
     }
 
-    selectFilters: SelectFilter[] = Array.of(DIFFICULTY_FILTER);
-    sortCriterias: SortCriteria[] = Array.of(DURATION_SORT_CRITERIA, CREATION_DATE_SORT_CRITERIA, MODIFICATION_DATE_SORT_CRITERIA);
+    filters: Filters = {
+        searchTerm: '',
+        sortColumn: '',
+        sortOrder: '',
+        selectFilters: {},
+    }
 
     constructor(private testTmplService: TestTmplService) {
     }
@@ -39,7 +47,7 @@ export class TestTemplatesListComponent implements OnInit {
 
     loadTestTemplates(): void {
         this.isFetching = true;
-        this.testTmplService.getAllTestTemplates(this.pagingSettings)
+        this.testTmplService.getAllTestTemplates(this.pagingSettings, this.filters)
             .subscribe(responseData => {
                 console.log(responseData);
                 this.pagedList = responseData;
@@ -65,7 +73,12 @@ export class TestTemplatesListComponent implements OnInit {
         this.loadTestTemplates();
     }
 
-    onFilterChange(filtersDto: Filters) {
-        console.log('Filter change event:', filtersDto);
+    onFilterChange(filters: Filters) {
+        this.filters = filters;
+        this.pagingSettings = {
+            page: 1,
+            pageSize: 3
+        }
+        this.loadTestTemplates();
     }
 }

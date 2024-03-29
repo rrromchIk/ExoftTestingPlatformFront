@@ -1,4 +1,4 @@
-<div *ngIf="!isFetching" class="items-list">
+<div class="items-list">
 
     <app-filters
         [selectFilters]="selectFilters"
@@ -10,7 +10,6 @@
         <app-test-template-item
             [testTemplate]="testTmpl"
             (deleteTestTemplateEvent)="onDeleteTestTemplate($event)"/>
-
     </div>
 
     <app-paginator *ngIf="pagedList != null"

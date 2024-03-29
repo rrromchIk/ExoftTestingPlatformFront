@@ -25,13 +25,21 @@ export class TestsListComponent implements OnInit {
     tests: TestModel[] = [];
     pagedList: PagedListModel<TestModel> | null = null;
     isFetching: boolean = false;
+
+    selectFilters: SelectFilter[] = Array.of(DIFFICULTY_FILTER, PUBLISHED_FILTER, FROM_TEMPLATE_FILTER);
+    sortCriterias: SortCriteria[] = Array.of(DURATION_SORT_CRITERIA, CREATION_DATE_SORT_CRITERIA, MODIFICATION_DATE_SORT_CRITERIA);
+
     pagingSettings: PagingSettings = {
         page: 1,
         pageSize: 3
     }
 
-    selectFilters: SelectFilter[] = Array.of(DIFFICULTY_FILTER, PUBLISHED_FILTER, FROM_TEMPLATE_FILTER);
-    sortCriterias: SortCriteria[] = Array.of(DURATION_SORT_CRITERIA, CREATION_DATE_SORT_CRITERIA, MODIFICATION_DATE_SORT_CRITERIA);
+    filters: Filters = {
+        searchTerm: '',
+        sortColumn: '',
+        sortOrder: '',
+        selectFilters: {},
+    }
 
     constructor(private testService: TestService) {
     }
@@ -42,13 +50,18 @@ export class TestsListComponent implements OnInit {
 
     loadTests(): void {
         this.isFetching = true;
-        this.testService.getAllTests(this.pagingSettings)
+        this.testService.getAllTests(this.pagingSettings, this.filters)
             .subscribe(responseData => {
-                console.log(responseData);
-                this.pagedList = responseData;
-                this.tests = responseData.items;
-                this.isFetching = false;
-            })
+                    console.log(responseData);
+                    this.pagedList = responseData;
+                    this.tests = responseData.items;
+                    this.isFetching = false;
+                },
+                error => {
+                    this.pagedList = null;
+                    this.tests = [];
+                    this.isFetching = false;
+                })
     }
 
     onDeleteTest(testId: string) {
@@ -82,7 +95,12 @@ export class TestsListComponent implements OnInit {
         this.loadTests();
     }
 
-    onFilterChange(filtersDto: Filters) {
-        console.log('Filter change event:', filtersDto);
+    onFilterChange(filters: Filters) {
+        this.filters = filters;
+        this.pagingSettings = {
+            page: 1,
+            pageSize: 3
+        }
+        this.loadTests();
     }
 }

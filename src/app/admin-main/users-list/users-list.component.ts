@@ -77,6 +77,10 @@ export class UsersListComponent {
 
     onFilterChange(filters: Filters) {
         this.filters = filters;
+        this.pagingSettings = {
+            page: 1,
+            pageSize: 3
+        }
         this.loadUsers();
     }
 }
