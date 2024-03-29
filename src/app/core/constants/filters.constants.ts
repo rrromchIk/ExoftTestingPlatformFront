@@ -37,7 +37,7 @@ export const USER_TEST_STATUS_FILTER: SelectFilter = {
 
 export const USER_ROLE_FILTER: SelectFilter = {
     filterLabel: 'Choose role',
-    filterName: 'difficulty',
+    filterName: 'role',
     options: [
         { optionLabel: 'All', optionValue: '' },
         { optionLabel: 'User', optionValue: 'user' },
