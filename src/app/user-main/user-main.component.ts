@@ -14,13 +14,20 @@ export class UserMainComponent {
     ];
     activeLink = this.navLinks[0];
 
-    constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
+    constructor(private router: Router, private activatedRoute: ActivatedRoute) {
+        this.setActiveLink()
+    }
 
     onTabChangedEvent(matTabChangeEvent: MatTabChangeEvent) {
-        // @ts-ignore
-        this.activeLink = this.navLinks.at(matTabChangeEvent.index)
-        const linkToNavigate = this.activeLink?.path;
+        this.activeLink = this.navLinks[matTabChangeEvent.index];
+        const linkToNavigate = this.activeLink.path;
+        this.router.navigate([linkToNavigate], { relativeTo: this.activatedRoute });
+    }
 
-        this.router.navigate([linkToNavigate], {relativeTo: this.activatedRoute});
+    private setActiveLink() {
+        const currentPath = this.router.url.split('/')[2];
+        const activeRoute = this.navLinks.find(link => link.path === currentPath);
+        if (activeRoute)
+            this.activeLink = activeRoute;
     }
 }
