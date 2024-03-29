@@ -36,11 +36,11 @@
                     (click)="onSortButtonClick(criteria.value)">
                 {{ criteria.label }}
                 <mat-icon iconPositionEnd *ngIf="filterForm.get('sortColumn')?.value === criteria.value &&
-                                                filterForm.get('sortDirection')?.value === 'asc'">
+                                                filterForm.get('sortOrder')?.value === 'asc'">
                     arrow_upward
                 </mat-icon>
                 <mat-icon iconPositionEnd *ngIf="filterForm.get('sortColumn')?.value === criteria.value &&
-                                                filterForm.get('sortDirection')?.value === 'desc'">
+                                                filterForm.get('sortOrder')?.value === 'desc'">
                     arrow_downward
                 </mat-icon>
             </button>

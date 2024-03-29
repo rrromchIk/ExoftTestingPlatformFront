@@ -30,7 +30,7 @@ export class FiltersComponent {
 
         formGroupConfig['searchTerm'] = [''];
         formGroupConfig['sortColumn'] = [''];
-        formGroupConfig['sortDirection'] = ['none'];
+        formGroupConfig['sortOrder'] = [''];
 
         this.filterForm = this.fb.group(formGroupConfig);
     }
@@ -40,13 +40,13 @@ export class FiltersComponent {
         let newSortDirection: string;
 
         if(sortColumn === previousSortColumn) {
-            const currentDirection = this.filterForm.get('sortDirection')?.value;
+            const currentDirection = this.filterForm.get('sortOrder')?.value;
             switch (currentDirection) {
                 case 'asc':
                     newSortDirection = 'desc';
                     break;
                 case 'desc':
-                    newSortDirection = 'none';
+                    newSortDirection = '';
                     break;
                 default:
                     newSortDirection = 'asc'
@@ -55,15 +55,15 @@ export class FiltersComponent {
             newSortDirection = 'asc';
         }
 
-        if(newSortDirection === 'none') {
+        if(newSortDirection === '') {
             this.filterForm.patchValue({
                 sortColumn: '',
-                sortDirection: newSortDirection
+                sortOrder: newSortDirection
             });
         } else {
             this.filterForm.patchValue({
                 sortColumn: sortColumn,
-                sortDirection: newSortDirection
+                sortOrder: newSortDirection
             });
         }
 
@@ -78,10 +78,10 @@ export class FiltersComponent {
         });
 
         const sortColumn = this.filterForm.get('sortColumn')?.value;
-        const sortDirection = this.filterForm.get('sortDirection')?.value;
+        const sortOrder = this.filterForm.get('sortOrder')?.value;
         const searchTerm = this.filterForm.get('searchTerm')?.value;
 
-        this.filterChange.emit({ sortColumn, sortDirection, selectFilters, searchTerm });
+        this.filterChange.emit({ sortColumn, sortOrder, selectFilters, searchTerm });
     }
 
     clearSearchInput() {
