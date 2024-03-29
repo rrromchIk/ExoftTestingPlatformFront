@@ -10,7 +10,7 @@ import {
     CREATION_DATE_SORT_CRITERIA,
     DIFFICULTY_FILTER,
     DURATION_SORT_CRITERIA,
-} from "../../core/constants";
+} from "../../core/constants/filters.constants";
 
 @Component({
   selector: 'app-tests-to-pass-list',

@@ -7,11 +7,16 @@ import {
     Validators
 } from "@angular/forms";
 import {
-    DIFFICULTY_VALUES, GENERATION_STRATEGIES_VALUES, MAX_QUESTION_POOL_NAME_LENGTH,
+    MAX_QUESTION_POOL_NAME_LENGTH,
     MAX_TEST_NAME_LENGTH,
     MAX_TEST_SUBJECT_LENGTH, MIN_NUMBER_OF_QUEST_TO_GENERATE,
     MIN_TEST_DURATION_VALUE
-} from "../../core/constants";
+} from "../../core/constants/validation.constants";
+
+import {
+    DIFFICULTY_VALUES,
+    GENERATION_STRATEGIES_VALUES
+} from "../../core/constants/view.constants";
 import {TestService} from "../../core/services/api/test.api.service";
 import {TestCreateDto} from "../../core/interfaces/test-create.dto";
 import {QuestionPoolCreateDto} from "../../core/interfaces/question-pool-create.dto";

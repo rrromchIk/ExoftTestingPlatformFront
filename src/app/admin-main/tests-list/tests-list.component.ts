@@ -13,7 +13,7 @@ import {
     FROM_TEMPLATE_FILTER,
     MODIFICATION_DATE_SORT_CRITERIA,
     PUBLISHED_FILTER
-} from "../../core/constants";
+} from "../../core/constants/filters.constants";
 
 
 @Component({

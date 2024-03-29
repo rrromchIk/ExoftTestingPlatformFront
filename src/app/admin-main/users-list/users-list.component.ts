@@ -10,7 +10,7 @@ import {
     CREATION_DATE_SORT_CRITERIA,
     EMAIL_CONFIRMED_FILTER, MODIFICATION_DATE_SORT_CRITERIA,
     USER_ROLE_FILTER
-} from "../../core/constants";
+} from "../../core/constants/filters.constants";
 
 @Component({
     selector: 'app-users-list',

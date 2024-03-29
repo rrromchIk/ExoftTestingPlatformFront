@@ -11,7 +11,7 @@ import {
     DURATION_SORT_CRITERIA,
     SCORE_SORT_CRITERIA, STARTING_TIME_SORT_CRITERIA,
     USER_TEST_STATUS_FILTER
-} from "../../core/constants";
+} from "../../core/constants/filters.constants";
 
 @Component({
   selector: 'app-started-tests-list',
