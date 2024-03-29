@@ -6,6 +6,8 @@ import {AppMaterialModule} from "../app-material/app-material.module";
 import {BackButtonDirective} from "../../directives/back-button.directive";
 import {UserAvatarUploaderComponent} from "../../components/user-avatar-uploader/user-avatar-uploader.component";
 import {DateTimeFormatPipe} from "../../pipes/date-time-format.pipe";
+import {FiltersComponent} from "../../components/filters/filters.component";
+import {ReactiveFormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -14,18 +16,21 @@ import {DateTimeFormatPipe} from "../../pipes/date-time-format.pipe";
         HeaderComponent,
         BackButtonDirective,
         UserAvatarUploaderComponent,
-        DateTimeFormatPipe
+        DateTimeFormatPipe,
+        FiltersComponent
     ],
     imports: [
         CommonModule,
-        AppMaterialModule
+        AppMaterialModule,
+        ReactiveFormsModule
     ],
     exports: [
         PaginatorComponent,
         HeaderComponent,
         BackButtonDirective,
         UserAvatarUploaderComponent,
-        DateTimeFormatPipe
+        DateTimeFormatPipe,
+        FiltersComponent
     ]
 })
 export class AppComponentsModule {

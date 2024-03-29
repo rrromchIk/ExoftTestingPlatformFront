@@ -1,0 +1,43 @@
+<mat-expansion-panel class="filters-container">
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            <mat-icon>tune</mat-icon>
+            Filters
+        </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <div class="filters" [formGroup]="filterForm">
+        <mat-form-field appearance="fill" *ngFor="let filter of selectFilters" class="filters-field">
+            <mat-label>{{ filter.filterLabel }}</mat-label>
+            <mat-select [formControlName]="filter.filterName" (selectionChange)="emitFilterChangeEvent()">
+                <mat-option *ngFor="let option of filter.options"
+                            [value]="option.optionValue">{{ option.optionLabel }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <span class="spacer"></span>
+
+        <mat-form-field class="filters-field">
+            <mat-label>Search</mat-label>
+            <input matInput type="text" placeholder="Search..." formControlName="searchTerm" (input)="emitFilterChangeEvent()">
+            <mat-icon matPrefix>search</mat-icon>
+            <button matSuffix mat-icon-button aria-label="Clear" (click)="clearSearchInput()">
+                <mat-icon>clear</mat-icon>
+            </button>
+        </mat-form-field>
+    </div>
+
+    <mat-card class="sort-bar">
+        <mat-card-content class="sort-bar-content">
+            <span>Sort by: </span>
+            <button *ngFor="let criteria of sortCriterias"
+                    mat-button
+                    class="sort-criteria"
+                    [title]="criteria.label"
+                    (click)="onSortButtonClick(criteria.value)">
+                {{ criteria.label }}
+                <mat-icon iconPositionEnd>arrow_downward</mat-icon>
+            </button>
+        </mat-card-content>
+    </mat-card>
+</mat-expansion-panel>
