@@ -5,7 +5,7 @@ import {PagingSettings} from "../../core/interfaces/paging-settings";
 import {UserService} from "../../core/services/api/user.api.service";
 import {SelectFilter} from "../../shared/interfaces/select-filter";
 import {SortCriteria} from "../../shared/interfaces/sort-criteria";
-import {FiltersDto} from "../../shared/interfaces/filters-dto";
+import {Filters} from "../../shared/interfaces/filters";
 import {
     CREATION_DATE_SORT_CRITERIA,
     EMAIL_CONFIRMED_FILTER, MODIFICATION_DATE_SORT_CRITERIA,
@@ -21,13 +21,21 @@ export class UsersListComponent {
     pagedListOfUsers: PagedListModel<UserModel> | null = null;
     users: UserModel[] = [];
     isFetching: boolean = false;
+
+    selectFilters: SelectFilter[] = Array.of(USER_ROLE_FILTER, EMAIL_CONFIRMED_FILTER);
+    sortCriterias: SortCriteria[] = Array.of(CREATION_DATE_SORT_CRITERIA, MODIFICATION_DATE_SORT_CRITERIA);
+
     pagingSettings: PagingSettings = {
         page: 1,
         pageSize: 3
     }
 
-    selectFilters: SelectFilter[] = Array.of(USER_ROLE_FILTER, EMAIL_CONFIRMED_FILTER);
-    sortCriterias: SortCriteria[] = Array.of(CREATION_DATE_SORT_CRITERIA, MODIFICATION_DATE_SORT_CRITERIA);
+    filters: Filters = {
+        searchTerm: '',
+        sortColumn: '',
+        sortOrder: '',
+        selectFilters: {},
+    }
 
     constructor(private usersService: UserService) {
     }
@@ -38,12 +46,17 @@ export class UsersListComponent {
 
     loadUsers(): void {
         this.isFetching = true;
-        this.usersService.getAllUsers(this.pagingSettings)
+        this.usersService.getAllUsers(this.pagingSettings, this.filters)
             .subscribe(responseData => {
-                this.pagedListOfUsers = responseData;
-                this.users = responseData.items;
-                this.isFetching = false;
-            })
+                    console.log("success get request");
+                    this.pagedListOfUsers = responseData;
+                    this.users = responseData.items;
+                    this.isFetching = false;
+                },
+                error => {
+                    this.pagedListOfUsers = null;
+                    this.users = [];
+                })
     }
 
     onDeleteUser(userId: string) {
@@ -62,7 +75,8 @@ export class UsersListComponent {
         this.loadUsers();
     }
 
-    onFilterChange(filtersDto: FiltersDto) {
-        console.log('Filter change event:', filtersDto);
+    onFilterChange(filters: Filters) {
+        this.filters = filters;
+        this.loadUsers();
     }
 }

@@ -6,6 +6,8 @@ import {UserModel} from "../../interfaces/user.model";
 import {PagingSettings} from "../../interfaces/paging-settings";
 import {UpdatedUserDto} from "../../interfaces/updated-user.dto";
 import {environment} from "../../../../environments/environment";
+import {Filters} from "../../../shared/interfaces/filters";
+import {HttpParamsHelper} from "../../helpers/http-params.helper";
 
 @Injectable({
     providedIn: 'root'
@@ -13,15 +15,15 @@ import {environment} from "../../../../environments/environment";
 export class UserService {
     private usersEndpoint = `${environment.apiUrl}/api/users`;
 
-    //private filters = "?page=1&pageSize=9&sortColumn=name&sortOrder=asc"
-
     constructor(private http: HttpClient) {
     }
 
-    getAllUsers(pagingSettings: PagingSettings): Observable<PagedListModel<UserModel>> {
+    getAllUsers(pagingSettings: PagingSettings, filters: Filters): Observable<PagedListModel<UserModel>> {
         let queryParams = new HttpParams();
-        queryParams = queryParams.append("page", pagingSettings.page);
-        queryParams = queryParams.append("pageSize", pagingSettings.pageSize);
+        queryParams = HttpParamsHelper.applyPaging(queryParams, pagingSettings);
+        queryParams = HttpParamsHelper.applyFilters(queryParams, filters);
+
+        console.log(queryParams)
 
         return this.http.get<PagedListModel<UserModel>>(
             this.usersEndpoint,
