@@ -5,7 +5,7 @@ import {TestTemplateModel} from "../../core/interfaces/test-template.model";
 import {TestTmplService} from "../../core/services/api/test-tmpl.api.service";
 import {SelectFilter} from "../../shared/interfaces/select-filter";
 import {SortCriteria} from "../../shared/interfaces/sort-criteria";
-import {FiltersDto} from "../../shared/interfaces/filters-dto";
+import {Filters} from "../../shared/interfaces/filters";
 import {
     CREATION_DATE_SORT_CRITERIA,
     DIFFICULTY_FILTER,
@@ -65,7 +65,7 @@ export class TestTemplatesListComponent implements OnInit {
         this.loadTestTemplates();
     }
 
-    onFilterChange(filtersDto: FiltersDto) {
+    onFilterChange(filtersDto: Filters) {
         console.log('Filter change event:', filtersDto);
     }
 }

@@ -5,7 +5,7 @@ import {TestToPassModel} from "../../core/interfaces/test-to-pass.model";
 import {UserTestService} from "../../core/services/api/user-test.api.service";
 import {SelectFilter} from "../../shared/interfaces/select-filter";
 import {SortCriteria} from "../../shared/interfaces/sort-criteria";
-import {FiltersDto} from "../../shared/interfaces/filters-dto";
+import {Filters} from "../../shared/interfaces/filters";
 import {
     CREATION_DATE_SORT_CRITERIA,
     DIFFICULTY_FILTER,
@@ -56,7 +56,7 @@ export class TestsToPassListComponent implements OnInit {
         this.loadTestsToPass();
     }
 
-    onFilterChange(filtersDto: FiltersDto) {
+    onFilterChange(filtersDto: Filters) {
         console.log('Filter change event:', filtersDto);
     }
 }

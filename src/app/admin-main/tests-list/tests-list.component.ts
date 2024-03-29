@@ -5,7 +5,7 @@ import {PagingSettings} from "../../core/interfaces/paging-settings";
 import {TestService} from "../../core/services/api/test.api.service";
 import {SelectFilter} from "../../shared/interfaces/select-filter";
 import {SortCriteria} from "../../shared/interfaces/sort-criteria";
-import {FiltersDto} from "../../shared/interfaces/filters-dto";
+import {Filters} from "../../shared/interfaces/filters";
 import {
     CREATION_DATE_SORT_CRITERIA,
     DIFFICULTY_FILTER,
@@ -82,7 +82,7 @@ export class TestsListComponent implements OnInit {
         this.loadTests();
     }
 
-    onFilterChange(filtersDto: FiltersDto) {
+    onFilterChange(filtersDto: Filters) {
         console.log('Filter change event:', filtersDto);
     }
 }

@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {SortCriteria} from "../../interfaces/sort-criteria";
 import {SelectFilter} from "../../interfaces/select-filter";
-import {FiltersDto} from "../../interfaces/filters-dto";
+import {Filters} from "../../interfaces/filters";
 import {FormBuilder, FormGroup} from "@angular/forms";
 
 @Component({
@@ -12,7 +12,7 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 export class FiltersComponent {
     @Input() sortCriterias: SortCriteria[] = [];
     @Input() selectFilters: SelectFilter[] = [];
-    @Output() filterChange: EventEmitter<FiltersDto> = new EventEmitter<FiltersDto>();
+    @Output() filterChange: EventEmitter<Filters> = new EventEmitter<Filters>();
     filterForm!: FormGroup;
 
     constructor(private fb: FormBuilder) {}

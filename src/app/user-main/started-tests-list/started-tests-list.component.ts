@@ -5,7 +5,7 @@ import {UserTestService} from "../../core/services/api/user-test.api.service";
 import {StartedTestModel} from "../../core/interfaces/started-test.model";
 import {SelectFilter} from "../../shared/interfaces/select-filter";
 import {SortCriteria} from "../../shared/interfaces/sort-criteria";
-import {FiltersDto} from "../../shared/interfaces/filters-dto";
+import {Filters} from "../../shared/interfaces/filters";
 import {
     DIFFICULTY_FILTER,
     DURATION_SORT_CRITERIA,
@@ -57,7 +57,7 @@ export class StartedTestsListComponent implements OnInit {
         this.loadStartedTests();
     }
 
-    onFilterChange(filtersDto: FiltersDto) {
+    onFilterChange(filtersDto: Filters) {
         console.log('Filter change event:', filtersDto);
     }
 }
