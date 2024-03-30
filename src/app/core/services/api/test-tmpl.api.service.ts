@@ -5,7 +5,7 @@ import {Observable} from "rxjs";
 import {PagedListModel} from "../../interfaces/paged-list.model";
 import {TestTemplateModel} from "../../interfaces/test-template.model";
 import {environment} from "../../../../environments/environment";
-import {Filters} from "../../../shared/interfaces/filters";
+import {Filters} from "../../interfaces/filters";
 import {HttpParamsHelper} from "../../helpers/http-params.helper";
 
 @Injectable({

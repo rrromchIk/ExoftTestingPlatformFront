@@ -3,9 +3,9 @@ import {PagedListModel} from "../../core/interfaces/paged-list.model";
 import {PagingSettings} from "../../core/interfaces/paging-settings";
 import {UserTestService} from "../../core/services/api/user-test.api.service";
 import {StartedTestModel} from "../../core/interfaces/started-test.model";
-import {SelectFilter} from "../../shared/interfaces/select-filter";
-import {SortCriteria} from "../../shared/interfaces/sort-criteria";
-import {Filters} from "../../shared/interfaces/filters";
+import {SelectFilter} from "../../core/interfaces/select-filter";
+import {SortCriteria} from "../../core/interfaces/sort-criteria";
+import {Filters} from "../../core/interfaces/filters";
 import {
     DIFFICULTY_FILTER,
     SCORE_SORT_CRITERIA, STARTING_TIME_SORT_CRITERIA,

@@ -6,7 +6,7 @@ import {TestToPassModel} from "../../interfaces/test-to-pass.model";
 import {StartedTestModel} from "../../interfaces/started-test.model";
 import {environment} from "../../../../environments/environment";
 import {HttpParamsHelper} from "../../helpers/http-params.helper";
-import {Filters} from "../../../shared/interfaces/filters";
+import {Filters} from "../../interfaces/filters";
 
 @Injectable({
     providedIn: 'root'

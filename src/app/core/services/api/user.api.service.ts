@@ -6,7 +6,7 @@ import {UserModel} from "../../interfaces/user.model";
 import {PagingSettings} from "../../interfaces/paging-settings";
 import {UpdatedUserDto} from "../../interfaces/updated-user.dto";
 import {environment} from "../../../../environments/environment";
-import {Filters} from "../../../shared/interfaces/filters";
+import {Filters} from "../../interfaces/filters";
 import {HttpParamsHelper} from "../../helpers/http-params.helper";
 
 @Injectable({

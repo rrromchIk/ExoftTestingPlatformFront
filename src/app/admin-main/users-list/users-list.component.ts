@@ -3,9 +3,9 @@ import {PagedListModel} from "../../core/interfaces/paged-list.model";
 import {UserModel} from "../../core/interfaces/user.model";
 import {PagingSettings} from "../../core/interfaces/paging-settings";
 import {UserService} from "../../core/services/api/user.api.service";
-import {SelectFilter} from "../../shared/interfaces/select-filter";
-import {SortCriteria} from "../../shared/interfaces/sort-criteria";
-import {Filters} from "../../shared/interfaces/filters";
+import {SelectFilter} from "../../core/interfaces/select-filter";
+import {SortCriteria} from "../../core/interfaces/sort-criteria";
+import {Filters} from "../../core/interfaces/filters";
 import {
     CREATION_DATE_SORT_CRITERIA,
     EMAIL_CONFIRMED_FILTER, MODIFICATION_DATE_SORT_CRITERIA,

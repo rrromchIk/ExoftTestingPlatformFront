@@ -1,5 +1,5 @@
-import {SelectFilter} from "../../shared/interfaces/select-filter";
-import {SortCriteria} from "../../shared/interfaces/sort-criteria";
+import {SelectFilter} from "../interfaces/select-filter";
+import {SortCriteria} from "../interfaces/sort-criteria";
 
 
 
