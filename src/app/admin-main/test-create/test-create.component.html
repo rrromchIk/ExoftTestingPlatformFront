@@ -81,8 +81,7 @@
                                     <input matInput placeholder="Question pool name" formControlName="questionPoolName">
 
                                     <mat-error *ngIf="control.get('questionPoolName')?.hasError('maxlength') &&
-                                        !control.get('questionPoolName')?.hasError('required') &&
-                                        control.get('questionPoolName')?.touched">
+                                        !control.get('questionPoolName')?.hasError('required')">
                                         Can not exceed <strong>{{MAX_TEST_NAME_LENGTH}} characters</strong>
                                     </mat-error>
 
