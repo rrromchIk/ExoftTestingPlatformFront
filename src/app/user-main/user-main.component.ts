@@ -24,7 +24,7 @@ export class UserMainComponent {
         this.router.navigate([linkToNavigate], { relativeTo: this.activatedRoute });
     }
 
-    private setActiveLink() {
+    setActiveLink() {
         const currentPath = this.router.url.split('/')[2];
         const activeRoute = this.navLinks.find(link => link.path === currentPath);
         if (activeRoute)
