@@ -54,26 +54,25 @@ export class TestCreateComponent {
         return this.createTestForm.get(name);
     }
 
-    get questionPools() {
+    get questionPoolsFormArray() {
         return this.createTestForm.get('questionPools') as FormArray;
     }
 
-    addQuestionPool() {
-        this.questionPools.push(this.fb.group({
+    addQuestionPoolFormGroup() {
+        this.questionPoolsFormArray.push(this.fb.group({
             questionPoolName: ['', [Validators.required, Validators.maxLength(MAX_QUESTION_POOL_NAME_LENGTH)]],
             numOfQuestionsToBeGenerated: ['', [Validators.required, Validators.min(MIN_NUMBER_OF_QUEST_TO_GENERATE)]],
             generationStrategy: ['', [Validators.required]]
         }));
     }
 
-    removeQuestionPool(index: number) {
-        this.questionPools.removeAt(index);
+    removeQuestionPoolFormGroup(index: number) {
+        this.questionPoolsFormArray.removeAt(index);
     }
-
 
     onSubmit() {
         if (this.createTestForm.valid) {
-            const questionPools: QuestionPoolCreateDto[] = this.questionPools.controls.map(
+            const questionPools: QuestionPoolCreateDto[] = this.questionPoolsFormArray.controls.map(
                 control => {
                     return {
                         name: control.get('questionPoolName')?.value,
