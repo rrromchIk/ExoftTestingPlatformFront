@@ -13,14 +13,14 @@
 
     <mat-card-footer class="list-item-card-footer">
         <mat-card-actions [ngSwitch]="testToPass.userTestStatus" class="list-item-card-actions">
-            <button *ngSwitchCase="'NotStarted'" mat-raised-button class="green-button"
+            <button *ngSwitchCase="UserTestStatus.NotStarted" mat-raised-button class="green-button"
                     (click)="onPassTest(testToPass)">
                 Start
             </button>
-            <button *ngSwitchCase="'InProcess'" mat-raised-button color="primary" (click)="onPassTest(testToPass)">
+            <button *ngSwitchCase="UserTestStatus.InProcess" mat-raised-button color="primary" (click)="onPassTest(testToPass)">
                 Continue
             </button>
-            <button *ngSwitchCase="'Completed'" mat-raised-button disabled="true">
+            <button *ngSwitchCase="UserTestStatus.Completed" mat-raised-button disabled="true">
                 Completed
             </button>
         </mat-card-actions>
