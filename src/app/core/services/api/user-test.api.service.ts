@@ -7,6 +7,7 @@ import {StartedTestModel} from "../../interfaces/started-test.model";
 import {environment} from "../../../../environments/environment";
 import {HttpParamsHelper} from "../../helpers/http-params.helper";
 import {Filters} from "../../interfaces/filters";
+import {UserTestModel} from "../../interfaces/user-test.model";
 
 @Injectable({
     providedIn: 'root'
@@ -43,5 +44,13 @@ export class UserTestService {
                 params: queryParams
             }
         );
+    }
+
+    createUserTest(userId: string, testId: string) {
+        return this.http.post(this.apiUrl + `/api/users/${userId}/tests/${testId}`, null);
+    }
+
+    getUserTest(userId: string, testId: string) {
+        return this.http.get<UserTestModel>(this.apiUrl + `/api/users/${userId}/tests/${testId}`)
     }
 }
