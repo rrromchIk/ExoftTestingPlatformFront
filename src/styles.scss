@@ -62,6 +62,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
             }
         }
     }
+
+    p {
+        margin: 0 0 5px 0 !important;
+    }
 }
 
 .form-card {
@@ -122,9 +126,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     }
 }
 
-p {
-    margin: 0 0 5px 0 !important;
-}
+
 
 .link {
     color: #007bff;
