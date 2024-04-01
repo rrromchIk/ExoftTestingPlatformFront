@@ -4,6 +4,7 @@ import {QuestionsPoolDetailsModel} from "../interfaces/user-question/questions-p
 import {UserQuestionService} from "./api/user-question.api.service";
 import {map, Observable} from "rxjs";
 import {UserTestService} from "./api/user-test.api.service";
+import {GenerationStrategy} from "../interfaces/questions-pool/generation-strategy.enum";
 
 @Injectable({
     providedIn: 'root'
@@ -38,7 +39,7 @@ export class PassTestService {
         let concatenatedQuestions: UserQuestionModel[] = [];
 
         for (const pool of questionsPools) {
-            if (pool.generationStrategy === 'Randomly') {
+            if (pool.generationStrategy === GenerationStrategy.Randomly) {
                 this.shuffleArray(pool.questionsId);
             }
 
