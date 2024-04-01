@@ -9,6 +9,7 @@ import { StartedTestsListComponent } from './started-tests-list/started-tests-li
 import { StartedTestItemComponent } from './started-tests-list/started-test-item/started-test-item.component';
 import {UserMainRoutingModule} from "./user-main-routing.module";
 import {ReactiveFormsModule} from "@angular/forms";
+import {TestCompletionPipe} from "./pipes/test-completion-status.pipe";
 import {UserTestStatusPipe} from "./pipes/user-test-status.pipe";
 
 
@@ -19,6 +20,7 @@ import {UserTestStatusPipe} from "./pipes/user-test-status.pipe";
         TestToPassItemComponent,
         StartedTestsListComponent,
         StartedTestItemComponent,
+        TestCompletionPipe,
         UserTestStatusPipe
     ],
     imports: [

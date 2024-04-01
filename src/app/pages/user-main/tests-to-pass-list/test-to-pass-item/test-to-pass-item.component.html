@@ -8,7 +8,7 @@
         <p><strong>Subject:</strong> {{ testToPass.subject }}</p>
         <p><strong>Difficulty:</strong> {{ testToPass.difficulty }}</p>
         <p><strong>Duration:</strong> {{ testToPass.duration }} min</p>
-        <p><strong>Status:</strong> {{ testToPass.userTestStatus }}</p>
+        <p><strong>Status:</strong> {{ testToPass.userTestStatus | userTestStatusFormatter}}</p>
     </mat-card-content>
 
     <mat-card-footer class="list-item-card-footer">

@@ -2,14 +2,17 @@ import {Pipe, PipeTransform} from "@angular/core";
 import {UserTestStatus} from "../../../core/interfaces/user-test/user-test-status.enum";
 
 @Pipe({
-    name: 'testStatusFormatter'
+    name: 'userTestStatusFormatter'
 })
 export class UserTestStatusPipe implements PipeTransform {
-    transform(value: any, status: string): any {
-        if (status === UserTestStatus.Completed) {
-            return value;
+    transform(value: any): any {
+        console.log(value);
+        if (value === UserTestStatus.Completed) {
+            return 'Completed';
+        } else if(value === UserTestStatus.InProcess) {
+            return 'In process'
         } else {
-            return 'Not completed';
+            return 'Not started';
         }
     }
 }

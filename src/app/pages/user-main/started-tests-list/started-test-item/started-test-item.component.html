@@ -10,11 +10,11 @@
         <p><strong>Starting time:</strong> {{ startedTest.startingTime | dateTimeFormat }}</p>
         <p>
             <strong>Ending time:</strong>
-            {{ startedTest.endingTime | dateTimeFormat | testStatusFormatter: startedTest.userTestStatus }}
+            {{ startedTest.endingTime | dateTimeFormat | testCompletionFormatter: startedTest.userTestStatus }}
         </p>
         <p>
             <strong>Result:</strong>
-            {{ (startedTest.userScore + '/' +startedTest.totalScore)| testStatusFormatter: startedTest.userTestStatus}}
+            {{ (startedTest.userScore + '/' +startedTest.totalScore)| testCompletionFormatter: startedTest.userTestStatus}}
         </p>
     </mat-card-content>
 
