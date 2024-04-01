@@ -4,6 +4,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../../../core/services/api/user.api.service";
 import {environment} from "../../../../environments/environment";
 import {UpdatedUserDto} from "../../../core/interfaces/user/updated-user.dto";
+import {FIRST_AND_LAST_NAMES_PATTERN} from "../../../core/constants/validation.constants";
 
 @Component({
     selector: 'app-edit-user-item',
@@ -45,8 +46,8 @@ export class EditUserItemComponent implements OnInit {
 
     ngOnInit() {
         this.editUserForm = this.fb.group({
-            firstName: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9\\s]+$')]],
-            lastName: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9\\s]+$')]],
+            firstName: ['', [Validators.required, Validators.pattern(FIRST_AND_LAST_NAMES_PATTERN)]],
+            lastName: ['', [Validators.required, Validators.pattern(FIRST_AND_LAST_NAMES_PATTERN)]],
             email: [''],
             emailConfirmed: [],
             role: ['']
