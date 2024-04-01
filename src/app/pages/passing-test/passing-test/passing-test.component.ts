@@ -1,11 +1,11 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {UserQuestionModel} from "../../../core/interfaces/user-question.model";
-import {QuestionModel} from "../../../core/interfaces/question.model";
+import {UserQuestionModel} from "../../../core/interfaces/user-question/user-question.model";
+import {QuestionModel} from "../../../core/interfaces/question/question.model";
 import {PassTestService} from "../../../core/services/pass-test.service";
 import {QuestionService} from "../../../core/services/api/question.api.service";
 import {UserTestService} from "../../../core/services/api/user-test.api.service";
-import {UserTestModel} from "../../../core/interfaces/user-test.model";
-import {TestModel} from "../../../core/interfaces/test.model";
+import {UserTestModel} from "../../../core/interfaces/user-test/user-test.model";
+import {TestModel} from "../../../core/interfaces/test/test.model";
 import {TestService} from "../../../core/services/api/test.api.service";
 
 @Component({

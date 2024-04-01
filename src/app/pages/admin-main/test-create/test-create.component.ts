@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {UserModel} from "../../../core/interfaces/user.model";
+import {UserModel} from "../../../core/interfaces/user/user.model";
 import {
     FormArray,
     FormBuilder,
@@ -18,8 +18,8 @@ import {
     GENERATION_STRATEGIES_VALUES
 } from "../../../core/constants/view.constants";
 import {TestService} from "../../../core/services/api/test.api.service";
-import {TestCreateDto} from "../../../core/interfaces/test-create.dto";
-import {QuestionPoolCreateDto} from "../../../core/interfaces/question-pool-create.dto";
+import {TestCreateDto} from "../../../core/interfaces/test/test-create.dto";
+import {QuestionPoolCreateDto} from "../../../core/interfaces/questions-pool/question-pool-create.dto";
 
 @Component({
     selector: 'app-test-create',

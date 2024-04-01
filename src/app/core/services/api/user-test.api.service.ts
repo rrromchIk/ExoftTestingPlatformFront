@@ -2,12 +2,12 @@ import {Injectable} from "@angular/core";
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {PagedListModel} from "../../interfaces/paged-list.model";
 import {PagingSettings} from "../../interfaces/paging-settings";
-import {TestToPassModel} from "../../interfaces/test-to-pass.model";
-import {StartedTestModel} from "../../interfaces/started-test.model";
+import {TestToPassModel} from "../../interfaces/user-test/test-to-pass.model";
+import {StartedTestModel} from "../../interfaces/user-test/started-test.model";
 import {environment} from "../../../../environments/environment";
 import {HttpParamsHelper} from "../../helpers/http-params.helper";
-import {Filters} from "../../interfaces/filters";
-import {UserTestModel} from "../../interfaces/user-test.model";
+import {Filters} from "../../interfaces/filters/filters";
+import {UserTestModel} from "../../interfaces/user-test/user-test.model";
 
 @Injectable({
     providedIn: 'root'

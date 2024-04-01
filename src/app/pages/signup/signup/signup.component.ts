@@ -3,7 +3,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../../../core/services/api/auth.api.service";
 import {Router} from "@angular/router";
 import {passwordsMatchValidator} from "../../../core/helpers/form-validators";
-import {UserSignupDto} from "../../../core/interfaces/user-signup.dto";
+import {UserSignupDto} from "../../../core/interfaces/user/user-signup.dto";
 
 
 @Component({

@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
-import {UserQuestionModel} from "../interfaces/user-question.model";
-import {QuestionsPoolDetailsModel} from "../interfaces/questions-pool-details.model";
+import {UserQuestionModel} from "../interfaces/user-question/user-question.model";
+import {QuestionsPoolDetailsModel} from "../interfaces/user-question/questions-pool-details.model";
 import {UserQuestionService} from "./api/user-question.api.service";
 import {map, Observable} from "rxjs";
 import {UserTestService} from "./api/user-test.api.service";

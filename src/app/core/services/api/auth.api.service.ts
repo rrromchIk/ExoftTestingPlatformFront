@@ -1,11 +1,11 @@
 import {Injectable} from "@angular/core";
 import {HttpClient, HttpResponse, HttpStatusCode} from "@angular/common/http";
-import {TokenModel} from "../../interfaces/token.model";
+import {TokenModel} from "../../interfaces/auth/token.model";
 import {catchError, throwError} from "rxjs";
-import {UserLoginDto} from "../../interfaces/user-login.dto";
-import {UserSignupDto} from "../../interfaces/user-signup.dto";
-import {UserModel} from "../../interfaces/user.model";
-import {ResetPasswordDto} from "../../interfaces/reset-password.dto";
+import {UserLoginDto} from "../../interfaces/user/user-login.dto";
+import {UserSignupDto} from "../../interfaces/user/user-signup.dto";
+import {UserModel} from "../../interfaces/user/user.model";
+import {ResetPasswordDto} from "../../interfaces/auth/reset-password.dto";
 import {environment} from "../../../../environments/environment";
 
 @Injectable({

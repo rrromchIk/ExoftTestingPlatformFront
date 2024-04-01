@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {StartedTestModel} from "../../../../core/interfaces/started-test.model";
+import {StartedTestModel} from "../../../../core/interfaces/user-test/started-test.model";
 
 @Component({
   selector: 'app-started-test-item',

@@ -1,4 +1,4 @@
-import {AnswerModel} from "./answer.model";
+import {AnswerModel} from "../answer/answer.model";
 
 export interface QuestionModel  {
     questionsPoolId: string;

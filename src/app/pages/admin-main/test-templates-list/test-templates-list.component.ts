@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {PagedListModel} from "../../../core/interfaces/paged-list.model";
 import {PagingSettings} from "../../../core/interfaces/paging-settings";
-import {TestTemplateModel} from "../../../core/interfaces/test-template.model";
+import {TestTemplateModel} from "../../../core/interfaces/test-template/test-template.model";
 import {TestTmplService} from "../../../core/services/api/test-tmpl.api.service";
-import {SelectFilter} from "../../../core/interfaces/select-filter";
-import {SortCriteria} from "../../../core/interfaces/sort-criteria";
-import {Filters} from "../../../core/interfaces/filters";
+import {SelectFilter} from "../../../core/interfaces/filters/select-filter";
+import {SortCriteria} from "../../../core/interfaces/filters/sort-criteria";
+import {Filters} from "../../../core/interfaces/filters/filters";
 import {
     CREATION_DATE_SORT_CRITERIA,
     DIFFICULTY_FILTER,

@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
-import {TestResultModel} from "../../../core/interfaces/test-result.model";
-import {QuestionResultModel} from "../../../core/interfaces/question-result.model";
+import {TestResultModel} from "../../../core/interfaces/test-result/test-result.model";
+import {QuestionResultModel} from "../../../core/interfaces/test-result/question-result.model";
 
 @Component({
   selector: 'app-test-result',

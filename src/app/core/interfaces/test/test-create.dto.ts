@@ -1,4 +1,4 @@
-import {QuestionPoolCreateDto} from "./question-pool-create.dto";
+import {QuestionPoolCreateDto} from "../questions-pool/question-pool-create.dto";
 
 export interface TestCreateDto {
     name: string;

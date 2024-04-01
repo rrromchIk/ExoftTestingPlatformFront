@@ -1,4 +1,4 @@
-import {TestModel} from "./test.model";
+import {TestModel} from "../test/test.model";
 
 export interface StartedTestModel {
 

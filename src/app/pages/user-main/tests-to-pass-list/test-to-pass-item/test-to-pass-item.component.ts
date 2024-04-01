@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {TestToPassModel} from "../../../../core/interfaces/test-to-pass.model";
+import {TestToPassModel} from "../../../../core/interfaces/user-test/test-to-pass.model";
 
 @Component({
   selector: 'app-test-to-pass-item',

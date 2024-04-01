@@ -3,11 +3,11 @@ import {HttpClient, HttpParams, HttpResponse} from '@angular/common/http';
 import {Observable, of} from 'rxjs';
 import {PagedListModel} from "../../interfaces/paged-list.model";
 import {PagingSettings} from "../../interfaces/paging-settings";
-import {TestModel} from "../../interfaces/test.model";
+import {TestModel} from "../../interfaces/test/test.model";
 import {environment} from "../../../../environments/environment";
-import {TestCreateDto} from "../../interfaces/test-create.dto";
+import {TestCreateDto} from "../../interfaces/test/test-create.dto";
 import {HttpParamsHelper} from "../../helpers/http-params.helper";
-import {Filters} from "../../interfaces/filters";
+import {Filters} from "../../interfaces/filters/filters";
 
 @Injectable({
     providedIn: 'root'

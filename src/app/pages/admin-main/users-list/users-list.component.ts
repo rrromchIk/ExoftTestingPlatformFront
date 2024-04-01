@@ -1,11 +1,11 @@
 import {Component} from '@angular/core';
 import {PagedListModel} from "../../../core/interfaces/paged-list.model";
-import {UserModel} from "../../../core/interfaces/user.model";
+import {UserModel} from "../../../core/interfaces/user/user.model";
 import {PagingSettings} from "../../../core/interfaces/paging-settings";
 import {UserService} from "../../../core/services/api/user.api.service";
-import {SelectFilter} from "../../../core/interfaces/select-filter";
-import {SortCriteria} from "../../../core/interfaces/sort-criteria";
-import {Filters} from "../../../core/interfaces/filters";
+import {SelectFilter} from "../../../core/interfaces/filters/select-filter";
+import {SortCriteria} from "../../../core/interfaces/filters/sort-criteria";
+import {Filters} from "../../../core/interfaces/filters/filters";
 import {
     CREATION_DATE_SORT_CRITERIA,
     EMAIL_CONFIRMED_FILTER, MODIFICATION_DATE_SORT_CRITERIA,

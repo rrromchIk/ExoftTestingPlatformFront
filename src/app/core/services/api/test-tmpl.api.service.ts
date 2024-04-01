@@ -3,9 +3,9 @@ import {HttpClient, HttpParams} from "@angular/common/http";
 import {PagingSettings} from "../../interfaces/paging-settings";
 import {Observable} from "rxjs";
 import {PagedListModel} from "../../interfaces/paged-list.model";
-import {TestTemplateModel} from "../../interfaces/test-template.model";
+import {TestTemplateModel} from "../../interfaces/test-template/test-template.model";
 import {environment} from "../../../../environments/environment";
-import {Filters} from "../../interfaces/filters";
+import {Filters} from "../../interfaces/filters/filters";
 import {HttpParamsHelper} from "../../helpers/http-params.helper";
 
 @Injectable({

@@ -1,6 +1,6 @@
 import { HttpParams } from '@angular/common/http';
 import {PagingSettings} from "../interfaces/paging-settings";
-import {Filters} from "../interfaces/filters";
+import {Filters} from "../interfaces/filters/filters";
 
 export class HttpParamsHelper {
     static applyPaging(params: HttpParams, pagingSettings: PagingSettings): HttpParams {

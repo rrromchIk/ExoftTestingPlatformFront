@@ -1,8 +1,8 @@
 import {Injectable} from "@angular/core";
-import {QuestionsPoolDetailsModel} from "../../interfaces/questions-pool-details.model";
+import {QuestionsPoolDetailsModel} from "../../interfaces/user-question/questions-pool-details.model";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../../environments/environment";
-import {UserQuestionModel} from "../../interfaces/user-question.model";
+import {UserQuestionModel} from "../../interfaces/user-question/user-question.model";
 
 @Injectable({
     providedIn: 'root'

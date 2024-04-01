@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {SortCriteria} from "../../../core/interfaces/sort-criteria";
-import {SelectFilter} from "../../../core/interfaces/select-filter";
-import {Filters} from "../../../core/interfaces/filters";
+import {SortCriteria} from "../../../core/interfaces/filters/sort-criteria";
+import {SelectFilter} from "../../../core/interfaces/filters/select-filter";
+import {Filters} from "../../../core/interfaces/filters/filters";
 import {FormBuilder, FormGroup} from "@angular/forms";
 
 @Component({

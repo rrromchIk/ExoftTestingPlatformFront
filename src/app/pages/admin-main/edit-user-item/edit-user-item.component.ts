@@ -1,9 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {UserModel} from "../../../core/interfaces/user.model";
+import {UserModel} from "../../../core/interfaces/user/user.model";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../../../core/services/api/user.api.service";
 import {environment} from "../../../../environments/environment";
-import {UpdatedUserDto} from "../../../core/interfaces/updated-user.dto";
+import {UpdatedUserDto} from "../../../core/interfaces/user/updated-user.dto";
 
 @Component({
     selector: 'app-edit-user-item',
