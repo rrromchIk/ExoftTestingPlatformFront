@@ -9,6 +9,7 @@ import { StartedTestsListComponent } from './started-tests-list/started-tests-li
 import { StartedTestItemComponent } from './started-tests-list/started-test-item/started-test-item.component';
 import {UserMainRoutingModule} from "./user-main-routing.module";
 import {ReactiveFormsModule} from "@angular/forms";
+import {UserTestStatusPipe} from "./pipes/user-test-status.pipe";
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import {ReactiveFormsModule} from "@angular/forms";
         TestToPassItemComponent,
         StartedTestsListComponent,
         StartedTestItemComponent,
+        UserTestStatusPipe
     ],
     imports: [
         CommonModule,

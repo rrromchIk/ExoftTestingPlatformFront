@@ -8,12 +8,14 @@
         <p><strong>Subject:</strong> {{ startedTest.test.subject }}</p>
         <p><strong>Difficulty:</strong> {{ startedTest.test.difficulty }}</p>
         <p><strong>Starting time:</strong> {{ startedTest.startingTime | dateTimeFormat }}</p>
-        <p><strong>Ending
-            time:</strong> {{ startedTest.userTestStatus == 'Completed'
-            ? (startedTest.endingTime | dateTimeFormat )
-                : 'Not completed' }}
+        <p>
+            <strong>Ending time:</strong>
+            {{ startedTest.endingTime | dateTimeFormat | testStatusFormatter: startedTest.userTestStatus }}
         </p>
-        <p><strong>Result:</strong> {{ startedTest.userScore }}/{{startedTest.totalScore}}</p>
+        <p>
+            <strong>Result:</strong>
+            {{ (startedTest.userScore + '/' +startedTest.totalScore)| testStatusFormatter: startedTest.userTestStatus}}
+        </p>
     </mat-card-content>
 
     <mat-card-footer *ngIf="startedTest.userTestStatus == 'Completed'">
