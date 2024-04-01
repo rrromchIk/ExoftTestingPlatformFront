@@ -1,0 +1,13 @@
+.timer-container {
+    display: flex;
+    font-size: 18px;
+    color: black;
+    border: 1px solid gray;
+    border-radius: 3px;
+    padding: 5px 10px;
+}
+
+.timer-warn {
+    color: red;
+    border-color: red;
+}
