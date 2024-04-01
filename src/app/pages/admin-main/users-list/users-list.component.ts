@@ -11,6 +11,9 @@ import {
     EMAIL_CONFIRMED_FILTER, MODIFICATION_DATE_SORT_CRITERIA,
     USER_ROLE_FILTER
 } from "../../../core/constants/filters.constants";
+import {DialogDataDto} from "../../../core/interfaces/dialog/dialog-data.dto";
+import {ConfirmationDialogComponent} from "../../../shared/components/dialog/confirmation-dialog.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
     selector: 'app-users-list',
@@ -37,7 +40,8 @@ export class UsersListComponent {
         selectFilters: {},
     }
 
-    constructor(private usersService: UserService) {
+    constructor(private usersService: UserService,
+                private dialog: MatDialog) {
     }
 
     ngOnInit(): void {
@@ -60,14 +64,25 @@ export class UsersListComponent {
     }
 
     onDeleteUser(userId: string) {
-        window.alert("Are u sure u want to delete?")
-        this.usersService.deleteUser(userId)
-            .subscribe(response => {
-                this.users = this.users.filter(user => user.id !== userId);
-                console.log(response);
-            }, error => {
-                console.log(error)
-            })
+        const dialogData: DialogDataDto = {
+            title: 'Confirm Action',
+            content: 'Are you sure you want to delete user?',
+        };
+        const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+            data: dialogData
+        });
+
+        dialogRef.afterClosed().subscribe((result) => {
+            if (result) {
+                this.usersService.deleteUser(userId)
+                    .subscribe(response => {
+                        this.users = this.users.filter(user => user.id !== userId);
+                        console.log(response);
+                    }, error => {
+                        console.log(error)
+                    })
+            }
+        });
     }
 
     onPageChangedEvent(pagingSetting: PagingSettings) {

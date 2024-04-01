@@ -12,6 +12,9 @@ import {
     DURATION_SORT_CRITERIA,
     MODIFICATION_DATE_SORT_CRITERIA
 } from "../../../core/constants/filters.constants";
+import {MatDialog} from "@angular/material/dialog";
+import {DialogDataDto} from "../../../core/interfaces/dialog/dialog-data.dto";
+import {ConfirmationDialogComponent} from "../../../shared/components/dialog/confirmation-dialog.component";
 
 @Component({
   selector: 'app-test-templates-list',
@@ -38,7 +41,8 @@ export class TestTemplatesListComponent implements OnInit {
         selectFilters: {},
     }
 
-    constructor(private testTmplService: TestTmplService) {
+    constructor(private testTmplService: TestTmplService,
+                private dialog: MatDialog) {
     }
 
     ngOnInit(): void {
@@ -57,14 +61,24 @@ export class TestTemplatesListComponent implements OnInit {
     }
 
     onDeleteTestTemplate(testTemplateId: string) {
-        window.alert("Are u sure u want to delete?")
-        this.testTmplService.deleteTestTemplate(testTemplateId)
-            .subscribe(response => {
-                this.testTemplates = this.testTemplates.filter(test => test.id !== testTemplateId);
-                console.log(response);
-            }, error => {
-                console.log(error)
-            })
+        const dialogData: DialogDataDto = {
+            title: 'Confirm Action',
+            content: 'Are you sure you want to delete test template?',
+        };
+        const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+            data: dialogData
+        });
+        dialogRef.afterClosed().subscribe((result) => {
+            if (result) {
+                this.testTmplService.deleteTestTemplate(testTemplateId)
+                    .subscribe(response => {
+                        this.testTemplates = this.testTemplates.filter(test => test.id !== testTemplateId);
+                        console.log(response);
+                    }, error => {
+                        console.log(error)
+                    })
+            }
+        });
     }
 
 

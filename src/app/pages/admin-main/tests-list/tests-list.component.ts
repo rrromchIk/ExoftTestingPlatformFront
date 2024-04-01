@@ -14,6 +14,9 @@ import {
     MODIFICATION_DATE_SORT_CRITERIA,
     PUBLISHED_FILTER
 } from "../../../core/constants/filters.constants";
+import {DialogDataDto} from "../../../core/interfaces/dialog/dialog-data.dto";
+import {ConfirmationDialogComponent} from "../../../shared/components/dialog/confirmation-dialog.component";
+import {MatDialog} from "@angular/material/dialog";
 
 
 @Component({
@@ -41,7 +44,7 @@ export class TestsListComponent implements OnInit {
         selectFilters: {},
     }
 
-    constructor(private testService: TestService) {
+    constructor(private testService: TestService, private dialog: MatDialog) {
     }
 
     ngOnInit(): void {
@@ -65,14 +68,25 @@ export class TestsListComponent implements OnInit {
     }
 
     onDeleteTest(testId: string) {
-        window.alert("Are u sure u want to delete?")
-        this.testService.deleteTest(testId)
-            .subscribe(response => {
-                this.tests = this.tests.filter(test => test.id !== testId);
-                console.log(response);
-            }, error => {
-                console.log(error)
-            })
+        const dialogData: DialogDataDto = {
+            title: 'Confirm Action',
+            content: 'Are you sure you want to delete test?'
+        };
+        const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+            data: dialogData
+        });
+
+        dialogRef.afterClosed().subscribe((result) => {
+            if (result) {
+                this.testService.deleteTest(testId)
+                    .subscribe(response => {
+                        this.tests = this.tests.filter(test => test.id !== testId);
+                        console.log(response);
+                    }, error => {
+                        console.log(error)
+                    })
+            }
+        });
     }
 
     onChangePublishedStatus(testId: string) {
