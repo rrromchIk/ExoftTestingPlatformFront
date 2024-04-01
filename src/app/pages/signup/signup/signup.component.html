@@ -59,7 +59,8 @@
                     </mat-error>
 
                     <mat-error *ngIf="getFormControl('password')?.hasError('pattern') &&
-                                !getFormControl('password')?.hasError('required')" class="password-requirements">
+                                !getFormControl('password')?.hasError('required')"
+                               class="password-requirements">
                         Password must have:
                         <li>At least 8 characters</li>
                         <li>At least one digit</li>
