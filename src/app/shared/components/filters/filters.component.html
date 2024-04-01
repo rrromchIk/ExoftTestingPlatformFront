@@ -10,7 +10,9 @@
             <mat-label>{{ filter.filterLabel }}</mat-label>
             <mat-select [formControlName]="filter.filterName" (selectionChange)="emitFilterChangeEvent()">
                 <mat-option *ngFor="let option of filter.options"
-                            [value]="option.optionValue">{{ option.optionLabel }}</mat-option>
+                            [value]="option.optionValue">
+                    {{ option.optionLabel }}
+                </mat-option>
             </mat-select>
         </mat-form-field>
 
