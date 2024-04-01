@@ -120,4 +120,18 @@ export class TestResultComponent {
     isQuestionPartiallyCorrectAnswered(questionResult: QuestionResultModel) {
         return questionResult.userScore > 0 && questionResult.userScore < questionResult.maxScore;
     }
+
+    getScoreInPercents() {
+        return (this.testResult.userScore / this.testResult.totalScore * 100).toPrecision(3);
+    }
+
+    getTimeSpent() {
+        const diff: number = this.testResult.endingTime.getTime()
+            - this.testResult.startingTime.getTime();
+
+        const minutes = Math.floor(diff / (1000 * 60));
+        const seconds = Math.floor((diff / 1000) % 60);
+
+        return `${minutes} min ${seconds} sec`
+    }
 }

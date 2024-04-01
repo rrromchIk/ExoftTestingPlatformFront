@@ -80,4 +80,13 @@
         </mat-card>
     </div>
 
+    <div class="test-result-container">
+        <p><strong>Starting time:</strong> {{testResult.startingTime | dateTimeFormat}}</p>
+        <hr>
+        <p><strong>Ending time:</strong> {{testResult.endingTime | dateTimeFormat}}</p>
+        <hr>
+        <p><strong>Time spent:</strong> {{getTimeSpent()}}</p>
+        <hr>
+        <p><strong>Score:</strong> {{testResult.userScore}}/{{testResult.totalScore}} ({{getScoreInPercents()}}%)</p>
+    </div>
 </div>

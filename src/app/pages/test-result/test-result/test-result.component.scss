@@ -63,17 +63,31 @@
     }
 }
 
+.test-result-container {
+    padding: 10px;
+    border: 1px solid gray;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    width: max-content;
+    height: max-content;
+
+    p {
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+}
+
 .questions-result-container {
-    display: flex;
-    flex-direction: column;
     width: 50%;
+    margin-right: 50px;
 }
 
 .question-card {
     padding: 10px 20px 10px 20px;
     height: max-content;
     margin-bottom: 30px;
-
 
     .question-text {
         font-size: 18px;

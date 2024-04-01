@@ -3,6 +3,7 @@ import {CommonModule} from '@angular/common';
 import {TestResultComponent} from "./test-result/test-result.component";
 import {AppMaterialModule} from "../../shared/modules/app-material/app-material.module";
 import {RouterModule} from "@angular/router";
+import {AppComponentsModule} from "../../shared/modules/app-components/app-components.module";
 
 
 @NgModule({
@@ -12,7 +13,8 @@ import {RouterModule} from "@angular/router";
     imports: [
         CommonModule,
         RouterModule,
-        AppMaterialModule
+        AppMaterialModule,
+        AppComponentsModule
     ]
 })
 export class TestResultModule {
