@@ -16,9 +16,9 @@
             <button mat-raised-button color="warn" (click)="onDeleteTestTemplate(testTemplate)">Delete</button>
         </mat-card-actions>
         <div class="list-item-card-metadata">
-            <mat-card-subtitle align='end'>Created
+            <mat-card-subtitle>Created
                 on: {{ testTemplate.createdTimestamp | dateTimeFormat }}</mat-card-subtitle>
-            <mat-card-subtitle align='end' *ngIf="testTemplate.modifiedTimestamp">Last
+            <mat-card-subtitle *ngIf="testTemplate.modifiedTimestamp">Last
                 Modified: {{ testTemplate.modifiedTimestamp | dateTimeFormat }}</mat-card-subtitle>
         </div>
     </mat-card-footer>

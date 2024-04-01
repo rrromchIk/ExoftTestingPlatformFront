@@ -31,9 +31,9 @@
             </button>
         </mat-card-actions>
         <div class="list-item-card-metadata">
-            <mat-card-subtitle align='end'>Created
+            <mat-card-subtitle>Created
                 on: {{ test.createdTimestamp | dateTimeFormat}}</mat-card-subtitle>
-            <mat-card-subtitle align='end' *ngIf="test.modifiedTimestamp">Last
+            <mat-card-subtitle *ngIf="test.modifiedTimestamp">Last
                 Modified: {{ test.modifiedTimestamp | dateTimeFormat }}</mat-card-subtitle>
         </div>
     </mat-card-footer>
