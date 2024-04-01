@@ -5,6 +5,7 @@ import {UserService} from "../../../core/services/api/user.api.service";
 import {environment} from "../../../../environments/environment";
 import {UpdatedUserDto} from "../../../core/interfaces/user/updated-user.dto";
 import {FIRST_AND_LAST_NAMES_PATTERN} from "../../../core/constants/validation.constants";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
     selector: 'app-edit-user-item',
@@ -23,11 +24,21 @@ export class EditUserItemComponent implements OnInit {
     constructor(
         private userService: UserService,
         private fb: FormBuilder,
+        private route: ActivatedRoute
     ) {
     }
+    ngOnInit() {
+        this.editUserForm = this.fb.group({
+            firstName: ['', [Validators.required, Validators.pattern(FIRST_AND_LAST_NAMES_PATTERN)]],
+            lastName: ['', [Validators.required, Validators.pattern(FIRST_AND_LAST_NAMES_PATTERN)]],
+            email: [''],
+            emailConfirmed: [],
+            role: ['']
+        });
 
-    @Input()
-    set id(userId: string) {
+        const userId = this.route.snapshot.params['id']
+        this.avatarLinkToDisplay = `${environment.apiUrl}/api/users/${userId}/avatar/download`
+
         this.userService.getUserById(userId).subscribe(response => {
             this.user = response;
             console.log(this.user);
@@ -38,19 +49,6 @@ export class EditUserItemComponent implements OnInit {
             this.editUserForm.valueChanges.subscribe(() => {
                 this.userDataChanges = this.isFormChanged();
             });
-        });
-
-
-        this.avatarLinkToDisplay = `${environment.apiUrl}/api/users/${userId}/avatar/download`
-    }
-
-    ngOnInit() {
-        this.editUserForm = this.fb.group({
-            firstName: ['', [Validators.required, Validators.pattern(FIRST_AND_LAST_NAMES_PATTERN)]],
-            lastName: ['', [Validators.required, Validators.pattern(FIRST_AND_LAST_NAMES_PATTERN)]],
-            email: [''],
-            emailConfirmed: [],
-            role: ['']
         });
     }
 
@@ -101,6 +99,7 @@ export class EditUserItemComponent implements OnInit {
     }
 
     onImageUploadedEvent(file: File) {
+        console.log("handling event")
         this.userAvatarChanges = true;
         this.uploadedUserAvatar = file;
 
