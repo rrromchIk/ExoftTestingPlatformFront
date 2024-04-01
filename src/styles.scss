@@ -22,7 +22,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     border-radius: 10px;
     padding: 10px 10px 10px 20px;
     margin-bottom: 20px;
-    opacity: 94%;
+    //opacity: 94%;
 
     &:hover {
         transform: scale(1.01);
@@ -129,6 +129,7 @@ p {
 .link {
     color: #007bff;
     text-decoration: none;
+    cursor: pointer;
 
     &:hover {
         text-decoration: underline;
