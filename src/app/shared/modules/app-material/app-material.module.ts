@@ -18,6 +18,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatSelectModule} from "@angular/material/select";
 import {MatRadioModule} from "@angular/material/radio";
+import {MatDialogModule} from "@angular/material/dialog";
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import {MatRadioModule} from "@angular/material/radio";
         MatInputModule,
         MatCheckboxModule,
         MatSelectModule,
-        MatRadioModule
+        MatRadioModule,
+        MatDialogModule
     ],
     providers: [
         provideAnimationsAsync(),

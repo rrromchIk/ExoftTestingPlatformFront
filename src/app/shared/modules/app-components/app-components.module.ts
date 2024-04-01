@@ -8,6 +8,7 @@ import {UserAvatarUploaderComponent} from "../../components/user-avatar-uploader
 import {DateTimeFormatPipe} from "../../pipes/date-time-format.pipe";
 import {FiltersComponent} from "../../components/filters/filters.component";
 import {ReactiveFormsModule} from "@angular/forms";
+import {ConfirmationDialogComponent} from "../../components/dialog/confirmation-dialog.component";
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import {ReactiveFormsModule} from "@angular/forms";
         BackButtonDirective,
         UserAvatarUploaderComponent,
         DateTimeFormatPipe,
-        FiltersComponent
+        FiltersComponent,
+        ConfirmationDialogComponent
     ],
     imports: [
         CommonModule,
