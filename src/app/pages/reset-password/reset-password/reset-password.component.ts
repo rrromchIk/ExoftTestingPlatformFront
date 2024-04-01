@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {AuthService} from "../../core/services/api/auth.api.service";
-import {passwordsMatchValidator} from "../../core/helpers/form-validators";
+import {AuthService} from "../../../core/services/api/auth.api.service";
+import {passwordsMatchValidator} from "../../../core/helpers/form-validators";
 import {ActivatedRoute} from "@angular/router";
-import {ResetPasswordDto} from "../../core/interfaces/reset-password.dto";
+import {ResetPasswordDto} from "../../../core/interfaces/reset-password.dto";
 
 @Component({
   selector: 'app-reset-password',

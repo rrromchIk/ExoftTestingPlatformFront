@@ -5,10 +5,10 @@ import {TestsToPassListComponent} from "./pages/user-main/tests-to-pass-list/tes
 import {StartedTestsListComponent} from "./pages/user-main/started-tests-list/started-tests-list.component";
 import {PassingTestComponent} from "./pages/passing-test/passing-test/passing-test.component";
 import {TestResultComponent} from "./pages/test-result/test-result/test-result.component";
-import {LoginComponent} from "./auth/login/login.component";
-import {SignupComponent} from "./auth/signup/signup.component";
-import {ForgotPasswordComponent} from "./auth/forgot-password/forgot-password.component";
-import {ResetPasswordComponent} from "./auth/reset-password/reset-password.component";
+import {LoginComponent} from "./pages/login/login/login.component";
+import {SignupComponent} from "./pages/signup/signup/signup.component";
+import {ForgotPasswordComponent} from "./pages/forgot-password/forgot-password/forgot-password.component";
+import {ResetPasswordComponent} from "./pages/reset-password/reset-password/reset-password.component";
 import {AdminMainComponent} from "./pages/admin-main/admin-main.component";
 import {TestsListComponent} from "./pages/admin-main/tests-list/tests-list.component";
 import {UsersListComponent} from "./pages/admin-main/users-list/users-list.component";

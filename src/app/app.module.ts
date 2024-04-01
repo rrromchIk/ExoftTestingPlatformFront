@@ -9,9 +9,12 @@ import {AppComponentsModule} from "./shared/modules/app-components/app-component
 import {ReactiveFormsModule} from "@angular/forms";
 import {AdminMainModule} from "./pages/admin-main/admin-main.module";
 import {UserMainModule} from "./pages/user-main/user-main.module";
-import {AuthModule} from "./auth/auth.module";
 import {PassingTestModule} from "./pages/passing-test/passing-test.module";
 import {TestResultModule} from "./pages/test-result/test-result.module";
+import {LoginModule} from "./pages/login/login.module";
+import {SignupModule} from "./pages/signup/signup.module";
+import {ForgotPasswordModule} from "./pages/forgot-password/forgot-password.module";
+import {ResetPasswordModule} from "./pages/reset-password/reset-password.module";
 
 
 @NgModule({
@@ -26,9 +29,12 @@ import {TestResultModule} from "./pages/test-result/test-result.module";
         ReactiveFormsModule,
         AdminMainModule,
         UserMainModule,
-        AuthModule,
         PassingTestModule,
-        TestResultModule
+        TestResultModule,
+        LoginModule,
+        SignupModule,
+        ForgotPasswordModule,
+        ResetPasswordModule
     ],
     providers: [
         {
