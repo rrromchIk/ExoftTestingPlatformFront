@@ -15,6 +15,8 @@ export class UserAvatarUploaderComponent {
         const inputElement = event.target as HTMLInputElement;
         if (inputElement.files && inputElement.files.length) {
             this.imageUploadedEvent.emit(inputElement.files[0]);
+
+            this.showDefaultImage = false;
         }
     }
 
