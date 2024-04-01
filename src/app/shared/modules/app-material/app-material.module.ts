@@ -17,6 +17,7 @@ import {MatExpansionModule} from "@angular/material/expansion";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatSelectModule} from "@angular/material/select";
+import {MatRadioModule} from "@angular/material/radio";
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import {MatSelectModule} from "@angular/material/select";
         MatTooltipModule,
         MatInputModule,
         MatCheckboxModule,
-        MatSelectModule
+        MatSelectModule,
+        MatRadioModule
     ],
     providers: [
         provideAnimationsAsync(),
