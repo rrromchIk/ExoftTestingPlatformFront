@@ -22,6 +22,9 @@
     <mat-card class="question-card">
         <mat-card-header class="question-card-header">
             <mat-card-title>Question {{currentQuestionIndex + 1}}</mat-card-title>
+
+
+            <p>Max score: {{currentQuestion?.maxScore}}</p>
         </mat-card-header>
 
         <mat-divider/>
@@ -39,7 +42,8 @@
                         <mat-checkbox color="primary" class="answer-field">{{i + 1}}. {{answer.text }}</mat-checkbox>
                     </ng-container>
                     <ng-container *ngIf="!isMultipleChoice(currentQuestion)">
-                        <mat-radio-button color="primary" class="answer-field">{{i + 1}}. {{answer.text }}</mat-radio-button>
+                        <mat-radio-button color="primary" class="answer-field">{{i + 1}}
+                            . {{answer.text }}</mat-radio-button>
                     </ng-container>
                 </div>
             </div>
@@ -48,7 +52,8 @@
         <mat-card-footer>
             <div class="question-card-footer">
                 <mat-card-actions class="question-card-actions">
-                    <button *ngIf="!isLastQuestion()" mat-raised-button color="primary" (click)="onNextQuestionButtonClicked()">
+                    <button *ngIf="!isLastQuestion()" mat-raised-button color="primary"
+                            (click)="onNextQuestionButtonClicked()">
                         Next question
                     </button>
                     <button *ngIf="isLastQuestion()" mat-raised-button color="warn" (click)="onCompleteTestClicked()">
@@ -59,5 +64,5 @@
         </mat-card-footer>
     </mat-card>
 
-    <timer-item [millis]="5000" (timeOut)="console.log('timeout')"></timer-item>
+    <timer-item [millis]="5000"></timer-item>
 </div>

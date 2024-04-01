@@ -1,0 +1,120 @@
+@use '../../../../node_modules/@angular/material/index' as mat;
+
+.page-container {
+    padding: 50px 20px 0 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+}
+
+.questions-nav-container {
+    width: 19%;
+    height: max-content;
+
+    margin-right: 50px;
+    padding: 10px;
+
+    .questions-nav-items {
+        padding: 5px;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(35px, 1fr));
+        gap: 5px;
+
+        .question-nav-item {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 45px;
+
+            box-sizing: border-box;
+            border: 1px solid #000;
+            border-radius: 3px;
+
+            overflow: hidden;
+            cursor: pointer;
+
+            .question-nav-item-number {
+                height: 50%;
+            }
+
+            .question-nav-item-state {
+                height: 50%;
+                width: 100%;
+            }
+        }
+
+        .answered {
+            background-color: #6A727D;
+        }
+
+        .active {
+            border: 3px solid #000;
+        }
+
+        .answered-wrong {
+            background-color: red;
+        }
+
+        .answered-correct {
+            background-color: green;
+        }
+    }
+
+    .link {
+        display: inline-block;
+        margin: 5px;
+        color: #1D75C5;
+    }
+}
+
+
+.question-card {
+    width: 50%;
+    padding: 10px 20px 10px 20px;
+    height: max-content;
+    margin-right: 50px;
+
+
+    .question-text {
+        font-size: 18px;
+        padding-top: 5px;
+        margin-bottom: 15px;
+    }
+
+    .answer-field {
+        @include mat.all-component-densities(-2);
+        width: 100%;
+        overflow: hidden;
+        white-space: break-spaces;
+    }
+
+    .question-card-header {
+        margin-bottom: 2px;
+        padding: 0;
+
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+
+    .question-card-content {
+        margin-top: 10px;
+        margin-bottom: 5px;
+        padding: 0;
+    }
+
+    .question-card-footer {
+        display: flex;
+        flex-direction: row;
+        justify-content: end;
+        align-items: center;
+
+
+        .question-card-actions {
+            padding: 0;
+        }
+    }
+}
