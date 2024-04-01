@@ -1,15 +1,21 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {AdminMainComponent} from "./admin-main/admin-main.component";
-import {AdminMainModule} from "./admin-main/admin-main.module";
-import {TestsListComponent} from "./admin-main/tests-list/tests-list.component";
-import {UsersListComponent} from "./admin-main/users-list/users-list.component";
+import {UserMainComponent} from "./pages/user-main/user-main.component";
+import {TestsToPassListComponent} from "./pages/user-main/tests-to-pass-list/tests-to-pass-list.component";
+import {StartedTestsListComponent} from "./pages/user-main/started-tests-list/started-tests-list.component";
+import {PassingTestComponent} from "./pages/passing-test/passing-test/passing-test.component";
+import {TestResultComponent} from "./pages/test-result/test-result/test-result.component";
 import {LoginComponent} from "./auth/login/login.component";
-import {EditUserItemComponent} from "./admin-main/edit-user-item/edit-user-item.component";
-import {UserMainComponent} from "./user-main/user-main.component";
 import {SignupComponent} from "./auth/signup/signup.component";
-import {TestsToPassListComponent} from "./user-main/tests-to-pass-list/tests-to-pass-list.component";
-import {StartedTestsListComponent} from "./user-main/started-tests-list/started-tests-list.component";
+import {ForgotPasswordComponent} from "./auth/forgot-password/forgot-password.component";
+import {ResetPasswordComponent} from "./auth/reset-password/reset-password.component";
+import {AdminMainComponent} from "./pages/admin-main/admin-main.component";
+import {TestsListComponent} from "./pages/admin-main/tests-list/tests-list.component";
+import {UsersListComponent} from "./pages/admin-main/users-list/users-list.component";
+import {EditUserItemComponent} from "./pages/admin-main/edit-user-item/edit-user-item.component";
+import {TestTemplatesListComponent} from "./pages/admin-main/test-templates-list/test-templates-list.component";
+import {TestCreateComponent} from "./pages/admin-main/test-create/test-create.component";
+
 
 const routes: Routes = [
     {
@@ -37,8 +43,16 @@ const routes: Routes = [
             {
                 path: 'started-tests',
                 component: StartedTestsListComponent
-            }
+            },
         ]
+    },
+    {
+        path: 'pass-test',
+        component: PassingTestComponent
+    },
+    {
+        path: 'test-result',
+        component: TestResultComponent
     },
     {
         path: 'login',
@@ -49,27 +63,43 @@ const routes: Routes = [
         component: SignupComponent
     },
     {
-        path: 'admin',
-        loadChildren: () => import('./admin-main/admin-main.module').then(m => m.AdminMainModule)
+        path: 'forgot-password',
+        component: ForgotPasswordComponent
+    },
+    {
+        path: 'reset-password',
+        component: ResetPasswordComponent
     },
     // {
     //     path: 'admin',
-    //     component: AdminMainComponent,
-    //     children: [
-    //         {
-    //             path: 'tests',
-    //             component: TestsListComponent
-    //         },
-    //         {
-    //             path: 'users',
-    //             component: UsersListComponent
-    //         },
-    //         {
-    //             path: 'users/:id/edit',
-    //             component: EditUserItemComponent
-    //         }
-    //     ]
+    //     loadChildren: () => import('./admin-main/admin-main.module').then(m => m.AdminMainModule)
     // },
+    {
+        path: 'admin',
+        component: AdminMainComponent,
+        children: [
+            {
+                path: 'tests',
+                component: TestsListComponent
+            },
+            {
+                path: 'users',
+                component: UsersListComponent
+            },
+            {
+                path: 'users/:id/edit',
+                component: EditUserItemComponent
+            },
+            {
+                path: 'test-templates',
+                component: TestTemplatesListComponent
+            },
+            {
+                path: 'test-create',
+                component: TestCreateComponent
+            }
+        ]
+    },
     {
         path: '**',
         redirectTo: 'login',
@@ -79,7 +109,9 @@ const routes: Routes = [
 
 @NgModule({
     imports: [RouterModule.forRoot(routes, {
-        bindToComponentInputs: true
+        bindToComponentInputs: true,
+        scrollPositionRestoration: "enabled",
+        anchorScrolling: "enabled"
     })],
     exports: [RouterModule],
 })

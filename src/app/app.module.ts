@@ -7,11 +7,11 @@ import {AppComponent} from './app.component';
 import {AuthInterceptorService} from "./core/interceptors/auth.interceptor.service";
 import {AppComponentsModule} from "./shared/modules/app-components/app-components.module";
 import {ReactiveFormsModule} from "@angular/forms";
-import {AdminMainModule} from "./admin-main/admin-main.module";
-import {UserMainModule} from "./user-main/user-main.module";
+import {AdminMainModule} from "./pages/admin-main/admin-main.module";
+import {UserMainModule} from "./pages/user-main/user-main.module";
 import {AuthModule} from "./auth/auth.module";
-import {PassingTestModule} from "./passing-test/passing-test.module";
-import {TestResultModule} from "./test-result/test-result.module";
+import {PassingTestModule} from "./pages/passing-test/passing-test.module";
+import {TestResultModule} from "./pages/test-result/test-result.module";
 
 
 @NgModule({
