@@ -4,6 +4,7 @@ import {AuthService} from "../../../core/services/api/auth.api.service";
 import {passwordsMatchValidator} from "../../../core/helpers/form-validators";
 import {ActivatedRoute} from "@angular/router";
 import {ResetPasswordDto} from "../../../core/interfaces/auth/reset-password.dto";
+import {PASSWORD_PATTERN} from "../../../core/constants/validation.constants";
 
 @Component({
   selector: 'app-reset-password',
@@ -27,7 +28,7 @@ export class ResetPasswordComponent implements OnInit {
     ngOnInit() {
         this.form = this.fb.group({
             password: ['', [Validators.required,
-                Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[\\W_]).{8,}$'),
+                Validators.pattern(PASSWORD_PATTERN),
                 passwordsMatchValidator('confirmPassword', true)]],
             confirmPassword: ['', [Validators.required, passwordsMatchValidator('password')]]
         });

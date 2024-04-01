@@ -4,6 +4,7 @@ import {AuthService} from "../../../core/services/api/auth.api.service";
 import {Router} from "@angular/router";
 import {passwordsMatchValidator} from "../../../core/helpers/form-validators";
 import {UserSignupDto} from "../../../core/interfaces/user/user-signup.dto";
+import {FIRST_AND_LAST_NAMES_PATTERN, PASSWORD_PATTERN} from "../../../core/constants/validation.constants";
 
 
 @Component({
@@ -25,11 +26,11 @@ export class SignupComponent implements OnInit {
 
     ngOnInit() {
         this.signUpForm = this.fb.group({
-            firstName: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9\\s]+$')]],
-            lastName: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9\\s]+$')]],
+            firstName: ['', [Validators.required, Validators.pattern(FIRST_AND_LAST_NAMES_PATTERN)]],
+            lastName: ['', [Validators.required, Validators.pattern(FIRST_AND_LAST_NAMES_PATTERN)]],
             email: ['', [Validators.required, Validators.email]],
             password: ['', [Validators.required,
-                            Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[\\W_]).{8,}$'),
+                            Validators.pattern(PASSWORD_PATTERN),
                             passwordsMatchValidator('confirmPassword', true)]],
             confirmPassword: ['', [Validators.required, passwordsMatchValidator('password')]]
         });
