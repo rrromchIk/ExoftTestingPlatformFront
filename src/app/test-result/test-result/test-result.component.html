@@ -1,0 +1,83 @@
+<div class="page-container">
+    <mat-card class="questions-nav-container">
+        <div class="questions-nav-items">
+            <div *ngFor="let question of testResult.questionsResults; let i = index"
+                 class="question-nav-item"
+                 [routerLink]="'/test-result'"
+                 [fragment]="'question' + (i + 1)">
+
+                <div class="question-nav-item-number">
+                    {{ i + 1 }}
+                </div>
+                <div class="question-nav-item-state"
+                     [ngClass]="{
+                            'answered-wrong': isQuestionWrongAnswered(question),
+                            'answered-correct': isQuestionCorrectAnswered(question),
+                            'answered-partially-correct': isQuestionPartiallyCorrectAnswered(question)
+                     }">
+                </div>
+            </div>
+        </div>
+    </mat-card>
+
+
+    <div class="questions-result-container">
+        <mat-card class="question-card" *ngFor="let questionResult of testResult.questionsResults; let i = index"
+                  id="question{{ i + 1 }}">
+            <mat-card-header class="question-card-header">
+                <mat-card-title>Question {{i + 1}}</mat-card-title>
+
+
+                <p>Score: {{questionResult.userScore}}/{{questionResult.maxScore}}</p>
+            </mat-card-header>
+
+            <mat-divider/>
+            <mat-card-content class="question-card-content">
+                <div class="question-text">
+                    <span>{{questionResult.questionText}}</span>
+                </div>
+
+                <div class="answers-container">
+                    <p *ngIf="isMultipleChoice(questionResult)">Choose one answer:</p>
+                    <p *ngIf="!isMultipleChoice(questionResult)">Choose correct answers:</p>
+
+                    <div *ngFor="let answer of questionResult.answersResults; let i = index"
+                         class="answer-item">
+                        <ng-container *ngIf="isMultipleChoice(questionResult)">
+                            <mat-checkbox color="primary"
+                                          class="answer-field"
+                                          disableRipple=true
+                                          (click)="$event.preventDefault()"
+                                          [checked]="answer.isUserAnswerSelected">
+                                {{i + 1}}. {{answer.answerText }}
+                            </mat-checkbox>
+                        </ng-container>
+
+                        <ng-container *ngIf="!isMultipleChoice(questionResult)">
+                            <mat-radio-button color="primary"
+                                              class="answer-field"
+                                              (click)="$event.preventDefault()"
+                                              [checked]="answer.isUserAnswerSelected">
+                                {{i + 1}}. {{ answer.answerText }}
+                            </mat-radio-button>
+                        </ng-container>
+
+                        <img *ngIf="answer.isUserAnswerSelected && answer.isCorrect"
+                             width="24" height="24" src="../../../assets/images/correct-mark.png">
+
+                        <img *ngIf="answer.isUserAnswerSelected && !answer.isCorrect"
+                             width="16" height="16" src="../../../assets/images/wrong-mark.png">
+                    </div>
+                </div>
+            </mat-card-content>
+            <mat-card-footer>
+                <div class="question-card-footer">
+                    <div class="correct-answers-container">
+                        Correct answers: {{getQuestionCorrectAnswers(questionResult)}}
+                    </div>
+                </div>
+            </mat-card-footer>
+        </mat-card>
+    </div>
+
+</div>
