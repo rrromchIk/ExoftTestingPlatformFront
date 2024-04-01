@@ -10,6 +10,8 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {AdminMainModule} from "./admin-main/admin-main.module";
 import {UserMainModule} from "./user-main/user-main.module";
 import {AuthModule} from "./auth/auth.module";
+import {PassingTestModule} from "./passing-test/passing-test.module";
+import {TestResultModule} from "./test-result/test-result.module";
 
 
 @NgModule({
@@ -24,7 +26,9 @@ import {AuthModule} from "./auth/auth.module";
         ReactiveFormsModule,
         AdminMainModule,
         UserMainModule,
-        AuthModule
+        AuthModule,
+        PassingTestModule,
+        TestResultModule
     ],
     providers: [
         {
