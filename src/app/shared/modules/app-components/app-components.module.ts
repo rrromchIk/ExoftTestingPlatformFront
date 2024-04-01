@@ -9,6 +9,7 @@ import {DateTimeFormatPipe} from "../../pipes/date-time-format.pipe";
 import {FiltersComponent} from "../../components/filters/filters.component";
 import {ReactiveFormsModule} from "@angular/forms";
 import {ConfirmationDialogComponent} from "../../components/dialog/confirmation-dialog.component";
+import {UserTestStatusPipe} from "../../pipes/user-test-status.pipe";
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import {ConfirmationDialogComponent} from "../../components/dialog/confirmation-
         UserAvatarUploaderComponent,
         DateTimeFormatPipe,
         FiltersComponent,
-        ConfirmationDialogComponent
+        ConfirmationDialogComponent,
+        UserTestStatusPipe
     ],
     imports: [
         CommonModule,
@@ -32,7 +34,8 @@ import {ConfirmationDialogComponent} from "../../components/dialog/confirmation-
         BackButtonDirective,
         UserAvatarUploaderComponent,
         DateTimeFormatPipe,
-        FiltersComponent
+        FiltersComponent,
+        UserTestStatusPipe
     ]
 })
 export class AppComponentsModule {

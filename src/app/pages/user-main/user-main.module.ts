@@ -10,8 +10,6 @@ import { StartedTestItemComponent } from './started-tests-list/started-test-item
 import {UserMainRoutingModule} from "./user-main-routing.module";
 import {ReactiveFormsModule} from "@angular/forms";
 import {TestCompletionPipe} from "./pipes/test-completion-status.pipe";
-import {UserTestStatusPipe} from "./pipes/user-test-status.pipe";
-
 
 @NgModule({
     declarations: [
@@ -21,7 +19,6 @@ import {UserTestStatusPipe} from "./pipes/user-test-status.pipe";
         StartedTestsListComponent,
         StartedTestItemComponent,
         TestCompletionPipe,
-        UserTestStatusPipe
     ],
     imports: [
         CommonModule,
