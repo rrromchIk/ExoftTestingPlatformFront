@@ -1,0 +1,63 @@
+<div class="page-container">
+    <mat-card class="questions-nav-container">
+        <div class="questions-nav-items">
+            <div *ngFor="let userQuestion of userQuestions; let i = index"
+                 class="question-nav-item"
+                 [class.active]="currentQuestionIndex === i">
+
+                <div class="question-nav-item-number">
+                    {{ i + 1 }}
+                </div>
+                <div class="question-nav-item-state" [class.answered]="userQuestion.isAnswered">
+
+                </div>
+            </div>
+        </div>
+
+        <a class="link" (click)="onCompleteTestClicked()">Complete test...</a>
+
+    </mat-card>
+
+
+    <mat-card class="question-card">
+        <mat-card-header class="question-card-header">
+            <mat-card-title>Question {{currentQuestionIndex + 1}}</mat-card-title>
+        </mat-card-header>
+
+        <mat-divider/>
+
+        <mat-card-content *ngIf="currentQuestion != null" class="question-card-content">
+            <div class="question-text">
+                <span>{{currentQuestion.text}}</span>
+            </div>
+
+            <div class="answers-container">
+                <p>Choose one answer:</p>
+
+                <div *ngFor="let answer of currentQuestion.answers; let i = index">
+                    <ng-container *ngIf="isMultipleChoice(currentQuestion)">
+                        <mat-checkbox color="primary" class="answer-field">{{i + 1}}. {{answer.text }}</mat-checkbox>
+                    </ng-container>
+                    <ng-container *ngIf="!isMultipleChoice(currentQuestion)">
+                        <mat-radio-button color="primary" class="answer-field">{{i + 1}}. {{answer.text }}</mat-radio-button>
+                    </ng-container>
+                </div>
+            </div>
+
+        </mat-card-content>
+        <mat-card-footer>
+            <div class="question-card-footer">
+                <mat-card-actions class="question-card-actions">
+                    <button *ngIf="!isLastQuestion()" mat-raised-button color="primary" (click)="onNextQuestionButtonClicked()">
+                        Next question
+                    </button>
+                    <button *ngIf="isLastQuestion()" mat-raised-button color="warn" (click)="onCompleteTestClicked()">
+                        Complete test
+                    </button>
+                </mat-card-actions>
+            </div>
+        </mat-card-footer>
+    </mat-card>
+
+    <timer-item [millis]="5000" (timeOut)="console.log('timeout')"></timer-item>
+</div>
