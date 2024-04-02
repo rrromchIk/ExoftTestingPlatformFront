@@ -1,18 +1,21 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {interval, Subscription} from "rxjs";
+import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 
+@UntilDestroy({checkProperties: true})
 @Component({
-  selector: 'timer-item',
-  templateUrl: './timer-item.component.html',
-  styleUrl: './timer-item.component.scss'
+    selector: 'timer-item',
+    templateUrl: './timer-item.component.html',
+    styleUrl: './timer-item.component.scss'
 })
-export class TimerItemComponent implements OnInit, OnDestroy {
+export class TimerItemComponent implements OnInit {
     @Input() millis: number = 0;
     @Output() timeOut: EventEmitter<void> = new EventEmitter<void>();
 
     timerHours: string = '00';
     timerMinutes: string = '00';
     timerSeconds: string = '00';
-    timerId: any;
+    timerSubscription: Subscription | undefined;
 
     ngOnInit() {
         if (this.millis <= 0) {
@@ -21,17 +24,14 @@ export class TimerItemComponent implements OnInit, OnDestroy {
         this.startTimer();
     }
 
-    ngOnDestroy() {
-        clearInterval(this.timerId);
-    }
-
     startTimer() {
         const deadline = new Date().valueOf() + this.millis;
         this.countdownTimer(deadline - 1000); //adjust one second delay
 
-        this.timerId = setInterval(() => {
-            this.countdownTimer(deadline);
-        }, 1000);
+       this.timerSubscription = interval(1000)
+            .subscribe(count => {
+                this.countdownTimer(deadline);
+            });
     }
 
     countdownTimer(deadline: number) {
@@ -43,7 +43,7 @@ export class TimerItemComponent implements OnInit, OnDestroy {
         const seconds = Math.floor(diff / 1000) % 60;
 
         if (hours === 0 && minutes === 0 && seconds === 0) {
-            clearInterval(this.timerId);
+            this.timerSubscription?.unsubscribe();
             this.timeOut.emit();
         }
 
