@@ -48,6 +48,7 @@ export class StartedTestsPageService {
     }
 
     updateFilters(newFilters: Filters): void {
+        this.resetPagingSettings();
         this.filtersSubject.next(newFilters);
     }
 
@@ -55,7 +56,7 @@ export class StartedTestsPageService {
         this.pagingSettingSubject.next(newPagingSettings);
     }
 
-    resetPagingSettings() {
+    private resetPagingSettings() {
         this.pagingSettingSubject.next({
             page: 1,
             pageSize: 3

@@ -58,7 +58,6 @@ export class TestsToPassListComponent implements OnInit {
     }
 
     onFilterChange(filters: Filters) {
-        this.testsToPassService.resetPagingSettings();
         this.testsToPassService.updateFilters(filters);
     }
 }

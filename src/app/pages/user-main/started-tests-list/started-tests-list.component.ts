@@ -55,7 +55,6 @@ export class StartedTestsListComponent implements OnInit {
     }
 
     onFilterChange(filters: Filters) {
-        this.startedTestsService.resetPagingSettings();
         this.startedTestsService.updateFilters(filters);
     }
 }
