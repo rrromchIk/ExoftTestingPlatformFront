@@ -1,4 +1,4 @@
-<div class="page-container">
+<div class="page-container" *ngIf="testResult != null">
     <mat-card class="questions-nav-container">
         <div class="questions-nav-items">
             <div *ngFor="let question of testResult.questionsResults; let i = index"

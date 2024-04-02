@@ -8,6 +8,7 @@ import {environment} from "../../../../environments/environment";
 import {HttpParamsHelper} from "../../helpers/http-params.helper";
 import {Filters} from "../../interfaces/filters/filters";
 import {UserTestModel} from "../../interfaces/user-test/user-test.model";
+import {TestResultModel} from "../../interfaces/test-result/test-result.model";
 
 @Injectable({
     providedIn: 'root'
@@ -52,5 +53,9 @@ export class UserTestApiService {
 
     getUserTest(userId: string, testId: string) {
         return this.http.get<UserTestModel>(this.apiUrl + `/api/users/${userId}/tests/${testId}`)
+    }
+
+    getUserTestResult(userId: string, testId: string) {
+        return this.http.get<TestResultModel>(this.apiUrl + `/api/users/${userId}/tests/${testId}/results`)
     }
 }
