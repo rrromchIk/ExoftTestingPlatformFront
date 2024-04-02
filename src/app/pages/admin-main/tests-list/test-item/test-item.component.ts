@@ -9,7 +9,7 @@ import {TestModel} from "../../../../core/interfaces/test/test.model";
 export class TestItemComponent {
     @Input() test!: TestModel;
     @Output() deleteTestEvent: EventEmitter<string> = new EventEmitter<string>();
-    @Output() changePublishedStatusEvent: EventEmitter<string> = new EventEmitter<string>();
+    @Output() changePublishedStatusEvent: EventEmitter<TestModel> = new EventEmitter<TestModel>();
 
     onDeleteTest(test: TestModel) {
         this.deleteTestEvent.emit(test.id);
@@ -17,6 +17,6 @@ export class TestItemComponent {
 
     onUpdatePublishedStatus(test: TestModel) {
         console.log("emit change status event");
-        this.changePublishedStatusEvent.emit(test.id)
+        this.changePublishedStatusEvent.emit(test)
     }
 }
