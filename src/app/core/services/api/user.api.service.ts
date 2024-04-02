@@ -23,8 +23,6 @@ export class UserApiService {
         queryParams = HttpParamsHelper.applyPaging(queryParams, pagingSettings);
         queryParams = HttpParamsHelper.applyFilters(queryParams, filters);
 
-        console.log(queryParams)
-
         return this.http.get<PagedListModel<UserModel>>(
             this.usersEndpoint,
             {
