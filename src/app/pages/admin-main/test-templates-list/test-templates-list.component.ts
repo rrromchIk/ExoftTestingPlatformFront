@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {PagedListModel} from "../../../core/interfaces/paged-list.model";
 import {PagingSettings} from "../../../core/interfaces/paging-settings";
 import {TestTemplateModel} from "../../../core/interfaces/test-template/test-template.model";
-import {TestTmplApiService} from "../../../core/services/api/test-tmpl.api.service";
 import {SelectFilter} from "../../../core/interfaces/filters/select-filter";
 import {SortCriteria} from "../../../core/interfaces/filters/sort-criteria";
 import {Filters} from "../../../core/interfaces/filters/filters";
@@ -15,11 +14,16 @@ import {
 import {MatDialog} from "@angular/material/dialog";
 import {DialogDataDto} from "../../../core/interfaces/dialog/dialog-data.dto";
 import {ConfirmationDialogComponent} from "../../../shared/components/dialog/confirmation-dialog.component";
+import {TestTemplatesPageService} from "../services/test-templates.page.service";
+import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
+import {filter} from "rxjs";
 
+@UntilDestroy()
 @Component({
-  selector: 'app-test-templates-list',
-  templateUrl: './test-templates-list.component.html',
-  styleUrl: './test-templates-list.component.scss'
+    selector: 'app-test-templates-list',
+    templateUrl: './test-templates-list.component.html',
+    styleUrl: './test-templates-list.component.scss',
+    providers: [TestTemplatesPageService]
 })
 export class TestTemplatesListComponent implements OnInit {
     testTemplates: TestTemplateModel[] = [];
@@ -29,35 +33,24 @@ export class TestTemplatesListComponent implements OnInit {
     selectFilters: SelectFilter[] = Array.of(DIFFICULTY_FILTER);
     sortCriterias: SortCriteria[] = Array.of(DURATION_SORT_CRITERIA, CREATION_DATE_SORT_CRITERIA, MODIFICATION_DATE_SORT_CRITERIA);
 
-    pagingSettings: PagingSettings = {
-        page: 1,
-        pageSize: 3
-    }
-
-    filters: Filters = {
-        searchTerm: '',
-        sortColumn: '',
-        sortOrder: '',
-        selectFilters: {},
-    }
-
-    constructor(private testTmplService: TestTmplApiService,
+    constructor(private testTmplsPageService: TestTemplatesPageService,
                 private dialog: MatDialog) {
     }
 
     ngOnInit(): void {
+        this.testTmplsPageService.fetching$.pipe(untilDestroyed(this)).subscribe(
+            value => this.isFetching = value
+        )
         this.loadTestTemplates();
     }
 
     loadTestTemplates(): void {
-        this.isFetching = true;
-        this.testTmplService.getAllTestTemplates(this.pagingSettings, this.filters)
-            .subscribe(responseData => {
-                console.log(responseData);
-                this.pagedList = responseData;
-                this.testTemplates = responseData.items;
-                this.isFetching = false;
-            })
+        this.testTmplsPageService.pagedListOfTestTemplates$.pipe(untilDestroyed(this)).subscribe(
+            response => {
+                this.pagedList = response;
+                this.testTemplates = response?.items || [];
+            }
+        )
     }
 
     onDeleteTestTemplate(testTemplateId: string) {
@@ -68,31 +61,21 @@ export class TestTemplatesListComponent implements OnInit {
         const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
             data: dialogData
         });
-        dialogRef.afterClosed().subscribe((result) => {
-            if (result) {
-                this.testTmplService.deleteTestTemplate(testTemplateId)
-                    .subscribe(response => {
-                        this.testTemplates = this.testTemplates.filter(test => test.id !== testTemplateId);
-                        console.log(response);
-                    }, error => {
-                        console.log(error)
-                    })
-            }
-        });
+
+        dialogRef
+            .afterClosed()
+            .pipe(
+                untilDestroyed(this),
+                filter((result) => result),
+            )
+            .subscribe(() => this.testTmplsPageService.deleteTestTemplate(testTemplateId));
     }
 
-
     onPageChangedEvent(pagingSetting: PagingSettings) {
-        this.pagingSettings = pagingSetting;
-        this.loadTestTemplates();
+        this.testTmplsPageService.updatePagingSetting(pagingSetting);
     }
 
     onFilterChange(filters: Filters) {
-        this.filters = filters;
-        this.pagingSettings = {
-            page: 1,
-            pageSize: 3
-        }
-        this.loadTestTemplates();
+        this.testTmplsPageService.updateFilters(filters);
     }
 }
