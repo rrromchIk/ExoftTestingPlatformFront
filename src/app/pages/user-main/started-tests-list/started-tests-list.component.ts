@@ -10,7 +10,7 @@ import {
     SCORE_SORT_CRITERIA, STARTING_TIME_SORT_CRITERIA,
     USER_TEST_STATUS_FILTER
 } from "../../../core/constants/filters.constants";
-import {StartedTestsService} from "../services/started-tests.service";
+import {StartedTestsPageService} from "../services/started-tests.page.service";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 
 @UntilDestroy()
@@ -18,7 +18,7 @@ import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
     selector: 'app-started-tests-list',
     templateUrl: './started-tests-list.component.html',
     styleUrl: './started-tests-list.component.scss',
-    providers: [StartedTestsService]
+    providers: [StartedTestsPageService]
 })
 export class StartedTestsListComponent implements OnInit {
     startedTests: StartedTestModel[] = [];
@@ -28,7 +28,7 @@ export class StartedTestsListComponent implements OnInit {
     selectFilters: SelectFilter[] = Array.of(DIFFICULTY_FILTER, USER_TEST_STATUS_FILTER);
     sortCriterias: SortCriteria[] = Array.of(STARTING_TIME_SORT_CRITERIA, SCORE_SORT_CRITERIA);
 
-    constructor(private startedTestsService: StartedTestsService) {}
+    constructor(private startedTestsService: StartedTestsPageService) {}
 
     ngOnInit(): void {
         this.startedTestsService.fetching$.pipe(untilDestroyed(this)).subscribe(
@@ -55,6 +55,7 @@ export class StartedTestsListComponent implements OnInit {
     }
 
     onFilterChange(filters: Filters) {
+        this.startedTestsService.resetPagingSettings();
         this.startedTestsService.updateFilters(filters);
     }
 }

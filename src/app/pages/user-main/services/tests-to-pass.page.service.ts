@@ -1,26 +1,25 @@
-import {Injectable} from "@angular/core";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
-import {UserTestApiService} from "../../../core/services/api/user-test.api.service";
+import {Injectable} from "@angular/core";
 import {
     BehaviorSubject,
     catchError,
     combineLatest,
     debounceTime,
     distinctUntilChanged,
-    Observable,
-    of,
+    Observable, of,
     switchMap,
-    tap,
+    tap
 } from "rxjs";
 import {Filters} from "../../../core/interfaces/filters/filters";
 import {PagingSettings} from "../../../core/interfaces/paging-settings";
 import {PagedListModel} from "../../../core/interfaces/paged-list.model";
-import {StartedTestModel} from "../../../core/interfaces/user-test/started-test.model";
+import {UserTestApiService} from "../../../core/services/api/user-test.api.service";
 import {AuthService} from "../../../shared/services/auth.service";
+import {TestToPassModel} from "../../../core/interfaces/user-test/test-to-pass.model";
 
 @UntilDestroy()
 @Injectable()
-export class StartedTestsService {
+export class TestsToPassPageService {
     private filtersSubject: BehaviorSubject<Filters> = new BehaviorSubject<Filters>({
         searchTerm: '',
         sortColumn: '',
@@ -33,13 +32,14 @@ export class StartedTestsService {
         pageSize: 3
     });
 
-    private pagedListSubject: BehaviorSubject<PagedListModel<StartedTestModel> | null> =
-        new BehaviorSubject<PagedListModel<StartedTestModel> | null>(null);
+    private pagedListSubject: BehaviorSubject<PagedListModel<TestToPassModel> | null> =
+        new BehaviorSubject<PagedListModel<TestToPassModel> | null>(null);
     private fetchingSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
     public filters$: Observable<Filters> = this.filtersSubject.asObservable();
+
     public pagingSetting$: Observable<PagingSettings> = this.pagingSettingSubject.asObservable();
-    public pagedListOfStartedTests$: Observable<PagedListModel<StartedTestModel> | null> = this.pagedListSubject.asObservable();
+    public pagedListOfTestsToPass$: Observable<PagedListModel<TestToPassModel> | null> = this.pagedListSubject.asObservable();
     public fetching$: Observable<boolean> = this.fetchingSubject.asObservable();
 
     constructor(private userTestApiService: UserTestApiService,
@@ -55,23 +55,31 @@ export class StartedTestsService {
         this.pagingSettingSubject.next(newPagingSettings);
     }
 
+    resetPagingSettings() {
+        this.pagingSettingSubject.next({
+            page: 1,
+            pageSize: 3
+        });
+    }
+
     private onFiltersAndPagingChange(): void {
         combineLatest([this.filters$, this.pagingSetting$])
             .pipe(
                 untilDestroyed(this),
+
                 tap(() => this.fetchingSubject.next(true)),
                 switchMap(([filters, pagedListSettings]) => {
-                        return this.loadStartedTestsList$(filters, pagedListSettings)
+                        return this.loadTestsToPassList$(filters, pagedListSettings)
                     }
                 ),
-                tap(() => this.fetchingSubject.next(false))
+
             )
             .subscribe();
     }
 
-    private loadStartedTestsList$(filters: Filters, pagedListSettings: PagingSettings) {
+    private loadTestsToPassList$(filters: Filters, pagedListSettings: PagingSettings) {
         return this.userTestApiService
-            .getAllStartedTestsForUser(
+            .getAllTestsToPassForUser(
                 this.authService.getUser().id,
                 pagedListSettings,
                 filters)
@@ -82,7 +90,8 @@ export class StartedTestsService {
                 catchError((error) => {
                     this.pagedListSubject.next(null);
                     return of(null);
-                })
+                }),
+                tap(() => this.fetchingSubject.next(false))
             );
     }
 }

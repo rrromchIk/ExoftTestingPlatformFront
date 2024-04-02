@@ -11,7 +11,7 @@ import {
     DIFFICULTY_FILTER,
     DURATION_SORT_CRITERIA,
 } from "../../../core/constants/filters.constants";
-import {TestsToPassService} from "../services/tests-to-pass.service";
+import {TestsToPassPageService} from "../services/tests-to-pass.page.service";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 
 @UntilDestroy()
@@ -19,7 +19,7 @@ import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
     selector: 'app-tests-to-pass-list',
     templateUrl: './tests-to-pass-list.component.html',
     styleUrl: './tests-to-pass-list.component.scss',
-    providers: [TestsToPassService]
+    providers: [TestsToPassPageService]
 })
 export class TestsToPassListComponent implements OnInit {
     tests: TestToPassModel[] = [];
@@ -30,7 +30,7 @@ export class TestsToPassListComponent implements OnInit {
     sortCriterias: SortCriteria[] = Array.of(DURATION_SORT_CRITERIA, CREATION_DATE_SORT_CRITERIA);
 
 
-    constructor(private testsToPassService: TestsToPassService) {
+    constructor(private testsToPassService: TestsToPassPageService) {
     }
 
     ngOnInit(): void {
@@ -58,6 +58,7 @@ export class TestsToPassListComponent implements OnInit {
     }
 
     onFilterChange(filters: Filters) {
+        this.testsToPassService.resetPagingSettings();
         this.testsToPassService.updateFilters(filters);
     }
 }
