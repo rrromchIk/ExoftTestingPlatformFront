@@ -57,6 +57,14 @@ export class TestTemplatesPageService {
             .pipe(
                 untilDestroyed(this),
                 tap(() => {
+                    if(
+                        this.pagedListSubject.value?.hasPreviousPage &&
+                        this.pagedListSubject.value?.items.length === 1
+                    ) {
+                        const pageListSettings = this.pagedListSubject.value;
+                        pageListSettings.page -= 1;
+                        this.pagingSettingSubject.next(pageListSettings);
+                    }
                     this.refreshTests();
                 }),
                 catchError((error) => {
