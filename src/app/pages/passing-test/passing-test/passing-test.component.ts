@@ -2,11 +2,11 @@ import {Component, Input, OnInit} from '@angular/core';
 import {UserQuestionModel} from "../../../core/interfaces/user-question/user-question.model";
 import {QuestionModel} from "../../../core/interfaces/question/question.model";
 import {PassTestService} from "../../../core/services/pass-test.service";
-import {QuestionService} from "../../../core/services/api/question.api.service";
-import {UserTestService} from "../../../core/services/api/user-test.api.service";
+import {QuestionApiService} from "../../../core/services/api/question.api.service";
+import {UserTestApiService} from "../../../core/services/api/user-test.api.service";
 import {UserTestModel} from "../../../core/interfaces/user-test/user-test.model";
 import {TestModel} from "../../../core/interfaces/test/test.model";
-import {TestService} from "../../../core/services/api/test.api.service";
+import {TestApiService} from "../../../core/services/api/test.api.service";
 
 @Component({
     selector: 'app-passing-test',
@@ -25,9 +25,9 @@ export class PassingTestComponent implements OnInit {
     userId: string = "f9884071-88d7-46af-d332-08dc45be50ce";
 
     constructor(private passTestService: PassTestService,
-                private questionService: QuestionService,
-                private userTestService: UserTestService,
-                private testService: TestService) {
+                private questionService: QuestionApiService,
+                private userTestService: UserTestApiService,
+                private testService: TestApiService) {
     }
 
     @Input()

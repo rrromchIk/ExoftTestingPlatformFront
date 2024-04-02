@@ -11,7 +11,7 @@ import {HttpParamsHelper} from "../../helpers/http-params.helper";
 @Injectable({
     providedIn: 'root'
 })
-export class TestTmplService {
+export class TestTmplApiService {
     private testTemplatesEndpoint = `${environment.apiUrl}/api/tests/templates`;
 
     constructor(private http: HttpClient) {}

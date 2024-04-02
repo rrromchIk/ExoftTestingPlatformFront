@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {PagedListModel} from "../../../core/interfaces/paged-list.model";
 import {PagingSettings} from "../../../core/interfaces/paging-settings";
 import {TestToPassModel} from "../../../core/interfaces/user-test/test-to-pass.model";
-import {UserTestService} from "../../../core/services/api/user-test.api.service";
+import {UserTestApiService} from "../../../core/services/api/user-test.api.service";
 import {SelectFilter} from "../../../core/interfaces/filters/select-filter";
 import {SortCriteria} from "../../../core/interfaces/filters/sort-criteria";
 import {Filters} from "../../../core/interfaces/filters/filters";
@@ -37,7 +37,7 @@ export class TestsToPassListComponent implements OnInit {
         selectFilters: {},
     }
 
-    constructor(private userTestService: UserTestService) {
+    constructor(private userTestService: UserTestApiService) {
     }
 
     ngOnInit(): void {

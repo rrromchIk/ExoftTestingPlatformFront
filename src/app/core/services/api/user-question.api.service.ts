@@ -7,7 +7,7 @@ import {UserQuestionModel} from "../../interfaces/user-question/user-question.mo
 @Injectable({
     providedIn: 'root'
 })
-export class UserQuestionService {
+export class UserQuestionApiService {
     private apiUrl: string = environment.apiUrl;
 
     constructor(private http: HttpClient) {}

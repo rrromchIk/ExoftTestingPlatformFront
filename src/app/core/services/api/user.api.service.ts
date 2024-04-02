@@ -12,7 +12,7 @@ import {HttpParamsHelper} from "../../helpers/http-params.helper";
 @Injectable({
     providedIn: 'root'
 })
-export class UserService {
+export class UserApiService {
     private usersEndpoint = `${environment.apiUrl}/api/users`;
 
     constructor(private http: HttpClient) {

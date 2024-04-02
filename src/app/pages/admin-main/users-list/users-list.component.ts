@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {PagedListModel} from "../../../core/interfaces/paged-list.model";
 import {UserModel} from "../../../core/interfaces/user/user.model";
 import {PagingSettings} from "../../../core/interfaces/paging-settings";
-import {UserService} from "../../../core/services/api/user.api.service";
+import {UserApiService} from "../../../core/services/api/user.api.service";
 import {SelectFilter} from "../../../core/interfaces/filters/select-filter";
 import {SortCriteria} from "../../../core/interfaces/filters/sort-criteria";
 import {Filters} from "../../../core/interfaces/filters/filters";
@@ -40,7 +40,7 @@ export class UsersListComponent {
         selectFilters: {},
     }
 
-    constructor(private usersService: UserService,
+    constructor(private usersService: UserApiService,
                 private dialog: MatDialog) {
     }
 

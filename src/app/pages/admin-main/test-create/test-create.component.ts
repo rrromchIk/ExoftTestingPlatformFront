@@ -17,7 +17,7 @@ import {
     DIFFICULTY_VALUES,
     GENERATION_STRATEGIES_VALUES
 } from "../../../core/constants/view.constants";
-import {TestService} from "../../../core/services/api/test.api.service";
+import {TestApiService} from "../../../core/services/api/test.api.service";
 import {TestCreateDto} from "../../../core/interfaces/test/test-create.dto";
 import {QuestionPoolCreateDto} from "../../../core/interfaces/questions-pool/question-pool-create.dto";
 
@@ -37,7 +37,7 @@ export class TestCreateComponent {
     user!: UserModel;
     createTestForm!: FormGroup;
 
-    constructor(private fb: FormBuilder, private testService: TestService) {
+    constructor(private fb: FormBuilder, private testService: TestApiService) {
     }
 
     ngOnInit() {

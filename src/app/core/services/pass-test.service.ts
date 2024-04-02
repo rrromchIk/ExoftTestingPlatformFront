@@ -1,16 +1,16 @@
 import {Injectable} from "@angular/core";
 import {UserQuestionModel} from "../interfaces/user-question/user-question.model";
 import {QuestionsPoolDetailsModel} from "../interfaces/user-question/questions-pool-details.model";
-import {UserQuestionService} from "./api/user-question.api.service";
+import {UserQuestionApiService} from "./api/user-question.api.service";
 import {map, Observable} from "rxjs";
-import {UserTestService} from "./api/user-test.api.service";
+import {UserTestApiService} from "./api/user-test.api.service";
 import {GenerationStrategy} from "../interfaces/questions-pool/generation-strategy.enum";
 
 @Injectable({
     providedIn: 'root'
 })
 export class PassTestService {
-    constructor(private userQuestionService: UserQuestionService, private userTestService: UserTestService) {}
+    constructor(private userQuestionService: UserQuestionApiService, private userTestService: UserTestApiService) {}
 
     createUserTest(userId: string, testId: string) {
         this.userTestService.createUserTest(userId, testId)

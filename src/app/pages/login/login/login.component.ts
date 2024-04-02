@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {AuthService} from "../../../core/services/api/auth.api.service";
+import {AuthApiService} from "../../../core/services/api/auth.api.service";
 import {Router} from "@angular/router";
 import {UserLoginDto} from "../../../core/interfaces/user/user-login.dto";
 
@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
 
     constructor(
         private fb: FormBuilder,
-        private authService: AuthService,
+        private authService: AuthApiService,
         private router: Router
     ) {}
 

@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {UserModel} from "../../../core/interfaces/user/user.model";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {UserService} from "../../../core/services/api/user.api.service";
+import {UserApiService} from "../../../core/services/api/user.api.service";
 import {environment} from "../../../../environments/environment";
 import {UpdatedUserDto} from "../../../core/interfaces/user/updated-user.dto";
 import {FIRST_AND_LAST_NAMES_PATTERN} from "../../../core/constants/validation.constants";
@@ -22,7 +22,7 @@ export class EditUserItemComponent implements OnInit {
     initialFormValues: any;
 
     constructor(
-        private userService: UserService,
+        private userService: UserApiService,
         private fb: FormBuilder,
         private route: ActivatedRoute
     ) {

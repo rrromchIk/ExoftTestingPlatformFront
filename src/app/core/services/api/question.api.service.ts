@@ -6,7 +6,7 @@ import {QuestionModel} from "../../interfaces/question/question.model";
 @Injectable({
     providedIn: 'root'
 })
-export class QuestionService {
+export class QuestionApiService {
     private questionsEndpoint = `${environment.apiUrl}/api/tests/questions-pools/questions/`;
 
     constructor(private http: HttpClient) {}

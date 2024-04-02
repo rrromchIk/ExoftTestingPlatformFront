@@ -12,7 +12,7 @@ import {UserTestModel} from "../../interfaces/user-test/user-test.model";
 @Injectable({
     providedIn: 'root'
 })
-export class UserTestService {
+export class UserTestApiService {
     private apiUrl: string = environment.apiUrl;
 
     constructor(private http: HttpClient) {

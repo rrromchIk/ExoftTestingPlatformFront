@@ -11,7 +11,7 @@ import {environment} from "../../../../environments/environment";
 @Injectable({
     providedIn: 'root'
 })
-export class AuthService {
+export class AuthApiService {
     private apiUrl: string = environment.apiUrl;
     private authEndpoint: string = `${environment.securityUrl}/api/auth`
 

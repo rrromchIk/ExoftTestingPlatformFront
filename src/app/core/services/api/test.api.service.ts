@@ -12,7 +12,7 @@ import {Filters} from "../../interfaces/filters/filters";
 @Injectable({
     providedIn: 'root'
 })
-export class TestService {
+export class TestApiService {
     private testsEndpoint = `${environment.apiUrl}/api/tests`;
 
     constructor(private http: HttpClient) {}

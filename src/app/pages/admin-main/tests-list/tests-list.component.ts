@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {TestModel} from "../../../core/interfaces/test/test.model";
 import {PagedListModel} from "../../../core/interfaces/paged-list.model";
 import {PagingSettings} from "../../../core/interfaces/paging-settings";
-import {TestService} from "../../../core/services/api/test.api.service";
+import {TestApiService} from "../../../core/services/api/test.api.service";
 import {SelectFilter} from "../../../core/interfaces/filters/select-filter";
 import {SortCriteria} from "../../../core/interfaces/filters/sort-criteria";
 import {Filters} from "../../../core/interfaces/filters/filters";
@@ -44,7 +44,7 @@ export class TestsListComponent implements OnInit {
         selectFilters: {},
     }
 
-    constructor(private testService: TestService, private dialog: MatDialog) {
+    constructor(private testService: TestApiService, private dialog: MatDialog) {
     }
 
     ngOnInit(): void {
