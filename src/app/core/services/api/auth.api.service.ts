@@ -7,6 +7,7 @@ import {UserSignupDto} from "../../interfaces/user/user-signup.dto";
 import {UserModel} from "../../interfaces/user/user.model";
 import {ResetPasswordDto} from "../../interfaces/auth/reset-password.dto";
 import {environment} from "../../../../environments/environment";
+import {UserLoginResponseDto} from "../../interfaces/user/user-login-response.dto";
 
 @Injectable({
     providedIn: 'root'
@@ -19,7 +20,7 @@ export class AuthApiService {
     }
 
     logIn(userLoginDto: UserLoginDto) {
-        return this.http.post<TokenModel>(this.authEndpoint+ "/login", userLoginDto)
+        return this.http.post<UserLoginResponseDto>(this.authEndpoint+ "/login", userLoginDto)
             .pipe(catchError(err => {
                 console.log(err);
                 let errMsg = "An error occurred";
