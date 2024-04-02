@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {PagedListModel} from "../../../core/interfaces/paged-list.model";
 import {PagingSettings} from "../../../core/interfaces/paging-settings";
-import {UserTestApiService} from "../../../core/services/api/user-test.api.service";
 import {StartedTestModel} from "../../../core/interfaces/user-test/started-test.model";
 import {SelectFilter} from "../../../core/interfaces/filters/select-filter";
 import {SortCriteria} from "../../../core/interfaces/filters/sort-criteria";
@@ -11,36 +10,30 @@ import {
     SCORE_SORT_CRITERIA, STARTING_TIME_SORT_CRITERIA,
     USER_TEST_STATUS_FILTER
 } from "../../../core/constants/filters.constants";
+import {StartedTestsService} from "../services/started-tests.service";
+import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 
+@UntilDestroy()
 @Component({
     selector: 'app-started-tests-list',
     templateUrl: './started-tests-list.component.html',
-    styleUrl: './started-tests-list.component.scss'
+    styleUrl: './started-tests-list.component.scss',
+    providers: [StartedTestsService]
 })
 export class StartedTestsListComponent implements OnInit {
     startedTests: StartedTestModel[] = [];
     pagedList: PagedListModel<StartedTestModel> | null = null;
-    isFetching: boolean = false;
+    isFetching: boolean = true;
 
     selectFilters: SelectFilter[] = Array.of(DIFFICULTY_FILTER, USER_TEST_STATUS_FILTER);
     sortCriterias: SortCriteria[] = Array.of(STARTING_TIME_SORT_CRITERIA, SCORE_SORT_CRITERIA);
 
-    pagingSettings: PagingSettings = {
-        page: 1,
-        pageSize: 3
-    }
-
-    filters: Filters = {
-        searchTerm: '',
-        sortColumn: '',
-        sortOrder: '',
-        selectFilters: {},
-    }
-
-    constructor(private userTestService: UserTestApiService) {
-    }
+    constructor(private startedTestsService: StartedTestsService) {}
 
     ngOnInit(): void {
+        this.startedTestsService.fetching$.pipe(untilDestroyed(this)).subscribe(
+            value => this.isFetching = value
+        )
         this.loadStartedTests();
     }
 
@@ -49,32 +42,19 @@ export class StartedTestsListComponent implements OnInit {
     }
 
     loadStartedTests(): void {
-        this.isFetching = true;
-        this.userTestService.getAllStartedTestsForUser("f9884071-88d7-46af-d332-08dc45be50ce",
-            this.pagingSettings, this.filters)
-            .subscribe(responseData => {
-                    console.log(responseData);
-                    this.pagedList = responseData;
-                    this.startedTests = responseData.items;
-                    this.isFetching = false;
-                },
-                error => {
-                    this.pagedList = null;
-                    this.startedTests = [];
-                })
+        this.startedTestsService.pagedListOfStartedTests$.pipe(untilDestroyed(this)).subscribe(
+            response => {
+                this.pagedList = response;
+                this.startedTests = response?.items || [];
+            }
+        )
     }
 
     onPageChangedEvent(pagingSetting: PagingSettings) {
-        this.pagingSettings = pagingSetting;
-        this.loadStartedTests();
+        this.startedTestsService.updatePagingSetting(pagingSetting);
     }
 
     onFilterChange(filters: Filters) {
-        this.filters = filters;
-        this.pagingSettings = {
-            page: 1,
-            pageSize: 3
-        }
-        this.loadStartedTests();
+        this.startedTestsService.updateFilters(filters);
     }
 }
