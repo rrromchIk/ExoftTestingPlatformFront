@@ -102,7 +102,7 @@ export class TestResultComponent {
         return question.answersResults
             .filter(a => a.isCorrect)
             .map(a => a.answerText)
-            .join(', ');
+            .join('; ');
     }
 
     isMultipleChoice(question: QuestionResultModel): boolean {
