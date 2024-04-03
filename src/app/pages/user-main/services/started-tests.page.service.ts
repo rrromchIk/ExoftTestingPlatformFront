@@ -80,7 +80,7 @@ export class StartedTestsPageService {
     private loadStartedTestsList$(filters: Filters, pagedListSettings: PagingSettings) {
         return this.userTestApiService
             .getAllStartedTestsForUser(
-                this.authService.getUser().id,
+                this.authService.getCurrentUser()!.id,
                 pagedListSettings,
                 filters)
             .pipe(

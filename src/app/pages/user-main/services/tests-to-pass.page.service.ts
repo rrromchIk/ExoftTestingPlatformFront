@@ -81,7 +81,7 @@ export class TestsToPassPageService {
     private loadTestsToPassList$(filters: Filters, pagedListSettings: PagingSettings) {
         return this.userTestApiService
             .getAllTestsToPassForUser(
-                this.authService.getUser().id,
+                this.authService.getCurrentUser()!.id,
                 pagedListSettings,
                 filters)
             .pipe(
