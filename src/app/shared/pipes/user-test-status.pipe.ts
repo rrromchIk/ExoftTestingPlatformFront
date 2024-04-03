@@ -6,7 +6,6 @@ import {UserTestStatus} from "../../core/interfaces/user-test/user-test-status.e
 })
 export class UserTestStatusPipe implements PipeTransform {
     transform(value: any): any {
-        console.log(value);
         if (value === UserTestStatus.Completed) {
             return 'Completed';
         } else if(value === UserTestStatus.InProcess) {
