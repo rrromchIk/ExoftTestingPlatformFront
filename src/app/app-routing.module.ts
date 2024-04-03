@@ -15,12 +15,15 @@ import {UsersListComponent} from "./pages/admin-main/users-list/users-list.compo
 import {EditUserItemComponent} from "./pages/admin-main/edit-user-item/edit-user-item.component";
 import {TestTemplatesListComponent} from "./pages/admin-main/test-templates-list/test-templates-list.component";
 import {TestCreateComponent} from "./pages/admin-main/test-create/test-create.component";
+import {AdminGuard, AuthenticatedGuard} from "./core/guards/guards";
+import {NotFoundComponent} from "./pages/not-found/not-found/not-found.component";
+import {ForbiddenComponent} from "./pages/forbidden/forbidden/forbidden.component";
 
 
 const routes: Routes = [
     {
         path: '',
-        redirectTo: '/user-main',
+        redirectTo: '/login',
         pathMatch: 'full'
     },
     // {
@@ -114,7 +117,7 @@ const routes: Routes = [
     },
     {
         path: '**',
-        redirectTo: 'login',
+        redirectTo: '404',
         pathMatch: 'full'
     }
 ];
