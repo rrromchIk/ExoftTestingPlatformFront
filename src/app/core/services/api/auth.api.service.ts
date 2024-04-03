@@ -1,7 +1,5 @@
 import {Injectable} from "@angular/core";
-import {HttpClient, HttpResponse, HttpStatusCode} from "@angular/common/http";
-import {TokenModel} from "../../interfaces/auth/token.model";
-import {catchError, throwError} from "rxjs";
+import {HttpClient, HttpResponse} from "@angular/common/http";
 import {UserLoginDto} from "../../interfaces/user/user-login.dto";
 import {UserSignupDto} from "../../interfaces/user/user-signup.dto";
 import {UserModel} from "../../interfaces/user/user.model";

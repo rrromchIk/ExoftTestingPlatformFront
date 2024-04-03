@@ -1,8 +1,7 @@
 import {Injectable} from "@angular/core";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
-import {BehaviorSubject, catchError, of, tap, throwError} from "rxjs";
 import {TokenModel} from "../../core/interfaces/auth/token.model";
-import {HttpClient, HttpResponse, HttpStatusCode} from "@angular/common/http";
+import {HttpStatusCode} from "@angular/common/http";
 import {UserModel} from "../../core/interfaces/user/user.model";
 import {AuthApiService} from "../../core/services/api/auth.api.service";
 import {UserLoginDto} from "../../core/interfaces/user/user-login.dto";
