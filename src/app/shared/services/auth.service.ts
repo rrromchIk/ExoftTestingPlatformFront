@@ -10,22 +10,25 @@ import {UserModel} from "../../core/interfaces/user/user.model";
     providedIn: "root"
 })
 export class AuthService {
-    constructor(private httpClient: HttpClient) {
-
+    setCurrentUser(user: UserModel): void {
+        console.log("setting user to localstorage");
+        console.log(user);
+        localStorage.setItem('currentUser', JSON.stringify(user));
     }
 
+    setTokensPair(tokens: TokenModel): void {
+        console.log("setting tokens to localstorage");
+        console.log(tokens);
+        localStorage.setItem('tokensPair', JSON.stringify(tokens));
+    }
 
-    getUser(): UserModel {
-        return {
-            createdBy: "",
-            createdTimestamp: new Date(),
-            email: "mashavinnikova2004@gmail.com",
-            emailConfirmed: false,
-            firstName: "Masha",
-            id: "f9884071-88d7-46af-d332-08dc45be50ce",
-            lastName: "Vinnikova",
-            profilePictureFilePath: "",
-            userRole: "Admin"
-        }
+    getCurrentUser(): UserModel | null {
+        const currentUser = localStorage.getItem('currentUser')
+        return currentUser != null ? JSON.parse(currentUser) : null;
+    }
+
+    getTokensPair(): TokenModel | null {
+        const tokens = localStorage.getItem('tokensPair');
+        return tokens != null ? JSON.parse(tokens) : null;
     }
 }

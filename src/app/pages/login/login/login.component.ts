@@ -48,8 +48,8 @@ export class LoginComponent implements OnInit {
                 .pipe(
                     untilDestroyed(this),
                     tap(data => {
-                        this.authService.setUser(data.userData);
-                        this.authService.setTokens(data.tokensPair);
+                        this.authService.setCurrentUser(data.userData);
+                        this.authService.setTokensPair(data.tokensPair);
                         this.router.navigate(['/']);
                     }),
                     catchError(err => {

@@ -1,13 +1,48 @@
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from "@angular/common/http";
 import {Observable} from "rxjs";
+import {AuthService} from "../../shared/services/auth.service";
+import {Injectable} from "@angular/core";
 
+@Injectable()
 export class AuthInterceptorService implements HttpInterceptor {
+    constructor(
+        private authService: AuthService
+    ) {
+    }
+
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        const modifiedRequest = req.clone(
-            {
-                headers: req.headers.append('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5pa2l0aW5yb21hMjYwNUBnbWFpbC5jb20iLCJuYW1laWQiOiIwYTViZmI1OC1kODhhLTRjNDctOTI1My0zZTY1YTZhOTZmYTYiLCJmaXJzdE5hbWUiOiJSb21hbiIsImxhc3ROYW1lIjoiTmlraXRpbiIsInJvbGUiOiJTdXBlckFkbWluIiwibmJmIjoxNzExMzk3MDA1LCJleHAiOjE3MTI1OTM0MDUsImlhdCI6MTcxMTM5NzAwNSwiaXNzIjoiVGVzdGluZ1NlY3VyaXR5IiwiYXVkIjoiVGVzdGluZ0FwaSJ9.bhL1WVtkvDK_hbR7G36WbUWrZhIVz7YqP8jxZ_dn_dE')
-            }
-        )
-        return next.handle(modifiedRequest);
+        return this.processRequestWithToken(req, next);
+            // .pipe(
+            //     catchError(error => {
+            //         if (error instanceof HttpErrorResponse && error.status === 401) {
+            //             return this.authService.refreshToken()
+            //                 .pipe(
+            //                     switchMap(() => this.processRequestWithToken(request, next)),
+            //                     catchError(error => {
+            //                         this.authService.logout();
+            //
+            //                         return throwError(error);
+            //                     })
+            //                 );
+            //         }
+            //
+            //         return throwError(error);
+            //     }));
+    }
+
+
+    private processRequestWithToken(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        const token = this.authService.getTokensPair();
+
+        console.log(token);
+        if (token != null) {
+            request = request.clone({
+                setHeaders: {
+                    Authorization: `Bearer ${token.accessToken}`
+                }
+            });
+        }
+
+        return next.handle(request);
     }
 }
