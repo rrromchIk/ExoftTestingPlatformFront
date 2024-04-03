@@ -28,7 +28,11 @@ export class AuthService {
                     next: (data) => {
                         this.setCurrentUser(data.userData);
                         this.setTokensPair(data.tokensPair);
-                        this.router.navigate(['/']);
+
+                        if(data.userData.role === 'Admin' || data.userData.role === 'SuperAdmin')
+                            this.router.navigate(['/admin']);
+                        else
+                            this.router.navigate(['/user-main']);
                     },
                     error: (err) => {
                         let errMsg: string;
