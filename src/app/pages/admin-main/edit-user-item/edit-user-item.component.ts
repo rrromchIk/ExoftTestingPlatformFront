@@ -88,7 +88,7 @@ export class EditUserItemComponent implements OnInit {
             lastName: this.user.lastName,
             email: this.user.email,
             emailConfirmed: this.user.emailConfirmed,
-            role: this.user.userRole
+            role: this.user.role
         })
         this.uploadedUserAvatar = null;
         this.avatarLinkToDisplay = `${environment.apiUrl}/api/users/${this.user.id}/avatar/download`

@@ -6,5 +6,5 @@ export interface UserModel extends BaseModel {
     email: string;
     emailConfirmed: boolean,
     profilePictureFilePath: string;
-    userRole: string;
+    role: string;
 }
