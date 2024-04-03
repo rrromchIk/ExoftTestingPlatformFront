@@ -30,6 +30,7 @@ const routes: Routes = [
     {
         path: 'user-main',
         component: UserMainComponent,
+        canActivate: [AuthenticatedGuard],
         children: [
             {
                 path: '',
@@ -48,11 +49,13 @@ const routes: Routes = [
     },
     {
         path: 'pass-test',
-        component: PassingTestComponent
+        component: PassingTestComponent,
+        canActivate: [AuthenticatedGuard]
     },
     {
         path: 'test-result',
-        component: TestResultComponent
+        component: TestResultComponent,
+        canActivate: [AuthenticatedGuard]
     },
     {
         path: 'login',
@@ -77,6 +80,7 @@ const routes: Routes = [
     {
         path: 'admin',
         component: AdminMainComponent,
+        canActivate: [AuthenticatedGuard, AdminGuard],
         children: [
             {
                 path: 'tests',
