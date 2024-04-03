@@ -1,10 +1,10 @@
 import {Injectable} from "@angular/core";
-import {UserQuestionModel} from "../interfaces/user-question/user-question.model";
-import {QuestionsPoolDetailsModel} from "../interfaces/user-question/questions-pool-details.model";
-import {UserQuestionApiService} from "./api/user-question.api.service";
+import {UserQuestionModel} from "../../../core/interfaces/user-question/user-question.model";
+import {QuestionsPoolDetailsModel} from "../../../core/interfaces/user-question/questions-pool-details.model";
+import {UserQuestionApiService} from "../../../core/services/api/user-question.api.service";
 import {map, Observable} from "rxjs";
-import {UserTestApiService} from "./api/user-test.api.service";
-import {GenerationStrategy} from "../interfaces/questions-pool/generation-strategy.enum";
+import {UserTestApiService} from "../../../core/services/api/user-test.api.service";
+import {GenerationStrategy} from "../../../core/interfaces/questions-pool/generation-strategy.enum";
 
 @Injectable({
     providedIn: 'root'

@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {AuthApiService} from "../../../core/services/api/auth.api.service";
 import {passwordsMatchValidator} from "../../../core/helpers/form-validators";
-import {ActivatedRoute, Route, Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {ResetPasswordDto} from "../../../core/interfaces/auth/reset-password.dto";
 import {PASSWORD_PATTERN} from "../../../core/constants/validation.constants";
 import {AlertService} from "../../../shared/services/alert.service";
-import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
+import {UntilDestroy} from "@ngneat/until-destroy";
+import {AuthService} from "../../../shared/services/auth.service";
 
 @UntilDestroy()
 @Component({
@@ -23,10 +23,9 @@ export class ResetPasswordComponent implements OnInit {
 
     constructor(
         private fb: FormBuilder,
-        private authService: AuthApiService,
         private route: ActivatedRoute,
         private alertService: AlertService,
-        private router: Router
+        private authService: AuthService
     ) {
     }
 
@@ -57,18 +56,7 @@ export class ResetPasswordComponent implements OnInit {
                     token: this.changePasswordToken,
                     newPassword: this.form.value.password
                 }
-                this.authService.resetPassword(resetPasswordDto)
-                    .pipe(untilDestroyed(this))
-                    .subscribe({
-                        next: () => {
-                            this.alertService.success('Password reset successfully');
-                            this.router.navigate(['/login']);
-                        },
-                        error: (error) => {
-                            this.alertService.error(error);
-                        }
-                    }
-                )
+                this.authService.resetPassword(resetPasswordDto);
             } else {
                 this.alertService.error("Invalid link");
             }

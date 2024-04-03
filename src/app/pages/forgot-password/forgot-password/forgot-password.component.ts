@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {AuthApiService} from "../../../core/services/api/auth.api.service";
-import {AlertService} from "../../../shared/services/alert.service";
-import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
+import {UntilDestroy} from "@ngneat/until-destroy";
+import {AuthService} from "../../../shared/services/auth.service";
 
 @UntilDestroy()
 @Component({
@@ -15,8 +14,7 @@ export class ForgotPasswordComponent implements OnInit {
 
     constructor(
         private fb: FormBuilder,
-        private authService: AuthApiService,
-        private alertService: AlertService
+        private authService: AuthService
     ) {
     }
 
@@ -32,17 +30,7 @@ export class ForgotPasswordComponent implements OnInit {
 
     onSubmit() {
         if (this.form.valid) {
-            this.authService.forgotPassword(this.form.value.email)
-                .pipe(untilDestroyed(this))
-                .subscribe({
-                    next: () => {
-                        this.alertService.success("Email sent success");
-                    },
-                    error: (error) => {
-                        this.alertService.error(error);
-                    }
-                }
-            )
+            this.authService.forgotPassword(this.form.value.email);
         }
     }
 }

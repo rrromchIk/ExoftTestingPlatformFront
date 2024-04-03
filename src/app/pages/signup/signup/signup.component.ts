@@ -1,12 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {AuthApiService} from "../../../core/services/api/auth.api.service";
-import {Router} from "@angular/router";
 import {passwordsMatchValidator} from "../../../core/helpers/form-validators";
 import {UserSignupDto} from "../../../core/interfaces/user/user-signup.dto";
 import {FIRST_AND_LAST_NAMES_PATTERN, PASSWORD_PATTERN} from "../../../core/constants/validation.constants";
-import {AlertService} from "../../../shared/services/alert.service";
-
+import {AuthService} from "../../../shared/services/auth.service";
 
 @Component({
     selector: 'app-signup',
@@ -19,9 +16,7 @@ export class SignupComponent implements OnInit {
 
     constructor(
         private fb: FormBuilder,
-        private authService: AuthApiService,
-        private router: Router,
-        private alertService: AlertService
+        private authService: AuthService,
     ) {
     }
 
@@ -49,16 +44,7 @@ export class SignupComponent implements OnInit {
                 email: this.signUpForm.value.email,
                 password: this.signUpForm.value.password,
             }
-            this.authService.signUp(userSignUpDto).subscribe({
-                    next: () => {
-                        this.alertService.success("Sign up success");
-                        this.router.navigate(['/login']);
-                    },
-                    error: error => {
-                        this.alertService.error(error);
-                    }
-                }
-            )
+            this.authService.signUp(userSignUpDto)
         }
     }
 }

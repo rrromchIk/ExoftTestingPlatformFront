@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {UserQuestionModel} from "../../../core/interfaces/user-question/user-question.model";
 import {QuestionModel} from "../../../core/interfaces/question/question.model";
-import {PassTestService} from "../../../core/services/pass-test.service";
+import {PassTestService} from "../services/pass-test.service";
 import {QuestionApiService} from "../../../core/services/api/question.api.service";
 import {UserTestApiService} from "../../../core/services/api/user-test.api.service";
 import {UserTestModel} from "../../../core/interfaces/user-test/user-test.model";
