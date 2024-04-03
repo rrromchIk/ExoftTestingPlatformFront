@@ -10,6 +10,7 @@ import {FiltersComponent} from "../../components/filters/filters.component";
 import {ReactiveFormsModule} from "@angular/forms";
 import {ConfirmationDialogComponent} from "../../components/dialog/confirmation-dialog.component";
 import {UserTestStatusPipe} from "../../pipes/user-test-status.pipe";
+import {LoaderComponent} from "../../components/loader/loader.component";
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import {UserTestStatusPipe} from "../../pipes/user-test-status.pipe";
         DateTimeFormatPipe,
         FiltersComponent,
         ConfirmationDialogComponent,
-        UserTestStatusPipe
+        UserTestStatusPipe,
+        LoaderComponent
     ],
     imports: [
         CommonModule,
@@ -35,7 +37,8 @@ import {UserTestStatusPipe} from "../../pipes/user-test-status.pipe";
         UserAvatarUploaderComponent,
         DateTimeFormatPipe,
         FiltersComponent,
-        UserTestStatusPipe
+        UserTestStatusPipe,
+        LoaderComponent
     ]
 })
 export class AppComponentsModule {
