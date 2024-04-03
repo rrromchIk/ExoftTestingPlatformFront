@@ -15,7 +15,8 @@ import {AppComponentsModule} from "../../shared/modules/app-components/app-compo
         CommonModule,
         AppMaterialModule,
         ReactiveFormsModule,
-        AppComponentsModule
+        AppComponentsModule,
+        RouterModule
     ]
 })
 export class ForgotPasswordModule {
