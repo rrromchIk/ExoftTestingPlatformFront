@@ -5,6 +5,7 @@ import {Router} from "@angular/router";
 import {passwordsMatchValidator} from "../../../core/helpers/form-validators";
 import {UserSignupDto} from "../../../core/interfaces/user/user-signup.dto";
 import {FIRST_AND_LAST_NAMES_PATTERN, PASSWORD_PATTERN} from "../../../core/constants/validation.constants";
+import {AlertService} from "../../../shared/services/alert.service";
 
 
 @Component({
@@ -13,14 +14,14 @@ import {FIRST_AND_LAST_NAMES_PATTERN, PASSWORD_PATTERN} from "../../../core/cons
     styleUrl: './signup.component.scss'
 })
 export class SignupComponent implements OnInit {
-    errorMessage: string | null = null;
     hidePassword: boolean = true;
     signUpForm!: FormGroup;
 
     constructor(
         private fb: FormBuilder,
         private authService: AuthApiService,
-        private router: Router
+        private router: Router,
+        private alertService: AlertService
     ) {
     }
 
@@ -48,13 +49,14 @@ export class SignupComponent implements OnInit {
                 email: this.signUpForm.value.email,
                 password: this.signUpForm.value.password,
             }
-            this.authService.signUp(userSignUpDto).subscribe(
-                res => {
-                    console.log(res);
-                    this.router.navigate(['/login']);
-                },
-                error => {
-                    this.errorMessage = error;
+            this.authService.signUp(userSignUpDto).subscribe({
+                    next: () => {
+                        this.alertService.success("Sign up success");
+                        this.router.navigate(['/login']);
+                    },
+                    error: error => {
+                        this.alertService.error(error);
+                    }
                 }
             )
         }

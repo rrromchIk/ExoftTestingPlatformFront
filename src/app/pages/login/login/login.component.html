@@ -4,8 +4,6 @@
             <mat-card-title class="form-card-tittle">Login</mat-card-title>
         </mat-card-header>
 
-        <p *ngIf="errorMessage != null">{{errorMessage}}</p>
-
         <mat-card-content>
             <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
                 <mat-form-field class="form-card-field full-width-field field-bottom-margin">

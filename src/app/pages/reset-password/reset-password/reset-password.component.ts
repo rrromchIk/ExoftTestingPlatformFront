@@ -2,17 +2,19 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthApiService} from "../../../core/services/api/auth.api.service";
 import {passwordsMatchValidator} from "../../../core/helpers/form-validators";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Route, Router} from "@angular/router";
 import {ResetPasswordDto} from "../../../core/interfaces/auth/reset-password.dto";
 import {PASSWORD_PATTERN} from "../../../core/constants/validation.constants";
+import {AlertService} from "../../../shared/services/alert.service";
+import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 
+@UntilDestroy()
 @Component({
-  selector: 'app-reset-password',
-  templateUrl: './reset-password.component.html',
-  styleUrl: './reset-password.component.scss'
+    selector: 'app-reset-password',
+    templateUrl: './reset-password.component.html',
+    styleUrl: './reset-password.component.scss'
 })
 export class ResetPasswordComponent implements OnInit {
-    errorMessage: string | null = null;
     form!: FormGroup;
     hidePassword: boolean = true;
     userId!: string | null;
@@ -22,8 +24,11 @@ export class ResetPasswordComponent implements OnInit {
     constructor(
         private fb: FormBuilder,
         private authService: AuthApiService,
-        private route: ActivatedRoute
-    ) {}
+        private route: ActivatedRoute,
+        private alertService: AlertService,
+        private router: Router
+    ) {
+    }
 
     ngOnInit() {
         this.form = this.fb.group({
@@ -45,25 +50,27 @@ export class ResetPasswordComponent implements OnInit {
     }
 
     onSubmit() {
-        this.errorMessage = null;
-        if(this.form.valid) {
-            if(this.userId && this.changePasswordToken) {
+        if (this.form.valid) {
+            if (this.userId && this.changePasswordToken) {
                 const resetPasswordDto: ResetPasswordDto = {
                     userId: this.userId,
                     token: this.changePasswordToken,
                     newPassword: this.form.value.password
                 }
-                this.authService.resetPassword(resetPasswordDto).subscribe(
-                    res => {
-                        console.log(res)
-                        this.errorMessage = null;
-                    },
-                    error => {
-                        this.errorMessage = error
+                this.authService.resetPassword(resetPasswordDto)
+                    .pipe(untilDestroyed(this))
+                    .subscribe({
+                        next: () => {
+                            this.alertService.success('Password reset successfully');
+                            this.router.navigate(['/login']);
+                        },
+                        error: (error) => {
+                            this.alertService.error(error);
+                        }
                     }
                 )
             } else {
-                this.errorMessage = "Invalid link"
+                this.alertService.error("Invalid link");
             }
         }
     }

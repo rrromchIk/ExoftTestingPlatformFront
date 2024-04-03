@@ -3,21 +3,27 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthApiService} from "../../../core/services/api/auth.api.service";
 import {Router} from "@angular/router";
 import {UserLoginDto} from "../../../core/interfaces/user/user-login.dto";
+import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
+import {catchError, of, tap} from "rxjs";
+import {AuthService} from "../../../shared/services/auth.service";
+import {AlertService} from "../../../shared/services/alert.service";
 
+@UntilDestroy()
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
     styleUrl: './login.component.scss'
 })
 export class LoginComponent implements OnInit {
-    errorMessage: string | null = null;
     hidePassword: boolean = true;
     loginForm!: FormGroup;
 
     constructor(
         private fb: FormBuilder,
-        private authService: AuthApiService,
-        private router: Router
+        private authApiService: AuthApiService,
+        private router: Router,
+        private authService: AuthService,
+        private alertService: AlertService
     ) {}
 
     ngOnInit() {
@@ -38,15 +44,20 @@ export class LoginComponent implements OnInit {
                 password: this.loginForm.value.password
             }
 
-            this.authService.logIn(userLoginDto).subscribe(
-                res => {
-                    console.log(res);
-                    this.router.navigate(['/']);
-                },
-                error => {
-                    this.errorMessage = error;
-                }
-            )
+            this.authApiService.logIn(userLoginDto)
+                .pipe(
+                    untilDestroyed(this),
+                    tap(data => {
+                        this.authService.setUser(data.userData);
+                        this.authService.setTokens(data.tokensPair);
+                        this.router.navigate(['/']);
+                    }),
+                    catchError(err => {
+                        this.alertService.error(err);
+                        return of(null);
+                    })
+                )
+                .subscribe()
         }
     }
 }

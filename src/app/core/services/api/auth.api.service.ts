@@ -38,9 +38,7 @@ export class AuthApiService {
         return this.http.post<UserModel>(`${this.apiUrl}/api/users/register`, userSignUpDto)
             .pipe(catchError(err => {
                 console.log(err);
-                let errMsg = "An error occurred";
-
-                errMsg = err.error.detail
+                let errMsg = err.error.detail;
 
                 return throwError(() => new Error(errMsg));
             }))
@@ -69,11 +67,14 @@ export class AuthApiService {
             resetPasswordDto,
             {
                 observe: 'response'
-            }).pipe(catchError(err => {
-            console.log(err);
+            })
+            .pipe(
+                catchError(err => {
+                    console.log(err);
 
-            let errMsg = err.error.detail;
-            return throwError(() => new Error(errMsg));
-        }))
+                    let errMsg = err.error.detail;
+                    return throwError(() => new Error(errMsg));
+                })
+            )
     }
 }
