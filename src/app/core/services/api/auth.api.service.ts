@@ -6,6 +6,7 @@ import {UserModel} from "../../interfaces/user/user.model";
 import {ResetPasswordDto} from "../../interfaces/auth/reset-password.dto";
 import {environment} from "../../../../environments/environment";
 import {UserLoginResponseDto} from "../../interfaces/user/user-login-response.dto";
+import {TokenModel} from "../../interfaces/auth/token.model";
 
 @Injectable({
     providedIn: 'root'
@@ -26,10 +27,14 @@ export class AuthApiService {
     }
 
     forgotPassword(email: string) {
-        return this.http.post<HttpResponse<any>>(this.authEndpoint + "/password/forgot", { email });
+        return this.http.post(this.authEndpoint + "/password/forgot", { email });
     }
 
     resetPassword(resetPasswordDto: ResetPasswordDto) {
-        return this.http.post<HttpResponse<any>>(this.authEndpoint + "/password/reset", resetPasswordDto);
+        return this.http.post(this.authEndpoint + "/password/reset", resetPasswordDto);
+    }
+
+    refreshToken(tokens: TokenModel) {
+        return this.http.post<TokenModel>(this.authEndpoint + "/refresh", tokens);
     }
 }

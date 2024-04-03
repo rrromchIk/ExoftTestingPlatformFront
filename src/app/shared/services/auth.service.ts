@@ -9,6 +9,7 @@ import {AlertService} from "./alert.service";
 import {Router} from "@angular/router";
 import {UserSignupDto} from "../../core/interfaces/user/user-signup.dto";
 import {ResetPasswordDto} from "../../core/interfaces/auth/reset-password.dto";
+import {of, tap} from "rxjs";
 
 @UntilDestroy()
 @Injectable({
@@ -83,6 +84,29 @@ export class AuthService {
                     this.alertService.error(err.error.detail);
                 }
             });
+    }
+
+    refreshToken() {
+        const tokensModel = this.getTokensPair();
+
+        if (tokensModel) {
+            return this.authApiService.refreshToken(tokensModel)
+                .pipe(
+                    tap(data => {
+                        console.log("refreshing tokens")
+                        this.setTokensPair(data);
+                    })
+                )
+        } else {
+            return of();
+        }
+    }
+
+    logout() {
+        console.log("logout");
+        localStorage.removeItem('currentUser');
+        localStorage.removeItem('tokensPair');
+        this.router.navigate(['/login'])
     }
 
     setCurrentUser(user: UserModel): void {
