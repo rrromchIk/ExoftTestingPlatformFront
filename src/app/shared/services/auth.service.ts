@@ -9,7 +9,8 @@ import {AlertService} from "./alert.service";
 import {Router} from "@angular/router";
 import {UserSignupDto} from "../../core/interfaces/user/user-signup.dto";
 import {ResetPasswordDto} from "../../core/interfaces/auth/reset-password.dto";
-import {of, tap} from "rxjs";
+import {finalize, of, tap} from "rxjs";
+import {LoaderService} from "./loader.service";
 
 @UntilDestroy()
 @Injectable({
@@ -18,18 +19,26 @@ import {of, tap} from "rxjs";
 export class AuthService {
     constructor(private authApiService: AuthApiService,
                 private alertService: AlertService,
-                private router: Router) {
+                private router: Router,
+                private loaderService: LoaderService) {
     }
 
     logIn(userLoginDto: UserLoginDto) {
+        this.loaderService.showLoading(true);
+
         this.authApiService.logIn(userLoginDto)
-            .pipe(untilDestroyed(this))
+            .pipe(
+                untilDestroyed(this),
+                finalize(() => {
+                    this.loaderService.showLoading(false);
+                })
+            )
             .subscribe({
                     next: (data) => {
                         this.setCurrentUser(data.userData);
                         this.setTokensPair(data.tokensPair);
 
-                        if(data.userData.role === 'Admin' || data.userData.role === 'SuperAdmin')
+                        if (data.userData.role === 'Admin' || data.userData.role === 'SuperAdmin')
                             this.router.navigate(['/admin']);
                         else
                             this.router.navigate(['/user-main']);
@@ -50,8 +59,15 @@ export class AuthService {
 
 
     signUp(userSignUpDto: UserSignupDto) {
+        this.loaderService.showLoading(true);
+
         this.authApiService.signUp(userSignUpDto)
-            .pipe(untilDestroyed(this))
+            .pipe(
+                untilDestroyed(this),
+                finalize(() => {
+                    this.loaderService.showLoading(false);
+                })
+            )
             .subscribe({
                 next: () => {
                     this.alertService.success("Sign up success");
@@ -64,8 +80,15 @@ export class AuthService {
     }
 
     forgotPassword(email: string) {
+        this.loaderService.showLoading(true);
+
         this.authApiService.forgotPassword(email)
-            .pipe(untilDestroyed(this))
+            .pipe(
+                untilDestroyed(this),
+                finalize(() => {
+                    this.loaderService.showLoading(false);
+                })
+            )
             .subscribe({
                 next: () => {
                     this.alertService.success("Email sent success");
@@ -77,8 +100,15 @@ export class AuthService {
     }
 
     resetPassword(resetPasswordDto: ResetPasswordDto) {
+        this.loaderService.showLoading(true);
+
         this.authApiService.resetPassword(resetPasswordDto)
-            .pipe(untilDestroyed(this))
+            .pipe(
+                untilDestroyed(this),
+                finalize(() => {
+                    this.loaderService.showLoading(false);
+                })
+            )
             .subscribe({
                 next: () => {
                     this.alertService.success('Password reset successfully');
