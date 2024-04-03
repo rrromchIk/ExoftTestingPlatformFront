@@ -101,6 +101,14 @@ const routes: Routes = [
         ]
     },
     {
+        path: 'forbidden',
+        component: ForbiddenComponent
+    },
+    {
+        path: '404',
+        component: NotFoundComponent
+    },
+    {
         path: '**',
         redirectTo: 'login',
         pathMatch: 'full'
