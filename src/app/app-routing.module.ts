@@ -86,6 +86,11 @@ const routes: Routes = [
         canActivate: [AuthenticatedGuard, AdminGuard],
         children: [
             {
+                path: '',
+                redirectTo: 'tests',
+                pathMatch: "full"
+            },
+            {
                 path: 'tests',
                 component: TestsListComponent
             },
