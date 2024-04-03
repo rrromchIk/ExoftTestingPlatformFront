@@ -25,12 +25,12 @@ export class AuthInterceptorService implements HttpInterceptor {
                                 catchError(error => {
                                     this.authService.logout();
 
-                                    return throwError(error);
+                                    return throwError(() => error);
                                 })
                             );
                     }
 
-                    return throwError(() => new Error(error));
+                    return throwError(() => error);
                 }));
     }
 
