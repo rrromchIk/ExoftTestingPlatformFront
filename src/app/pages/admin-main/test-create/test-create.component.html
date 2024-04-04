@@ -24,6 +24,11 @@
                     <mat-error *ngIf="getFormControl('testName')?.hasError('required')">
                         Test name <strong>required</strong>
                     </mat-error>
+
+                    <mat-error *ngIf="getFormControl('testName')?.hasError('conflict') &&
+                                !getFormControl('testName')?.hasError('required')">
+                        Test name is already taken.
+                    </mat-error>
                 </mat-form-field>
 
                 <mat-form-field class="form-card-field field-bottom-margin">

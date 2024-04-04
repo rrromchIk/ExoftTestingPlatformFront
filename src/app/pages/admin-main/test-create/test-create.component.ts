@@ -20,7 +20,13 @@ import {
 import {TestApiService} from "../../../core/services/api/test.api.service";
 import {TestCreateDto} from "../../../core/interfaces/test/test-create.dto";
 import {QuestionPoolCreateDto} from "../../../core/interfaces/questions-pool/question-pool-create.dto";
+import {LoaderService} from "../../../shared/services/loader.service";
+import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
+import {finalize} from "rxjs";
+import {AlertService} from "../../../shared/services/alert.service";
+import {HttpStatusCode} from "@angular/common/http";
 
+@UntilDestroy(this)
 @Component({
     selector: 'app-test-create',
     templateUrl: './test-create.component.html',
@@ -37,7 +43,10 @@ export class TestCreateComponent {
     user!: UserModel;
     createTestForm!: FormGroup;
 
-    constructor(private fb: FormBuilder, private testService: TestApiService) {
+    constructor(private fb: FormBuilder,
+                private testService: TestApiService,
+                private loaderService: LoaderService,
+                private alertService: AlertService) {
     }
 
     ngOnInit() {
@@ -89,13 +98,24 @@ export class TestCreateComponent {
                 questionsPools: questionPools
             };
 
-            console.log(testCreateDto);
-
+            this.loaderService.showLoading(true);
             this.testService.createTest(testCreateDto)
-                .subscribe(response => {
-                    console.log(response);
-                }, error => {
-                    console.log(error);
+                .pipe(
+                    untilDestroyed(this),
+                    finalize(() => this.loaderService.showLoading(false))
+                )
+                .subscribe({
+                    next: response => {
+                        this.alertService.success('Test created successfully');
+                    },
+                    error: error => {
+                        if(error.status === HttpStatusCode.Conflict) {
+                            this.alertService.error('Test with such name already exists');
+                            this.createTestForm.controls['testName'].setErrors({'conflict': true})
+                        } else {
+                            this.alertService.error('Error while creating test');
+                        }
+                    }
                 });
         }
     }
