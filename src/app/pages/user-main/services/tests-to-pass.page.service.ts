@@ -16,6 +16,7 @@ import {PagedListModel} from "../../../core/interfaces/paged-list.model";
 import {UserTestApiService} from "../../../core/services/api/user-test.api.service";
 import {AuthService} from "../../../shared/services/auth.service";
 import {TestToPassModel} from "../../../core/interfaces/user-test/test-to-pass.model";
+import {LoaderService} from "../../../shared/services/loader.service";
 
 @UntilDestroy()
 @Injectable()
@@ -34,16 +35,15 @@ export class TestsToPassPageService {
 
     private pagedListSubject: BehaviorSubject<PagedListModel<TestToPassModel> | null> =
         new BehaviorSubject<PagedListModel<TestToPassModel> | null>(null);
-    private fetchingSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
     public filters$: Observable<Filters> = this.filtersSubject.asObservable();
 
     public pagingSetting$: Observable<PagingSettings> = this.pagingSettingSubject.asObservable();
     public pagedListOfTestsToPass$: Observable<PagedListModel<TestToPassModel> | null> = this.pagedListSubject.asObservable();
-    public fetching$: Observable<boolean> = this.fetchingSubject.asObservable();
 
     constructor(private userTestApiService: UserTestApiService,
-                private authService: AuthService) {
+                private authService: AuthService,
+                private loaderService: LoaderService) {
         this.onFiltersAndPagingChange();
     }
 
@@ -68,7 +68,7 @@ export class TestsToPassPageService {
             .pipe(
                 untilDestroyed(this),
 
-                tap(() => this.fetchingSubject.next(true)),
+                tap(() => this.loaderService.showLoading(true)),
                 switchMap(([filters, pagedListSettings]) => {
                         return this.loadTestsToPassList$(filters, pagedListSettings)
                     }
@@ -92,7 +92,7 @@ export class TestsToPassPageService {
                     this.pagedListSubject.next(null);
                     return of(null);
                 }),
-                tap(() => this.fetchingSubject.next(false))
+                tap(() => this.loaderService.showLoading(false))
             );
     }
 }

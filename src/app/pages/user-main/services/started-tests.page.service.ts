@@ -17,6 +17,7 @@ import {PagingSettings} from "../../../core/interfaces/paging-settings";
 import {PagedListModel} from "../../../core/interfaces/paged-list.model";
 import {StartedTestModel} from "../../../core/interfaces/user-test/started-test.model";
 import {AuthService} from "../../../shared/services/auth.service";
+import {LoaderService} from "../../../shared/services/loader.service";
 
 @UntilDestroy()
 @Injectable()
@@ -35,15 +36,14 @@ export class StartedTestsPageService {
 
     private pagedListSubject: BehaviorSubject<PagedListModel<StartedTestModel> | null> =
         new BehaviorSubject<PagedListModel<StartedTestModel> | null>(null);
-    private fetchingSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
     public filters$: Observable<Filters> = this.filtersSubject.asObservable();
     public pagingSetting$: Observable<PagingSettings> = this.pagingSettingSubject.asObservable();
     public pagedListOfStartedTests$: Observable<PagedListModel<StartedTestModel> | null> = this.pagedListSubject.asObservable();
-    public fetching$: Observable<boolean> = this.fetchingSubject.asObservable();
 
     constructor(private userTestApiService: UserTestApiService,
-                private authService: AuthService) {
+                private authService: AuthService,
+                private loaderService: LoaderService) {
         this.onFiltersAndPagingChange();
     }
 
@@ -67,12 +67,12 @@ export class StartedTestsPageService {
         combineLatest([this.filters$, this.pagingSetting$])
             .pipe(
                 untilDestroyed(this),
-                tap(() => this.fetchingSubject.next(true)),
+                tap(() => this.loaderService.showLoading(true)),
                 switchMap(([filters, pagedListSettings]) => {
                         return this.loadStartedTestsList$(filters, pagedListSettings)
                     }
                 ),
-                tap(() => this.fetchingSubject.next(false))
+                tap(() => this.loaderService.showLoading(false))
             )
             .subscribe();
     }

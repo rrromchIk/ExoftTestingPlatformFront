@@ -28,7 +28,6 @@ import {filter} from "rxjs";
 export class TestTemplatesListComponent implements OnInit {
     testTemplates: TestTemplateModel[] = [];
     pagedList: PagedListModel<TestTemplateModel> | null = null;
-    isFetching: boolean = false;
 
     selectFilters: SelectFilter[] = Array.of(DIFFICULTY_FILTER);
     sortCriterias: SortCriteria[] = Array.of(DURATION_SORT_CRITERIA, CREATION_DATE_SORT_CRITERIA, MODIFICATION_DATE_SORT_CRITERIA);
@@ -38,9 +37,6 @@ export class TestTemplatesListComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.testTmplsPageService.fetching$.pipe(untilDestroyed(this)).subscribe(
-            value => this.isFetching = value
-        )
         this.loadTestTemplates();
     }
 

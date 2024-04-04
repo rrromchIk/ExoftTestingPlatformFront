@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {PagedListModel} from "../../../core/interfaces/paged-list.model";
 import {PagingSettings} from "../../../core/interfaces/paging-settings";
 import {TestToPassModel} from "../../../core/interfaces/user-test/test-to-pass.model";
-import {UserTestApiService} from "../../../core/services/api/user-test.api.service";
 import {SelectFilter} from "../../../core/interfaces/filters/select-filter";
 import {SortCriteria} from "../../../core/interfaces/filters/sort-criteria";
 import {Filters} from "../../../core/interfaces/filters/filters";
@@ -24,7 +23,6 @@ import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 export class TestsToPassListComponent implements OnInit {
     tests: TestToPassModel[] = [];
     pagedList: PagedListModel<TestToPassModel> | null = null;
-    isFetching: boolean = true;
 
     selectFilters: SelectFilter[] = Array.of(DIFFICULTY_FILTER);
     sortCriterias: SortCriteria[] = Array.of(DURATION_SORT_CRITERIA, CREATION_DATE_SORT_CRITERIA);
@@ -34,9 +32,6 @@ export class TestsToPassListComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.testsToPassService.fetching$.pipe(untilDestroyed(this)).subscribe(
-            value => this.isFetching = value
-        )
         this.loadTestsToPass();
     }
 

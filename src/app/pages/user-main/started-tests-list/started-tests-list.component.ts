@@ -23,7 +23,6 @@ import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 export class StartedTestsListComponent implements OnInit {
     startedTests: StartedTestModel[] = [];
     pagedList: PagedListModel<StartedTestModel> | null = null;
-    isFetching: boolean = true;
 
     selectFilters: SelectFilter[] = Array.of(DIFFICULTY_FILTER, USER_TEST_STATUS_FILTER);
     sortCriterias: SortCriteria[] = Array.of(STARTING_TIME_SORT_CRITERIA, SCORE_SORT_CRITERIA);
@@ -31,9 +30,6 @@ export class StartedTestsListComponent implements OnInit {
     constructor(private startedTestsService: StartedTestsPageService) {}
 
     ngOnInit(): void {
-        this.startedTestsService.fetching$.pipe(untilDestroyed(this)).subscribe(
-            value => this.isFetching = value
-        )
         this.loadStartedTests();
     }
 

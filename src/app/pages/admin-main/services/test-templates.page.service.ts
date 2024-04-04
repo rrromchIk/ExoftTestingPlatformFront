@@ -1,11 +1,13 @@
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 import {Injectable} from "@angular/core";
-import {BehaviorSubject, catchError, combineLatest, Observable, of, switchMap, tap} from "rxjs";
+import {BehaviorSubject, catchError, combineLatest, finalize, Observable, of, switchMap, tap} from "rxjs";
 import {Filters} from "../../../core/interfaces/filters/filters";
 import {PagingSettings} from "../../../core/interfaces/paging-settings";
 import {PagedListModel} from "../../../core/interfaces/paged-list.model";
 import {TestTmplApiService} from "../../../core/services/api/test-tmpl.api.service";
 import {TestTemplateModel} from "../../../core/interfaces/test-template/test-template.model";
+import {AlertService} from "../../../shared/services/alert.service";
+import {LoaderService} from "../../../shared/services/loader.service";
 
 @UntilDestroy()
 @Injectable()
@@ -24,14 +26,13 @@ export class TestTemplatesPageService {
 
     private pagedListSubject: BehaviorSubject<PagedListModel<TestTemplateModel> | null> =
         new BehaviorSubject<PagedListModel<TestTemplateModel> | null>(null);
-    private fetchingSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-
     public filters$: Observable<Filters> = this.filtersSubject.asObservable();
     public pagingSetting$: Observable<PagingSettings> = this.pagingSettingSubject.asObservable();
     public pagedListOfTestTemplates$: Observable<PagedListModel<TestTemplateModel> | null> = this.pagedListSubject.asObservable();
-    public fetching$: Observable<boolean> = this.fetchingSubject.asObservable();
 
-    constructor(private testTemplateApiService: TestTmplApiService) {
+    constructor(private testTemplateApiService: TestTmplApiService,
+                private alertService: AlertService,
+                private loaderService: LoaderService) {
         this.onFiltersAndPagingChange();
     }
 
@@ -52,11 +53,16 @@ export class TestTemplatesPageService {
     }
 
     deleteTestTemplate(testTmplId: string) {
+        this.loaderService.showLoading(true);
+
         this.testTemplateApiService
             .deleteTestTemplate(testTmplId)
             .pipe(
                 untilDestroyed(this),
-                tap(() => {
+                finalize(() => this.loaderService.showLoading(false))
+            )
+            .subscribe({
+                next: () => {
                     if(
                         this.pagedListSubject.value?.hasPreviousPage &&
                         this.pagedListSubject.value?.items.length === 1
@@ -65,26 +71,26 @@ export class TestTemplatesPageService {
                         pageListSettings.page -= 1;
                         this.pagingSettingSubject.next(pageListSettings);
                     }
+
+                    this.alertService.success('Test template deleted successfully');
                     this.refreshTests();
-                }),
-                catchError((error) => {
-                    console.error('Error deleting test:', error);
-                    return of(null);
-                }),
-            )
-            .subscribe();
+                },
+                error: () => {
+                    this.alertService.error('Unable to delete test template');
+                }
+            });
     }
 
     private onFiltersAndPagingChange() {
         combineLatest([this.filters$, this.pagingSetting$])
             .pipe(
                 untilDestroyed(this),
-                tap(() => this.fetchingSubject.next(true)),
+                tap(() => this.loaderService.showLoading(true)),
                 switchMap(([filters, pagedListSettings]) => {
                         return this.loadTestTemplatesList$(filters, pagedListSettings)
                     }
                 ),
-                tap(() => this.fetchingSubject.next(false))
+                tap(() => this.loaderService.showLoading(false))
             )
             .subscribe();
     }

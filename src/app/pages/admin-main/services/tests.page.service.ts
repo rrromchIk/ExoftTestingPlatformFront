@@ -1,4 +1,4 @@
-import {BehaviorSubject, catchError, combineLatest, Observable, of, switchMap, tap} from "rxjs";
+import {BehaviorSubject, catchError, combineLatest, finalize, Observable, of, switchMap, tap} from "rxjs";
 import {Filters} from "../../../core/interfaces/filters/filters";
 import {PagingSettings} from "../../../core/interfaces/paging-settings";
 import {PagedListModel} from "../../../core/interfaces/paged-list.model";
@@ -6,6 +6,8 @@ import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 import {TestModel} from "../../../core/interfaces/test/test.model";
 import {TestApiService} from "../../../core/services/api/test.api.service";
 import {Injectable} from "@angular/core";
+import {AlertService} from "../../../shared/services/alert.service";
+import {LoaderService} from "../../../shared/services/loader.service";
 
 @UntilDestroy()
 @Injectable()
@@ -24,14 +26,14 @@ export class TestsPageService {
 
     private pagedListSubject: BehaviorSubject<PagedListModel<TestModel> | null> =
         new BehaviorSubject<PagedListModel<TestModel> | null>(null);
-    private fetchingSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
     public filters$: Observable<Filters> = this.filtersSubject.asObservable();
     public pagingSetting$: Observable<PagingSettings> = this.pagingSettingSubject.asObservable();
     public pagedListOfTests$: Observable<PagedListModel<TestModel> | null> = this.pagedListSubject.asObservable();
-    public fetching$: Observable<boolean> = this.fetchingSubject.asObservable();
 
-    constructor(private testApiService: TestApiService) {
+    constructor(private testApiService: TestApiService,
+                private alertService: AlertService,
+                private loaderService: LoaderService) {
         this.onFiltersAndPagingChange();
     }
 
@@ -52,26 +54,35 @@ export class TestsPageService {
     }
 
     updatePublishedStatus(test: TestModel) {
+        this.loaderService.showLoading(true);
         this.testApiService.updatePublishedStatus(test.id, !test.isPublished)
             .pipe(
                 untilDestroyed(this),
-                tap(() => {
-                    this.refreshTests();
-                }), catchError((error) => {
-                    console.error('Error deleting test:', error);
-                    return of(null);
-                })
+                finalize(() => this.loaderService.showLoading(false))
             )
-            .subscribe();
+            .subscribe({
+                next: () => {
+                    this.alertService.success('Published status updated successfully')
+                    this.refreshTests();
+                },
+                error: () => {
+                    this.alertService.error('Unable to update test published status')
+                }
+            });
     }
 
     deleteTest(testId: string) {
+        this.loaderService.showLoading(true);
+
         this.testApiService
             .deleteTest(testId)
             .pipe(
                 untilDestroyed(this),
-                tap(() => {
-                    if(
+                finalize(() => this.loaderService.showLoading(false))
+            )
+            .subscribe({
+                next: () => {
+                    if (
                         this.pagedListSubject.value?.hasPreviousPage &&
                         this.pagedListSubject.value?.items.length === 1
                     ) {
@@ -79,26 +90,25 @@ export class TestsPageService {
                         pageListSettings.page -= 1;
                         this.pagingSettingSubject.next(pageListSettings);
                     }
+                    this.alertService.success('Test deleted successfully');
                     this.refreshTests();
-                }),
-                catchError((error) => {
-                    console.error('Error deleting test:', error);
-                    return of(null);
-                }),
-            )
-            .subscribe();
+                },
+                error: () => {
+                    this.alertService.error('Unable to delete test');
+                }
+            });
     }
 
     private onFiltersAndPagingChange() {
         combineLatest([this.filters$, this.pagingSetting$])
             .pipe(
                 untilDestroyed(this),
-                tap(() => this.fetchingSubject.next(true)),
+                tap(() => this.loaderService.showLoading(true)),
                 switchMap(([filters, pagedListSettings]) => {
                         return this.loadTestsList$(filters, pagedListSettings)
                     }
                 ),
-                tap(() => this.fetchingSubject.next(false))
+                tap(() => this.loaderService.showLoading(false))
             )
             .subscribe();
     }
