@@ -9,7 +9,7 @@ import {AlertService} from "./alert.service";
 import {Router} from "@angular/router";
 import {UserSignupDto} from "../../core/interfaces/user/user-signup.dto";
 import {ResetPasswordDto} from "../../core/interfaces/auth/reset-password.dto";
-import {finalize, of, tap} from "rxjs";
+import {BehaviorSubject, finalize, Observable, of, tap} from "rxjs";
 import {LoaderService} from "./loader.service";
 
 @UntilDestroy()
@@ -22,6 +22,9 @@ export class AuthService {
                 private router: Router,
                 private loaderService: LoaderService) {
     }
+
+    private currentUserSubject: BehaviorSubject<UserModel | null> = new BehaviorSubject<UserModel | null>(null);
+    public currentUser$: Observable<UserModel | null> = this.currentUserSubject.asObservable();
 
     logIn(userLoginDto: UserLoginDto) {
         this.loaderService.showLoading(true);
@@ -140,12 +143,14 @@ export class AuthService {
         console.log("logout");
         localStorage.removeItem('currentUser');
         localStorage.removeItem('tokensPair');
+        this.currentUserSubject.next(null);
         this.router.navigate(['/login'])
     }
 
     setCurrentUser(user: UserModel): void {
         console.log("setting user to localstorage");
         console.log(user);
+        this.currentUserSubject.next(user);
         localStorage.setItem('currentUser', JSON.stringify(user));
     }
 
