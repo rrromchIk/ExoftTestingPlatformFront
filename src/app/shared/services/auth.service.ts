@@ -23,7 +23,7 @@ export class AuthService {
                 private loaderService: LoaderService) {
     }
 
-    private currentUserSubject: BehaviorSubject<UserModel | null> = new BehaviorSubject<UserModel | null>(null);
+    private currentUserSubject: BehaviorSubject<UserModel | null> = new BehaviorSubject<UserModel | null>(this.getCurrentUser());
     public currentUser$: Observable<UserModel | null> = this.currentUserSubject.asObservable();
 
     logIn(userLoginDto: UserLoginDto) {
