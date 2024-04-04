@@ -43,7 +43,9 @@ export class EditUserItemComponent implements OnInit {
 
         this.editUserPageService.getUserById(userId);
 
-        this.editUserPageService.user$.subscribe({
+        this.editUserPageService.user$
+            .pipe(untilDestroyed(this))
+            .subscribe({
                 next: (data) => {
                     if(data) {
                         this.user = data;
