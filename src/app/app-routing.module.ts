@@ -18,6 +18,7 @@ import {TestCreateComponent} from "./pages/admin-main/test-create/test-create.co
 import {AdminGuard, AuthenticatedGuard} from "./core/guards/guards";
 import {NotFoundComponent} from "./pages/not-found/not-found/not-found.component";
 import {ForbiddenComponent} from "./pages/forbidden/forbidden/forbidden.component";
+import {TestEditComponent} from "./pages/admin-main/test-edit/test-edit.component";
 
 
 const routes: Routes = [
@@ -109,6 +110,10 @@ const routes: Routes = [
             {
                 path: 'test-create',
                 component: TestCreateComponent
+            },
+            {
+                path: 'tests/:id/edit',
+                component: TestEditComponent
             }
         ]
     },

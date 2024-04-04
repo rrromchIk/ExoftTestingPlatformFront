@@ -17,7 +17,11 @@
 
     <mat-card-footer class="list-item-card-footer">
         <mat-card-actions class="list-item-card-actions">
-            <button mat-raised-button color="primary">Edit</button>
+            <button mat-raised-button
+                    color="primary"
+                    [routerLink]="[test.id, 'edit']">
+                Edit
+            </button>
             <button mat-raised-button color="warn" (click)="onDeleteTest(test)">Delete</button>
             <button *ngIf="!test.isPublished" mat-raised-button class="green-button"
                     (click)="onUpdatePublishedStatus(test)">
