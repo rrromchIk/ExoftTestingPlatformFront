@@ -27,7 +27,6 @@ import {filter} from "rxjs";
 export class UsersListComponent {
     pagedListOfUsers: PagedListModel<UserModel> | null = null;
     users: UserModel[] = [];
-    isFetching: boolean = false;
 
     selectFilters: SelectFilter[] = Array.of(USER_ROLE_FILTER, EMAIL_CONFIRMED_FILTER);
     sortCriterias: SortCriteria[] = Array.of(CREATION_DATE_SORT_CRITERIA, MODIFICATION_DATE_SORT_CRITERIA);
