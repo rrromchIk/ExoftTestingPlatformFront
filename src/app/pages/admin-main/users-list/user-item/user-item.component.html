@@ -12,8 +12,14 @@
     </mat-card-content>
     <mat-card-footer class="list-item-card-footer">
         <mat-card-actions class="list-item-card-actions">
-            <button mat-raised-button color="primary" [routerLink]="[user.id, 'edit']">Edit</button>
-            <button mat-raised-button color="warn" (click)="onDeleteUser(user)">Delete</button>
+            <button *ngIf="canModifyUser()"
+                mat-raised-button
+                    color="primary"
+                    [routerLink]="[user.id, 'edit']">
+                Edit
+            </button>
+            <button *ngIf="canModifyUser()"
+                mat-raised-button color="warn" (click)="onDeleteUser(user)">Delete</button>
         </mat-card-actions>
         <div class="list-item-card-metadata">
             <mat-card-subtitle>Created on: {{ user.createdTimestamp | dateTimeFormat }}</mat-card-subtitle>
