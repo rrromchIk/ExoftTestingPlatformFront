@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams, HttpResponse} from '@angular/common/http';
-import {Observable, of} from 'rxjs';
+import {Observable} from 'rxjs';
 import {PagedListModel} from "../../interfaces/paged-list.model";
 import {PagingSettings} from "../../interfaces/paging-settings";
 import {TestModel} from "../../interfaces/test/test.model";
@@ -8,6 +8,7 @@ import {environment} from "../../../../environments/environment";
 import {TestCreateDto} from "../../interfaces/test/test-create.dto";
 import {HttpParamsHelper} from "../../helpers/http-params.helper";
 import {Filters} from "../../interfaces/filters/filters";
+import {TestUpdateDto} from "../../interfaces/test/test-update.dto";
 
 @Injectable({
     providedIn: 'root'
@@ -51,31 +52,11 @@ export class TestApiService {
         return this.http.post(this.testsEndpoint, testCreateDto)
     }
 
-    // getAllTests(pagingSettings: PagingSettings): Observable<PagedListModel<TestModel>> {
-    //     // Mock data for tests
-    //     const mockPagedData: PagedListModel<TestModel> = {
-    //         items: [
-    //             { id: '1', name: 'Test 1', subject: 'Subject 1', duration: 30, isPublished: true, difficulty: 'Easy', createdTimestamp: new Date(), modifiedTimestamp: new Date(), createdBy: 'User 1' },
-    //             { id: '2', name: 'Test 2', subject: 'Subject 2', duration: 45, isPublished: false, difficulty: 'Medium', createdTimestamp: new Date(), modifiedTimestamp: new Date(), createdBy: 'User 2' },
-    //             { id: '3', name: 'Test 3', subject: 'Subject 3', duration: 60, isPublished: true, difficulty: 'Hard', createdTimestamp: new Date(), modifiedTimestamp: new Date(), createdBy: 'User 3' }
-    //         ],
-    //         page: 1,
-    //         pageSize: 3,
-    //         totalCount: 3,
-    //         hasNextPage: false,
-    //         hasPreviousPage: false
-    //     };
-    //
-    //     return of(mockPagedData);
-    // }
-    //
-    // deleteTest(testId: string) {
-    //     // Mock implementation
-    //     return of(null);
-    // }
-    //
-    // updatePublishedStatus(testId: string, updatedStatus: boolean) {
-    //     // Mock implementation
-    //     return of(null);
-    // }
+    updateTest(testId: string, updatedTest: TestUpdateDto) {
+        return this.http.put(this.testsEndpoint + `/${testId}`, updatedTest);
+    }
+
+    getTestById(testId: string) {
+        return this.http.get<TestModel>(this.testsEndpoint + `/${testId}/questions-pools`);
+    }
 }
