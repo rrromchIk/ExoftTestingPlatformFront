@@ -40,7 +40,6 @@ export class TestCreateComponent {
     protected readonly GENERATION_STRATEGIES_VALUES: string[] = GENERATION_STRATEGIES_VALUES;
     protected readonly MIN_NUMBER_OF_QUEST_TO_GENERATE: number = MIN_NUMBER_OF_QUEST_TO_GENERATE;
 
-    user!: UserModel;
     createTestForm!: FormGroup;
 
     constructor(private fb: FormBuilder,

@@ -105,7 +105,8 @@
                                         Must be <strong>greater than {{MIN_TEST_DURATION_VALUE}}</strong>
                                     </mat-error>
 
-                                    <mat-error *ngIf="control.get('numOfQuestionsToBeGenerated')?.hasError('required')">
+                                    <mat-error *ngIf="control.get('numOfQuestionsToBeGenerated')?.hasError('required') &&
+                                                      control.get('questionPoolName')?.touched">
                                         Field is <strong>required</strong>
                                     </mat-error>
                                 </mat-form-field>
@@ -119,7 +120,8 @@
                                         </mat-option>
                                     </mat-select>
 
-                                    <mat-error *ngIf="control.get('generationStrategy')?.hasError('required')">
+                                    <mat-error *ngIf="control.get('generationStrategy')?.hasError('required') &&
+                                                      control.get('questionPoolName')?.touched">
                                         Generation strategy is <strong>required</strong>
                                     </mat-error>
                                 </mat-form-field>
