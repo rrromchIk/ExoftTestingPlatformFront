@@ -1,4 +1,5 @@
 import {BaseModel} from "../base.model";
+import {QuestionsPoolModel} from "../questions-pool/questions-pool.model";
 
 export interface TestModel extends BaseModel {
     name: string;
@@ -7,4 +8,5 @@ export interface TestModel extends BaseModel {
     isPublished: boolean;
     difficulty: string;
     templateId?: string;
+    questionsPools: QuestionsPoolModel[];
 }
