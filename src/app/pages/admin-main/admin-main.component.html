@@ -23,6 +23,9 @@
                 <a mat-list-item routerLink="./users">
                     <span>All users</span>
                 </a>
+                <a *ngIf="currentUser?.role === 'SuperAdmin'" mat-list-item routerLink="./register-user">
+                    <span>Register user</span>
+                </a>
             </mat-nav-list>
         </mat-expansion-panel>
 
