@@ -55,11 +55,11 @@ export class TestEditPageService {
                     error: (error) => {
                         if (error.status === HttpStatusCode.Conflict) {
                             this.alertService.error('Test with such name already exists');
+                            this.testSubject.error(new Error());
                         } else {
-                            this.alertService.error('Error while creating test');
+                            this.alertService.error("Unable to update test");
                         }
 
-                        this.alertService.error("Unable to update test");
                         this.testSubject.next(this.testSubject.getValue());
                     }
                 }

@@ -79,6 +79,9 @@ export class TestEditComponent {
                                 this.testDataChanges = this.isFormChanged(initialFormValues);
                             });
                     }
+                },
+                error: () => {
+                    this.editTestForm.controls['testName'].setErrors({'conflict': true})
                 }
             });
     }
