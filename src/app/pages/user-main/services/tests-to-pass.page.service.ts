@@ -16,7 +16,6 @@ import {PagedListModel} from "../../../core/interfaces/paged-list.model";
 import {UserTestApiService} from "../../../core/services/api/user-test.api.service";
 import {AuthService} from "../../../shared/services/auth.service";
 import {TestToPassModel} from "../../../core/interfaces/user-test/test-to-pass.model";
-import {LoaderService} from "../../../shared/services/loader.service";
 
 @UntilDestroy()
 @Injectable()
@@ -42,8 +41,7 @@ export class TestsToPassPageService {
     public pagedListOfTestsToPass$: Observable<PagedListModel<TestToPassModel> | null> = this.pagedListSubject.asObservable();
 
     constructor(private userTestApiService: UserTestApiService,
-                private authService: AuthService,
-                private loaderService: LoaderService) {
+                private authService: AuthService) {
         this.onFiltersAndPagingChange();
     }
 
@@ -67,13 +65,10 @@ export class TestsToPassPageService {
         combineLatest([this.filters$, this.pagingSetting$])
             .pipe(
                 untilDestroyed(this),
-
-                tap(() => this.loaderService.showLoading(true)),
                 switchMap(([filters, pagedListSettings]) => {
                         return this.loadTestsToPassList$(filters, pagedListSettings)
                     }
-                ),
-
+                )
             )
             .subscribe();
     }
@@ -91,8 +86,7 @@ export class TestsToPassPageService {
                 catchError((error) => {
                     this.pagedListSubject.next(null);
                     return of(null);
-                }),
-                tap(() => this.loaderService.showLoading(false))
+                })
             );
     }
 }

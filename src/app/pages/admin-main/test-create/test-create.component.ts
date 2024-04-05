@@ -20,9 +20,7 @@ import {
 import {TestApiService} from "../../../core/services/api/test.api.service";
 import {TestCreateDto} from "../../../core/interfaces/test/test-create.dto";
 import {QuestionPoolCreateDto} from "../../../core/interfaces/questions-pool/question-pool-create.dto";
-import {LoaderService} from "../../../shared/services/loader.service";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
-import {finalize} from "rxjs";
 import {AlertService} from "../../../shared/services/alert.service";
 import {HttpStatusCode} from "@angular/common/http";
 import {Router} from "@angular/router";
@@ -45,7 +43,6 @@ export class TestCreateComponent {
 
     constructor(private fb: FormBuilder,
                 private testService: TestApiService,
-                private loaderService: LoaderService,
                 private alertService: AlertService,
                 private router: Router) {
     }
@@ -99,12 +96,8 @@ export class TestCreateComponent {
                 questionsPools: questionPools
             };
 
-            this.loaderService.showLoading(true);
             this.testService.createTest(testCreateDto)
-                .pipe(
-                    untilDestroyed(this),
-                    finalize(() => this.loaderService.showLoading(false))
-                )
+                .pipe(untilDestroyed(this))
                 .subscribe({
                     next: response => {
                         this.alertService.success('Test created successfully');

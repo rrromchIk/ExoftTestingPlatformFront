@@ -1,13 +1,12 @@
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 import {Injectable} from "@angular/core";
-import {BehaviorSubject, catchError, combineLatest, finalize, Observable, of, switchMap, tap} from "rxjs";
+import {BehaviorSubject, catchError, combineLatest, Observable, of, switchMap, tap} from "rxjs";
 import {Filters} from "../../../core/interfaces/filters/filters";
 import {PagingSettings} from "../../../core/interfaces/paging-settings";
 import {PagedListModel} from "../../../core/interfaces/paged-list.model";
 import {UserApiService} from "../../../core/services/api/user.api.service";
 import {UserModel} from "../../../core/interfaces/user/user.model";
 import {AlertService} from "../../../shared/services/alert.service";
-import {LoaderService} from "../../../shared/services/loader.service";
 
 @UntilDestroy()
 @Injectable()
@@ -32,8 +31,7 @@ export class UsersPageService {
     public pagedListOfUsers$: Observable<PagedListModel<UserModel> | null> = this.pagedListSubject.asObservable();
 
     constructor(private userApiService: UserApiService,
-                private alertService: AlertService,
-                private loaderService: LoaderService) {
+                private alertService: AlertService) {
         this.onFiltersAndPagingChange();
     }
 
@@ -54,14 +52,9 @@ export class UsersPageService {
     }
 
     deleteUser(testId: string) {
-        this.loaderService.showLoading(true);
-
         this.userApiService
             .deleteUser(testId)
-            .pipe(
-                untilDestroyed(this),
-                finalize(() => this.loaderService.showLoading(false))
-            )
+            .pipe(untilDestroyed(this))
             .subscribe({
                 next: () => {
                     if(
@@ -85,12 +78,10 @@ export class UsersPageService {
         combineLatest([this.filters$, this.pagingSetting$])
             .pipe(
                 untilDestroyed(this),
-                tap(() => this.loaderService.showLoading(true)),
                 switchMap(([filters, pagedListSettings]) => {
                         return this.loadTestsList$(filters, pagedListSettings)
                     }
-                ),
-                tap(() => this.loaderService.showLoading(false))
+                )
             )
             .subscribe();
     }

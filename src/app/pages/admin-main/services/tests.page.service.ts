@@ -1,4 +1,4 @@
-import {BehaviorSubject, catchError, combineLatest, finalize, Observable, of, switchMap, tap} from "rxjs";
+import {BehaviorSubject, catchError, combineLatest, Observable, of, switchMap, tap} from "rxjs";
 import {Filters} from "../../../core/interfaces/filters/filters";
 import {PagingSettings} from "../../../core/interfaces/paging-settings";
 import {PagedListModel} from "../../../core/interfaces/paged-list.model";
@@ -7,7 +7,6 @@ import {TestModel} from "../../../core/interfaces/test/test.model";
 import {TestApiService} from "../../../core/services/api/test.api.service";
 import {Injectable} from "@angular/core";
 import {AlertService} from "../../../shared/services/alert.service";
-import {LoaderService} from "../../../shared/services/loader.service";
 
 @UntilDestroy()
 @Injectable()
@@ -32,8 +31,7 @@ export class TestsPageService {
     public pagedListOfTests$: Observable<PagedListModel<TestModel> | null> = this.pagedListSubject.asObservable();
 
     constructor(private testApiService: TestApiService,
-                private alertService: AlertService,
-                private loaderService: LoaderService) {
+                private alertService: AlertService) {
         this.onFiltersAndPagingChange();
     }
 
@@ -54,12 +52,8 @@ export class TestsPageService {
     }
 
     updatePublishedStatus(test: TestModel) {
-        this.loaderService.showLoading(true);
         this.testApiService.updatePublishedStatus(test.id, !test.isPublished)
-            .pipe(
-                untilDestroyed(this),
-                finalize(() => this.loaderService.showLoading(false))
-            )
+            .pipe(untilDestroyed(this))
             .subscribe({
                 next: () => {
                     this.alertService.success('Published status updated successfully')
@@ -72,14 +66,9 @@ export class TestsPageService {
     }
 
     deleteTest(testId: string) {
-        this.loaderService.showLoading(true);
-
         this.testApiService
             .deleteTest(testId)
-            .pipe(
-                untilDestroyed(this),
-                finalize(() => this.loaderService.showLoading(false))
-            )
+            .pipe(untilDestroyed(this))
             .subscribe({
                 next: () => {
                     if (
@@ -103,12 +92,10 @@ export class TestsPageService {
         combineLatest([this.filters$, this.pagingSetting$])
             .pipe(
                 untilDestroyed(this),
-                tap(() => this.loaderService.showLoading(true)),
                 switchMap(([filters, pagedListSettings]) => {
                         return this.loadTestsList$(filters, pagedListSettings)
                     }
-                ),
-                tap(() => this.loaderService.showLoading(false))
+                )
             )
             .subscribe();
     }

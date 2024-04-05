@@ -1,8 +1,7 @@
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 import {Injectable} from "@angular/core";
 import {AlertService} from "../../../shared/services/alert.service";
-import {LoaderService} from "../../../shared/services/loader.service";
-import {BehaviorSubject, finalize, Observable} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import {TestApiService} from "../../../core/services/api/test.api.service";
 import {TestModel} from "../../../core/interfaces/test/test.model";
 import {TestUpdateDto} from "../../../core/interfaces/test/test-update.dto";
@@ -18,20 +17,14 @@ export class TestEditPageService {
     public test$: Observable<TestModel  | null> = this.testSubject.asObservable();
 
     constructor(private alertService: AlertService,
-                private loaderService: LoaderService,
                 private testApiService: TestApiService,
                 private questionsPoolApiService: QuestionsPoolApiService) {
 
     }
 
     getTestById(testId: string) {
-        this.loaderService.showLoading(true);
-
         this.testApiService.getTestById(testId)
-            .pipe(
-                untilDestroyed(this),
-                finalize(() => this.loaderService.showLoading(false))
-            )
+            .pipe(untilDestroyed(this))
             .subscribe({
                 next: response => {
                     this.testSubject.next(response);
@@ -44,13 +37,8 @@ export class TestEditPageService {
 
 
     updateTest(testId: string, testToUpdate: TestUpdateDto) {
-        this.loaderService.showLoading(true);
-
         this.testApiService.updateTest(testId, testToUpdate)
-            .pipe(
-                untilDestroyed(this),
-                finalize(() => this.loaderService.showLoading(false))
-            )
+            .pipe(untilDestroyed(this))
             .subscribe({
                     next: () => {
                         this.alertService.success("Test updated successfully");
@@ -79,13 +67,8 @@ export class TestEditPageService {
     }
 
     createQuestionPool(testId: string, questionPoolDto: QuestionPoolCreateDto) {
-        this.loaderService.showLoading(true);
-
         this.questionsPoolApiService.createQuestionsPool(testId, questionPoolDto)
-            .pipe(
-                untilDestroyed(this),
-                finalize(() => this.loaderService.showLoading(false))
-            )
+            .pipe(untilDestroyed(this))
             .subscribe({
                 next: (data) => {
                     this.alertService.success("Questions pool saved successfully");
@@ -104,13 +87,8 @@ export class TestEditPageService {
     }
 
     deleteQuestionsPool(questionsPool: QuestionsPoolModel) {
-        this.loaderService.showLoading(true);
-
         this.questionsPoolApiService.deleteQuestionsPool(questionsPool.id)
-            .pipe(
-                untilDestroyed(this),
-                finalize(() => this.loaderService.showLoading(false))
-            )
+            .pipe(untilDestroyed(this))
             .subscribe({
                 next: () => {
                     this.alertService.success("Questions pool deleted successfully");

@@ -1,8 +1,7 @@
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 import {Injectable} from "@angular/core";
 import {AlertService} from "../../../shared/services/alert.service";
-import {LoaderService} from "../../../shared/services/loader.service";
-import {BehaviorSubject, finalize, Observable} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import {UserModel} from "../../../core/interfaces/user/user.model";
 import {UserApiService} from "../../../core/services/api/user.api.service";
 import {UpdatedUserDto} from "../../../core/interfaces/user/updated-user.dto";
@@ -14,19 +13,13 @@ export class EditUserPageService {
     public user$: Observable<UserModel  | null> = this.userSubject.asObservable();
 
     constructor(private userApiService: UserApiService,
-                private alertService: AlertService,
-                private loaderService: LoaderService) {
+                private alertService: AlertService) {
     }
 
 
     getUserById(userId: string) {
-        this.loaderService.showLoading(true);
-
         this.userApiService.getUserById(userId)
-            .pipe(
-                untilDestroyed(this),
-                finalize(() => this.loaderService.showLoading(false))
-            )
+            .pipe(untilDestroyed(this))
             .subscribe({
                 next: response => {
                     this.userSubject.next(response);
@@ -38,13 +31,8 @@ export class EditUserPageService {
     }
 
     updateUser(userId: string, userToUpdate: UpdatedUserDto) {
-        this.loaderService.showLoading(true);
-
         this.userApiService.update(userId, userToUpdate)
-            .pipe(
-                untilDestroyed(this),
-                finalize(() => this.loaderService.showLoading(false))
-            )
+            .pipe(untilDestroyed(this))
             .subscribe({
                 next: () => {
                     this.alertService.success("User updated successfully");
@@ -65,13 +53,8 @@ export class EditUserPageService {
     }
 
     updateUserAvatar(userId: string, avatarUploaded: File) {
-        this.loaderService.showLoading(true);
-
         this.userApiService.updateAvatar(userId, avatarUploaded)
-            .pipe(
-                untilDestroyed(this),
-                finalize(() => this.loaderService.showLoading(false))
-            )
+            .pipe(untilDestroyed(this))
             .subscribe({
                 next: () => {
                     this.alertService.success("User avatar updated successfully");

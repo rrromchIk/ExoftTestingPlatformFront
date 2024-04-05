@@ -17,7 +17,6 @@ import {PagingSettings} from "../../../core/interfaces/paging-settings";
 import {PagedListModel} from "../../../core/interfaces/paged-list.model";
 import {StartedTestModel} from "../../../core/interfaces/user-test/started-test.model";
 import {AuthService} from "../../../shared/services/auth.service";
-import {LoaderService} from "../../../shared/services/loader.service";
 
 @UntilDestroy()
 @Injectable()
@@ -42,8 +41,7 @@ export class StartedTestsPageService {
     public pagedListOfStartedTests$: Observable<PagedListModel<StartedTestModel> | null> = this.pagedListSubject.asObservable();
 
     constructor(private userTestApiService: UserTestApiService,
-                private authService: AuthService,
-                private loaderService: LoaderService) {
+                private authService: AuthService) {
         this.onFiltersAndPagingChange();
     }
 
@@ -67,12 +65,10 @@ export class StartedTestsPageService {
         combineLatest([this.filters$, this.pagingSetting$])
             .pipe(
                 untilDestroyed(this),
-                tap(() => this.loaderService.showLoading(true)),
                 switchMap(([filters, pagedListSettings]) => {
                         return this.loadStartedTestsList$(filters, pagedListSettings)
                     }
                 ),
-                tap(() => this.loaderService.showLoading(false))
             )
             .subscribe();
     }

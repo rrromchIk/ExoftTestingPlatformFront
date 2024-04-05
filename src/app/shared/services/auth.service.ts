@@ -9,8 +9,7 @@ import {AlertService} from "./alert.service";
 import {Router} from "@angular/router";
 import {UserSignupDto} from "../../core/interfaces/user/user-signup.dto";
 import {ResetPasswordDto} from "../../core/interfaces/auth/reset-password.dto";
-import {BehaviorSubject, finalize, Observable, of, tap} from "rxjs";
-import {LoaderService} from "./loader.service";
+import {BehaviorSubject, catchError, Observable, of, tap} from "rxjs";
 
 @UntilDestroy()
 @Injectable({
@@ -19,23 +18,15 @@ import {LoaderService} from "./loader.service";
 export class AuthService {
     constructor(private authApiService: AuthApiService,
                 private alertService: AlertService,
-                private router: Router,
-                private loaderService: LoaderService) {
+                private router: Router) {
     }
 
     private currentUserSubject: BehaviorSubject<UserModel | null> = new BehaviorSubject<UserModel | null>(this.getCurrentUser());
     public currentUser$: Observable<UserModel | null> = this.currentUserSubject.asObservable();
 
     logIn(userLoginDto: UserLoginDto) {
-        this.loaderService.showLoading(true);
-
         this.authApiService.logIn(userLoginDto)
-            .pipe(
-                untilDestroyed(this),
-                finalize(() => {
-                    this.loaderService.showLoading(false);
-                })
-            )
+            .pipe(untilDestroyed(this))
             .subscribe({
                     next: (data) => {
                         this.setCurrentUser(data.userData);
@@ -62,15 +53,8 @@ export class AuthService {
 
 
     signUp(userSignUpDto: UserSignupDto) {
-        this.loaderService.showLoading(true);
-
         this.authApiService.signUp(userSignUpDto)
-            .pipe(
-                untilDestroyed(this),
-                finalize(() => {
-                    this.loaderService.showLoading(false);
-                })
-            )
+            .pipe(untilDestroyed(this))
             .subscribe({
                 next: () => {
                     this.alertService.success("Sign up success");
@@ -83,15 +67,8 @@ export class AuthService {
     }
 
     forgotPassword(email: string) {
-        this.loaderService.showLoading(true);
-
         this.authApiService.forgotPassword(email)
-            .pipe(
-                untilDestroyed(this),
-                finalize(() => {
-                    this.loaderService.showLoading(false);
-                })
-            )
+            .pipe(untilDestroyed(this))
             .subscribe({
                 next: () => {
                     this.alertService.success("Email sent success");
@@ -103,15 +80,8 @@ export class AuthService {
     }
 
     resetPassword(resetPasswordDto: ResetPasswordDto) {
-        this.loaderService.showLoading(true);
-
         this.authApiService.resetPassword(resetPasswordDto)
-            .pipe(
-                untilDestroyed(this),
-                finalize(() => {
-                    this.loaderService.showLoading(false);
-                })
-            )
+            .pipe(untilDestroyed(this))
             .subscribe({
                 next: () => {
                     this.alertService.success('Password reset successfully');
@@ -132,6 +102,11 @@ export class AuthService {
                     tap(data => {
                         console.log("refreshing tokens")
                         this.setTokensPair(data);
+                    }),
+                    catchError(() => {
+                        this.logout();
+
+                        return of();
                     })
                 )
         } else {

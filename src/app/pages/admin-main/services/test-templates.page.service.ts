@@ -1,13 +1,12 @@
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 import {Injectable} from "@angular/core";
-import {BehaviorSubject, catchError, combineLatest, finalize, Observable, of, switchMap, tap} from "rxjs";
+import {BehaviorSubject, catchError, combineLatest, Observable, of, switchMap, tap} from "rxjs";
 import {Filters} from "../../../core/interfaces/filters/filters";
 import {PagingSettings} from "../../../core/interfaces/paging-settings";
 import {PagedListModel} from "../../../core/interfaces/paged-list.model";
 import {TestTmplApiService} from "../../../core/services/api/test-tmpl.api.service";
 import {TestTemplateModel} from "../../../core/interfaces/test-template/test-template.model";
 import {AlertService} from "../../../shared/services/alert.service";
-import {LoaderService} from "../../../shared/services/loader.service";
 
 @UntilDestroy()
 @Injectable()
@@ -31,8 +30,7 @@ export class TestTemplatesPageService {
     public pagedListOfTestTemplates$: Observable<PagedListModel<TestTemplateModel> | null> = this.pagedListSubject.asObservable();
 
     constructor(private testTemplateApiService: TestTmplApiService,
-                private alertService: AlertService,
-                private loaderService: LoaderService) {
+                private alertService: AlertService) {
         this.onFiltersAndPagingChange();
     }
 
@@ -53,14 +51,9 @@ export class TestTemplatesPageService {
     }
 
     deleteTestTemplate(testTmplId: string) {
-        this.loaderService.showLoading(true);
-
         this.testTemplateApiService
             .deleteTestTemplate(testTmplId)
-            .pipe(
-                untilDestroyed(this),
-                finalize(() => this.loaderService.showLoading(false))
-            )
+            .pipe(untilDestroyed(this))
             .subscribe({
                 next: () => {
                     if(
@@ -85,12 +78,10 @@ export class TestTemplatesPageService {
         combineLatest([this.filters$, this.pagingSetting$])
             .pipe(
                 untilDestroyed(this),
-                tap(() => this.loaderService.showLoading(true)),
                 switchMap(([filters, pagedListSettings]) => {
                         return this.loadTestTemplatesList$(filters, pagedListSettings)
                     }
                 ),
-                tap(() => this.loaderService.showLoading(false))
             )
             .subscribe();
     }
