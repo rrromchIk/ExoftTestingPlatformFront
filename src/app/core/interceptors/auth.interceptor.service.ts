@@ -42,8 +42,7 @@ export class AuthInterceptorService implements HttpInterceptor {
     private processRequestWithToken(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const token = this.authService.getTokensPair();
 
-        console.log("appending token")
-        console.log(token);
+        console.log("interceptor::appending access token to outgoing request")
         if (token != null) {
             request = request.clone({
                 setHeaders: {

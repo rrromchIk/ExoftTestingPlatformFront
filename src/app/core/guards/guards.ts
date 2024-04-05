@@ -13,8 +13,6 @@ export const AdminGuard: CanActivateFn = (
     const currentUser = authService.getCurrentUser();
 
     const userRole = currentUser?.role;
-    console.log(currentUser);
-    console.log(userRole);
     if (userRole === 'Admin' || userRole === 'SuperAdmin') {
         console.log("adminGuard::allowed");
 
