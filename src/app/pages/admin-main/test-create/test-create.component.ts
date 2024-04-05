@@ -25,6 +25,7 @@ import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 import {finalize} from "rxjs";
 import {AlertService} from "../../../shared/services/alert.service";
 import {HttpStatusCode} from "@angular/common/http";
+import {Router} from "@angular/router";
 
 @UntilDestroy(this)
 @Component({
@@ -45,7 +46,8 @@ export class TestCreateComponent {
     constructor(private fb: FormBuilder,
                 private testService: TestApiService,
                 private loaderService: LoaderService,
-                private alertService: AlertService) {
+                private alertService: AlertService,
+                private router: Router) {
     }
 
     ngOnInit() {
@@ -106,6 +108,7 @@ export class TestCreateComponent {
                 .subscribe({
                     next: response => {
                         this.alertService.success('Test created successfully');
+                        this.router.navigate(['admin', 'tests', response.id, 'edit']);
                     },
                     error: error => {
                         if(error.status === HttpStatusCode.Conflict) {

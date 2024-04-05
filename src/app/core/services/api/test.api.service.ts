@@ -49,7 +49,7 @@ export class TestApiService {
     }
 
     createTest(testCreateDto: TestCreateDto) {
-        return this.http.post(this.testsEndpoint, testCreateDto)
+        return this.http.post<TestModel>(this.testsEndpoint, testCreateDto)
     }
 
     updateTest(testId: string, updatedTest: TestUpdateDto) {
