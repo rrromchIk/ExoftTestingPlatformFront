@@ -5,10 +5,10 @@ import {MatDialog} from "@angular/material/dialog";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 import {
     MAX_ANSWER_TEXT_LENGTH,
-    MAX_QUESTION_POOL_NAME_LENGTH, MAX_QUESTION_TEXT_LENGTH,
-    MAX_TEST_NAME_LENGTH,
-    MIN_NUMBER_OF_QUEST_TO_GENERATE, MIN_QUESTION_SCORE_VALUE,
-    MIN_TEST_DURATION_VALUE
+    MAX_QUESTION_POOL_NAME_LENGTH,
+    MAX_QUESTION_TEXT_LENGTH,
+    MIN_NUMBER_OF_QUEST_TO_GENERATE,
+    MIN_QUESTION_SCORE_VALUE,
 } from "../../../core/constants/validation.constants";
 import {GENERATION_STRATEGIES_VALUES} from "../../../core/constants/view.constants";
 import {QuestionsPoolModel} from "../../../core/interfaces/questions-pool/questions-pool.model";
@@ -30,8 +30,11 @@ import {AlertService} from "../../../shared/services/alert.service";
     providers: [QuestionsPoolEditPageService]
 })
 export class QuestionsPoolEditComponent {
-    protected readonly MAX_TEST_NAME_LENGTH: number = MAX_TEST_NAME_LENGTH;
-    protected readonly MIN_TEST_DURATION_VALUE: number = MIN_TEST_DURATION_VALUE;
+    protected readonly MAX_QUESTION_POOL_NAME_LENGTH = MAX_QUESTION_POOL_NAME_LENGTH;
+    protected readonly MIN_NUMBER_OF_QUEST_TO_GENERATE = MIN_NUMBER_OF_QUEST_TO_GENERATE;
+    protected readonly MAX_QUESTION_TEXT_LENGTH = MAX_QUESTION_TEXT_LENGTH;
+    protected readonly MIN_QUESTION_SCORE_VALUE = MIN_QUESTION_SCORE_VALUE;
+    protected readonly MAX_ANSWER_TEXT_LENGTH = MAX_ANSWER_TEXT_LENGTH;
     protected readonly GENERATION_STRATEGIES_VALUES: string[] = GENERATION_STRATEGIES_VALUES;
 
     questionsPool!: QuestionsPoolModel;
@@ -144,7 +147,7 @@ export class QuestionsPoolEditComponent {
 
     initAnswers() {
         return this.fb.group({
-            answerText: ['', Validators.required, Validators.maxLength(MAX_ANSWER_TEXT_LENGTH)],
+            answerText: ['', [Validators.required, Validators.maxLength(MAX_ANSWER_TEXT_LENGTH)]],
             isCorrect: [false, Validators.required]
         })
     }
@@ -207,10 +210,4 @@ export class QuestionsPoolEditComponent {
             )
             .subscribe(() => this.questionsPoolEditService.deleteQuestion(question));
     }
-
-    protected readonly MAX_QUESTION_POOL_NAME_LENGTH = MAX_QUESTION_POOL_NAME_LENGTH;
-    protected readonly MIN_NUMBER_OF_QUEST_TO_GENERATE = MIN_NUMBER_OF_QUEST_TO_GENERATE;
-    protected readonly MAX_QUESTION_TEXT_LENGTH = MAX_QUESTION_TEXT_LENGTH;
-    protected readonly MIN_QUESTION_SCORE_VALUE = MIN_QUESTION_SCORE_VALUE;
-    protected readonly MAX_ANSWER_TEXT_LENGTH = MAX_ANSWER_TEXT_LENGTH;
 }
