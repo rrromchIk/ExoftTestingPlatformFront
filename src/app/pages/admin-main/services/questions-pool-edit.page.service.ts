@@ -72,6 +72,8 @@ export class QuestionsPoolEditPageService {
 
                     if(currentQuestions) {
                         currentQuestions.push(data);
+                    } else {
+                        this.questionsSubject.next([data]);
                     }
                 },
                 error: (err) => {
