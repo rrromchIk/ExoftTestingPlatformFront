@@ -124,7 +124,7 @@
                             <div class="question-fields">
                                 <mat-form-field class="form-card-field field-bottom-margin text-area-field">
                                     <mat-label>Question text</mat-label>
-                                    <textarea matInput placeholder="Write question"
+                                    <textarea matInput rows="3" placeholder="Write question"
                                               formControlName="questionText"></textarea>
 
                                     <mat-error *ngIf="question.get('questionText')?.hasError('maxlength') &&
@@ -174,7 +174,9 @@
                                     <mat-card-content class="answer-card-content">
                                         <mat-form-field class="answer-field">
                                             <mat-label>Answer text</mat-label>
-                                            <input matInput placeholder="Write answer" formControlName="answerText">
+                                            <textarea matInput rows="1" placeholder="Write answer"
+                                                      formControlName="answerText"></textarea>
+<!--                                            <input matInput placeholder="Write answer" formControlName="answerText">-->
 
                                             <mat-error *ngIf="answer.get('answerText')?.hasError('maxlength') &&
                                                              !answer.get('answerText')?.hasError('required')">

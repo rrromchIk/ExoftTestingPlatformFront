@@ -93,6 +93,7 @@
                     padding: 5px 10px;
 
                     .answer-field {
+                        width: 350px;
                         margin-right: 10px;
                         @include mat.all-component-densities(-6);
                     }

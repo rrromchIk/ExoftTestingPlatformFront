@@ -15,6 +15,7 @@ import { TestTemplatesListComponent } from './test-templates-list/test-templates
 import { TestTemplateItemComponent } from './test-templates-list/test-template-item/test-template-item.component';
 import { TestCreateComponent } from './test-create/test-create.component';
 import { TestEditComponent } from './test-edit/test-edit.component';
+import { QuestionsPoolEditComponent } from './questions-pool-edit/questions-pool-edit.component';
 
 @NgModule({
     declarations: [
@@ -28,6 +29,7 @@ import { TestEditComponent } from './test-edit/test-edit.component';
         TestTemplateItemComponent,
         TestCreateComponent,
         TestEditComponent,
+        QuestionsPoolEditComponent,
     ],
     imports: [
         CommonModule,
