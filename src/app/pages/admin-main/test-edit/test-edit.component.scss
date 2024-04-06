@@ -2,11 +2,14 @@
 
 .content-container {
     padding: 0;
+
+    .back-button-container {
+        margin-bottom: 5px;
+    }
 }
 
 .form-card {
     max-width: max-content;
-    margin-left: 8%;
     text-align: start;
 
     .form-card-header {

@@ -76,7 +76,7 @@ export class TestEditComponent {
                         this.editTestForm.valueChanges
                             .pipe(untilDestroyed(this))
                             .subscribe(() => {
-                                this.testDataChanges = this.isFormChanged(initialFormValues);
+                                this.testDataChanges = this.isTestFormChanged(initialFormValues);
                             });
                     }
                 },
@@ -101,7 +101,7 @@ export class TestEditComponent {
         this.testDataChanges = false;
     }
 
-    isFormChanged(initialFormValues: any) {
+    isTestFormChanged(initialFormValues: any) {
         return JSON.stringify(initialFormValues) !== JSON.stringify(this.editTestForm.value);
     }
 
@@ -147,7 +147,6 @@ export class TestEditComponent {
             this.testEditPageService.createQuestionPool(this.test.id, questionPoolDto);
         }
     }
-
 
     deleteQuestionsPool(questionsPool: QuestionsPoolModel) {
         const dialogData: DialogDataDto = {
