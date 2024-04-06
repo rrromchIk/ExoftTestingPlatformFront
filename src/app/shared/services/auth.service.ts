@@ -43,7 +43,7 @@ export class AuthService {
                         if (err.error.status == HttpStatusCode.Unauthorized)
                             errMsg = "Invalid password";
                         else
-                            errMsg = err.error.detail
+                            errMsg = err.error.detail || 'An unexpected error occurred';
 
                         this.alertService.error(errMsg);
                     }
