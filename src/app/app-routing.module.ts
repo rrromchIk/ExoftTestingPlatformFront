@@ -12,7 +12,7 @@ import {ResetPasswordComponent} from "./pages/reset-password/reset-password/rese
 import {AdminMainComponent} from "./pages/admin-main/admin-main.component";
 import {TestsListComponent} from "./pages/admin-main/tests-list/tests-list.component";
 import {UsersListComponent} from "./pages/admin-main/users-list/users-list.component";
-import {EditUserItemComponent} from "./pages/admin-main/edit-user-item/edit-user-item.component";
+import {UserEditComponent} from "./pages/admin-main/user-edit/user-edit.component";
 import {TestTemplatesListComponent} from "./pages/admin-main/test-templates-list/test-templates-list.component";
 import {TestCreateComponent} from "./pages/admin-main/test-create/test-create.component";
 import {AdminGuard, AuthenticatedGuard} from "./core/guards/guards";
@@ -101,7 +101,7 @@ const routes: Routes = [
             },
             {
                 path: 'users/:id/edit',
-                component: EditUserItemComponent
+                component: UserEditComponent
             },
             {
                 path: 'test-templates',

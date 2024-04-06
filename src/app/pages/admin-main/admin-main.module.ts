@@ -8,7 +8,7 @@ import {UsersListComponent} from "./users-list/users-list.component";
 import {TestItemComponent} from "./tests-list/test-item/test-item.component";
 import {UserItemComponent} from "./users-list/user-item/user-item.component";
 import {AppMaterialModule} from "../../shared/modules/app-material/app-material.module";
-import {EditUserItemComponent} from "./edit-user-item/edit-user-item.component";
+import {UserEditComponent} from "./user-edit/user-edit.component";
 import {AppComponentsModule} from "../../shared/modules/app-components/app-components.module";
 import {ReactiveFormsModule} from "@angular/forms";
 import { TestTemplatesListComponent } from './test-templates-list/test-templates-list.component';
@@ -23,7 +23,7 @@ import { TestEditComponent } from './test-edit/test-edit.component';
         UsersListComponent,
         TestItemComponent,
         UserItemComponent,
-        EditUserItemComponent,
+        UserEditComponent,
         TestTemplatesListComponent,
         TestTemplateItemComponent,
         TestCreateComponent,

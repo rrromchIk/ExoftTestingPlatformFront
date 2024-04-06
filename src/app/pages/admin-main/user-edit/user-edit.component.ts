@@ -10,12 +10,12 @@ import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 
 @UntilDestroy()
 @Component({
-    selector: 'app-edit-user-item',
-    templateUrl: './edit-user-item.component.html',
-    styleUrl: './edit-user-item.component.scss',
+    selector: 'app-user-edit',
+    templateUrl: './user-edit.component.html',
+    styleUrl: './user-edit.component.scss',
     providers: [EditUserPageService]
 })
-export class EditUserItemComponent implements OnInit {
+export class UserEditComponent implements OnInit {
     user!: UserModel;
     editUserForm!: FormGroup;
     avatarLinkToDisplay: string | null = null;
