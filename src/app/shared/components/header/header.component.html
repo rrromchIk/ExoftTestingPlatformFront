@@ -1,11 +1,29 @@
 <mat-toolbar color="primary">
     <span>Testing platform</span>
     <span class="spacer"></span>
-    <button *ngIf="currentUser != null" mat-raised-button (click)="logOut()">
-        Logout
-        <mat-icon iconPositionEnd>exit_to_app</mat-icon>
-    </button>
-    <button mat-icon-button>
-        <mat-icon>account_circle</mat-icon>
-    </button>
+
+    <div class="header-actions">
+        <button *ngIf="currentUser != null" mat-raised-button (click)="logOut()">
+            Logout
+            <mat-icon iconPositionEnd>exit_to_app</mat-icon>
+        </button>
+        <button *ngIf="currentUser == null" mat-raised-button [routerLink]="['/login']">
+            Login
+        </button>
+        <button *ngIf="currentUser == null" mat-stroked-button [routerLink]="['/signup']">
+            Sign up
+        </button>
+    </div>
+
+    <img *ngIf="!showDefaultProfilePicture && showProfilePicture"
+         [src]="profilePictureLink"
+         class="current-user-image"
+         (error)="showDefaultProfilePicture = true"
+         alt="userAvatar" />
+
+    <img *ngIf="showDefaultProfilePicture && showProfilePicture"
+         src="./assets/images/default-avatar.png"
+         class="current-user-image"
+         alt="userAvatar" />
+
 </mat-toolbar>

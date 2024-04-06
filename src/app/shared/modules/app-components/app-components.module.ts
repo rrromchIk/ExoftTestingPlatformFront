@@ -11,6 +11,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {ConfirmationDialogComponent} from "../../components/dialog/confirmation-dialog.component";
 import {UserTestStatusPipe} from "../../pipes/user-test-status.pipe";
 import {LoaderComponent} from "../../components/loader/loader.component";
+import {RouterLink} from "@angular/router";
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import {LoaderComponent} from "../../components/loader/loader.component";
     imports: [
         CommonModule,
         AppMaterialModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        RouterLink
     ],
     exports: [
         PaginatorComponent,

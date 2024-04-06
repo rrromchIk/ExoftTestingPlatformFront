@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../../services/auth.service";
 import {UserModel} from "../../../core/interfaces/user/user.model";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
+import {environment} from "../../../../environments/environment";
 
 @UntilDestroy()
 @Component({
@@ -11,6 +12,11 @@ import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 })
 export class HeaderComponent implements OnInit {
     currentUser!: UserModel | null;
+
+    showProfilePicture: boolean = false;
+    profilePictureLink!: string;
+    showDefaultProfilePicture: boolean = false;
+
     constructor(private authService: AuthService) {}
 
     logOut() {
@@ -21,7 +27,19 @@ export class HeaderComponent implements OnInit {
         this.authService.currentUser$
             .pipe(untilDestroyed(this))
             .subscribe(
-            data => this.currentUser = data
+            data => {
+                console.log(data);
+                this.currentUser = data;
+
+                if(data) {
+                    this.profilePictureLink = `${environment.apiUrl}/api/users/${data.id}/avatar/download`;
+                    this.showProfilePicture = true;
+                    this.showDefaultProfilePicture = false;
+                } else {
+                    this.showDefaultProfilePicture = true;
+                    this.showProfilePicture = false;
+                }
+            }
         )
     }
 }
