@@ -6,5 +6,4 @@ export interface QuestionsPoolModel extends BaseModel {
     numOfQuestionsToBeGenerated: number;
     templateId: string | null;
     generationStrategy: string;
-    //questions: Question[];
 }
