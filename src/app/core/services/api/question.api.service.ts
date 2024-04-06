@@ -17,6 +17,6 @@ export class QuestionApiService {
     }
 
     getQuestionsByQuestionPoolId(questionsPoolId: string) {
-        return this.http.get<QuestionModel[]>(this.apiUrl + `/api/tests/questions-pools/${questionsPoolId}questions`);
+        return this.http.get<QuestionModel[]>(this.apiUrl + `/api/tests/questions-pools/${questionsPoolId}/questions`);
     }
 }
