@@ -48,7 +48,7 @@ export class UserTestApiService {
     }
 
     createUserTest(userId: string, testId: string) {
-        return this.http.post(this.apiUrl + `/api/users/${userId}/tests/${testId}`, null);
+        return this.http.post<UserTestModel>(this.apiUrl + `/api/users/${userId}/tests/${testId}`, null);
     }
 
     getUserTest(userId: string, testId: string) {
@@ -57,5 +57,9 @@ export class UserTestApiService {
 
     getUserTestResult(userId: string, testId: string) {
         return this.http.get<TestResultModel>(this.apiUrl + `/api/users/${userId}/tests/${testId}/results`)
+    }
+
+    complete(userId: string, testId: string) {
+        return this.http.patch(this.apiUrl + `/api/users/${userId}/tests/${testId}/complete`, null);
     }
 }
