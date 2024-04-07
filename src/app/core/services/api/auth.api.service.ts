@@ -37,4 +37,8 @@ export class AuthApiService {
     refreshToken(tokens: TokenModel) {
         return this.http.post<TokenModel>(this.authEndpoint + "/refresh", tokens);
     }
+
+    confirmEmail(userId: string, token: string) {
+        return this.http.post(`${this.apiUrl}/api/users/email/confirm`, {userId, token});
+    }
 }

@@ -15,6 +15,7 @@ import {LoginModule} from "./pages/login/login.module";
 import {SignupModule} from "./pages/signup/signup.module";
 import {ForgotPasswordModule} from "./pages/forgot-password/forgot-password.module";
 import {ResetPasswordModule} from "./pages/reset-password/reset-password.module";
+import {EmailConfirmModule} from "./pages/email-confirm/email-confirm.module";
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import {ResetPasswordModule} from "./pages/reset-password/reset-password.module"
         LoginModule,
         SignupModule,
         ForgotPasswordModule,
-        ResetPasswordModule
+        ResetPasswordModule,
+        EmailConfirmModule
     ],
     providers: [
         {
