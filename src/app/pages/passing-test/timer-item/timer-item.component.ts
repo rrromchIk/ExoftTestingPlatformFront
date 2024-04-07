@@ -26,7 +26,7 @@ export class TimerItemComponent implements OnInit {
 
     startTimer() {
         const deadline = new Date().valueOf() + this.millis;
-        this.countdownTimer(deadline - 1000); //adjust one second delay
+        this.countdownTimer(deadline);
 
        this.timerSubscription = interval(1000)
             .subscribe(count => {
