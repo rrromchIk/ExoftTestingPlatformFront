@@ -41,7 +41,7 @@
                 <div class="answers-container">
                     <div *ngIf="!isMultipleChoice(questionResult)">
                         <p>Choose one answer:</p>
-                        <div *ngFor="let answer of questionResult.answersResults" class="answer-item">
+                        <div *ngFor="let answer of questionResult.answersResults; let i = index" class="answer-item">
                             <mat-radio-group [name]="questionResult.id">
                                 <mat-radio-button color="primary"
                                                   class="answer-field"
