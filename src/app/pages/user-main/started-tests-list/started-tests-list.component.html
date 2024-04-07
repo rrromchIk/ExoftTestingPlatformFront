@@ -7,8 +7,7 @@
 
     <div *ngFor="let test of startedTests">
         <app-started-test-item
-            [startedTest]="test"
-            (checkOutResultEvent)="onCheckOutTestResultsEvent($event)"/>
+            [startedTest]="test"/>
     </div>
 
     <app-paginator *ngIf="pagedList != null"

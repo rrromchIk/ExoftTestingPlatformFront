@@ -1,5 +1,6 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {StartedTestModel} from "../../../../core/interfaces/user-test/started-test.model";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-started-test-item',
@@ -8,10 +9,14 @@ import {StartedTestModel} from "../../../../core/interfaces/user-test/started-te
 })
 export class StartedTestItemComponent {
     @Input() startedTest!: StartedTestModel;
-    @Output() checkOutResultEvent: EventEmitter<string> = new EventEmitter<string>();
+
+    constructor(private router: Router) {
+    }
 
     checkOutResult(startedTest: StartedTestModel) {
-        this.checkOutResultEvent.emit(startedTest.test.id);
         console.log("check out test result event emitted, testId: " + startedTest.test.id);
+        this.router.navigate(['/test-result'], {
+            queryParams: {id: startedTest.test.id}
+        })
     }
 }

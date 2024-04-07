@@ -33,10 +33,6 @@ export class StartedTestsListComponent implements OnInit {
         this.loadStartedTests();
     }
 
-    onCheckOutTestResultsEvent(testId: string) {
-        console.log("onCheckOutTestResultsEvent handled")
-    }
-
     loadStartedTests(): void {
         this.startedTestsService.pagedListOfStartedTests$.pipe(untilDestroyed(this)).subscribe(
             response => {
