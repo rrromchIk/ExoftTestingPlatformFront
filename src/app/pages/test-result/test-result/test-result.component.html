@@ -1,9 +1,10 @@
-<div class="page-container" *ngIf="testResult != null">
+<div class="page-container" *ngIf="testResult !== null">
     <mat-card class="questions-nav-container">
         <div class="questions-nav-items">
             <div *ngFor="let question of testResult.questionsResults; let i = index"
                  class="question-nav-item"
                  [routerLink]="'/test-result'"
+                 [queryParams]="{id: testResult.testId}"
                  [fragment]="'question' + (i + 1)">
 
                 <div class="question-nav-item-number">
@@ -38,8 +39,8 @@
                 </div>
 
                 <div class="answers-container">
-                    <p *ngIf="isMultipleChoice(questionResult)">Choose one answer:</p>
-                    <p *ngIf="!isMultipleChoice(questionResult)">Choose correct answers:</p>
+                    <p *ngIf="!isMultipleChoice(questionResult)">Choose one answer:</p>
+                    <p *ngIf="isMultipleChoice(questionResult)">Choose correct answers:</p>
 
                     <div *ngFor="let answer of questionResult.answersResults; let i = index"
                          class="answer-item">
@@ -54,12 +55,14 @@
                         </ng-container>
 
                         <ng-container *ngIf="!isMultipleChoice(questionResult)">
-                            <mat-radio-button color="primary"
-                                              class="answer-field"
-                                              (click)="$event.preventDefault()"
-                                              [checked]="answer.isUserAnswerSelected">
-                                {{i + 1}}. {{ answer.answerText }}
-                            </mat-radio-button>
+                            <mat-radio-group [name]="questionResult.id">
+                                <mat-radio-button color="primary"
+                                                  class="answer-field"
+                                                  (click)="$event.preventDefault()"
+                                                  [checked]="answer.isUserAnswerSelected">
+                                    {{i + 1}}. {{ answer.answerText }}
+                                </mat-radio-button>
+                            </mat-radio-group>
                         </ng-container>
 
                         <img *ngIf="answer.isUserAnswerSelected && answer.isCorrect"
