@@ -20,7 +20,7 @@ export class UserQuestionApiService {
         return this.http.get<UserQuestionModel[]>(`${this.apiUrl}/api/users/${userId}/tests/${testId}/questions`);
     }
 
-    createUsersQuestions(userQuestions: {userId: string, questionId: string}[]) {
+    createUserQuestions(userQuestions: {userId: string, questionId: string}[]) {
         return this.http.post(`${this.apiUrl}/api/users/questions`, userQuestions);
     }
 }
