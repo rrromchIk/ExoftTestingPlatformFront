@@ -8,5 +8,5 @@ export interface TestModel extends BaseModel {
     isPublished: boolean;
     difficulty: string;
     templateId?: string;
-    questionsPools: QuestionsPoolModel[];
+    questionsPools?: QuestionsPoolModel[];
 }

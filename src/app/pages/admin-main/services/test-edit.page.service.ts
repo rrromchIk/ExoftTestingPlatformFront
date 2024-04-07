@@ -76,7 +76,7 @@ export class TestEditPageService {
                     const currentTest = this.testSubject.getValue();
 
                     if(currentTest) {
-                        currentTest.questionsPools.push(data);
+                        currentTest.questionsPools!.push(data);
                         this.testSubject.next(currentTest);
                     }
                 },
@@ -96,7 +96,7 @@ export class TestEditPageService {
                     const currentTest = this.testSubject.getValue();
 
                     if(currentTest) {
-                        currentTest.questionsPools = currentTest.questionsPools
+                        currentTest.questionsPools = currentTest.questionsPools!
                             .filter(qp => qp.id !== questionsPool.id);
 
                         this.testSubject.next(currentTest);
