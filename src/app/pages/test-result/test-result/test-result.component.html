@@ -39,37 +39,44 @@
                 </div>
 
                 <div class="answers-container">
-                    <p *ngIf="!isMultipleChoice(questionResult)">Choose one answer:</p>
-                    <p *ngIf="isMultipleChoice(questionResult)">Choose correct answers:</p>
-
-                    <div *ngFor="let answer of questionResult.answersResults; let i = index"
-                         class="answer-item">
-                        <ng-container *ngIf="isMultipleChoice(questionResult)">
-                            <mat-checkbox color="primary"
-                                          class="answer-field"
-                                          disableRipple=true
-                                          (click)="$event.preventDefault()"
-                                          [checked]="answer.isUserAnswerSelected">
-                                {{i + 1}}. {{answer.answerText }}
-                            </mat-checkbox>
-                        </ng-container>
-
-                        <ng-container *ngIf="!isMultipleChoice(questionResult)">
+                    <div *ngIf="!isMultipleChoice(questionResult)">
+                        <p>Choose one answer:</p>
+                        <div *ngFor="let answer of questionResult.answersResults" class="answer-item">
                             <mat-radio-group [name]="questionResult.id">
                                 <mat-radio-button color="primary"
                                                   class="answer-field"
                                                   (click)="$event.preventDefault()"
-                                                  [checked]="answer.isUserAnswerSelected">
+                                                  [checked]="answer.isUserAnswerSelected"
+                                                  [value]="answer.answerText">
                                     {{i + 1}}. {{ answer.answerText }}
                                 </mat-radio-button>
                             </mat-radio-group>
-                        </ng-container>
 
-                        <img *ngIf="answer.isUserAnswerSelected && answer.isCorrect"
-                             width="24" height="24" src="../../../assets/images/correct-mark.png">
+                            <img *ngIf="answer.isUserAnswerSelected && answer.isCorrect"
+                                 width="24" height="24" src="../../../assets/images/correct-mark.png">
 
-                        <img *ngIf="answer.isUserAnswerSelected && !answer.isCorrect"
-                             width="16" height="16" src="../../../assets/images/wrong-mark.png">
+                            <img *ngIf="answer.isUserAnswerSelected && !answer.isCorrect"
+                                 width="16" height="16" src="../../../assets/images/wrong-mark.png">
+                        </div>
+                    </div>
+
+                    <div *ngIf="isMultipleChoice(questionResult)">
+                        <p>Choose correct answers:</p>
+
+                        <div *ngFor="let answer of questionResult.answersResults;" class="answer-item">
+                            <mat-checkbox color="primary"
+                                          class="answer-field"
+                                          (click)="$event.preventDefault()"
+                                          [checked]="answer.isUserAnswerSelected">
+                                {{i + 1}}. {{answer.answerText }}
+                            </mat-checkbox>
+
+                            <img *ngIf="answer.isUserAnswerSelected && answer.isCorrect"
+                                 width="24" height="24" src="../../../assets/images/correct-mark.png">
+
+                            <img *ngIf="answer.isUserAnswerSelected && !answer.isCorrect"
+                                 width="16" height="16" src="../../../assets/images/wrong-mark.png">
+                        </div>
                     </div>
                 </div>
             </mat-card-content>
