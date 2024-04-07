@@ -1,6 +1,8 @@
+import {TestModel} from "../test/test.model";
+
 export interface UserTestModel {
     userId: string;
-    testId: string;
+    test: TestModel
     totalScore: number;
     userScore: number;
     startingTime: Date;
