@@ -35,10 +35,6 @@ export class TestsToPassListComponent implements OnInit {
         this.loadTestsToPass();
     }
 
-    onPassTestEvent(testId: string) {
-        console.log("Pass test event handled: " + testId);
-    }
-
     loadTestsToPass(): void {
         this.testsToPassService.pagedListOfTestsToPass$.pipe(untilDestroyed(this)).subscribe(
             response => {

@@ -1,6 +1,7 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {TestToPassModel} from "../../../../core/interfaces/user-test/test-to-pass.model";
 import {UserTestStatus} from "../../../../core/interfaces/user-test/user-test-status.enum";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-test-to-pass-item',
@@ -10,11 +11,15 @@ import {UserTestStatus} from "../../../../core/interfaces/user-test/user-test-st
 export class TestToPassItemComponent {
     protected readonly UserTestStatus = UserTestStatus;
     @Input() testToPass!: TestToPassModel;
-    @Output() passTestEvent: EventEmitter<string> = new EventEmitter<string>();
+
+    constructor(private router: Router) {
+    }
 
     onPassTest(test: TestToPassModel) {
-        this.passTestEvent.emit(test.id);
         console.log("pass test event emitted, testId: " + test.id);
+        this.router.navigate(['pass-test'], {
+            queryParams: {id: test.id}
+        })
     }
 
 }

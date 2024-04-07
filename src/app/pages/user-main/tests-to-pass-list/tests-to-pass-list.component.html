@@ -7,9 +7,7 @@
 
     <div *ngFor="let test of tests">
         <app-test-to-pass-item
-            [testToPass]="test"
-            (passTestEvent)="onPassTestEvent($event)"/>
-
+            [testToPass]="test"/>
     </div>
 
     <app-paginator *ngIf="pagedList != null"
