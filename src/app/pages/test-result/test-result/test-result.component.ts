@@ -5,121 +5,30 @@ import {UserTestApiService} from "../../../core/services/api/user-test.api.servi
 import {AuthService} from "../../../shared/services/auth.service";
 import {ActivatedRoute} from "@angular/router";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
-import {tap} from "rxjs";
 
 @UntilDestroy()
 @Component({
-  selector: 'app-test-result',
-  templateUrl: './test-result.component.html',
-  styleUrl: './test-result.component.scss'
+    selector: 'app-test-result',
+    templateUrl: './test-result.component.html',
+    styleUrl: './test-result.component.scss'
 })
 export class TestResultComponent implements OnInit {
-    testResult: TestResultModel = {
-        userId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-        testId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-        totalScore: 15,
-        userScore: 10,
-        startingTime: new Date(),
-        endingTime: new Date(),
-        userTestStatus: 'Completed',
-        questionsResults: [
-            {
-                id: '3',
-                questionText: 'What is the capital of Italy?',
-                maxScore: 5,
-                userScore: 0,
-                answersResults: [
-                    {
-                        id: '7',
-                        answerText: 'Rome',
-                        isCorrect: true,
-                        isUserAnswerSelected: false
-                    },
-                    {
-                        id: '8',
-                        answerText: 'Madrid',
-                        isCorrect: false,
-                        isUserAnswerSelected: true
-                    },
-                    {
-                        id: '9',
-                        answerText: 'Athens',
-                        isCorrect: false,
-                        isUserAnswerSelected: false
-                    }
-                ]
-            },
-            {
-                id: '1',
-                questionText: 'What is the capital of France?',
-                maxScore: 5,
-                userScore: 3,
-                answersResults: [
-                    {
-                        id: '1',
-                        answerText: 'Paris',
-                        isCorrect: true,
-                        isUserAnswerSelected: true
-                    },
-                    {
-                        id: '2',
-                        answerText: 'Berlin',
-                        isCorrect: false,
-                        isUserAnswerSelected: false
-                    },
-                    {
-                        id: '3',
-                        answerText: 'London',
-                        isCorrect: true,
-                        isUserAnswerSelected: false
-                    }
-                ]
-            },
-            {
-                id: '2',
-                questionText: 'What is the capital of Japan?',
-                maxScore: 5,
-                userScore: 5,
-                answersResults: [
-                    {
-                        id: '4',
-                        answerText: 'Tokyo',
-                        isCorrect: true,
-                        isUserAnswerSelected: true
-                    },
-                    {
-                        id: '5',
-                        answerText: 'Beijing asd asd asd asd asssssssssssssssssssssssssssssssss asd asd asd ssssssssssssssss asd',
-                        isCorrect: false,
-                        isUserAnswerSelected: false
-                    },
-                    {
-                        id: '6',
-                        answerText: 'Seoul',
-                        isCorrect: false,
-                        isUserAnswerSelected: false
-                    }
-                ]
-            }
-        ]
-    };
-    //testResult!: TestResultModel;
+    testResult: TestResultModel | null = null;
 
     constructor(private userTestApiService: UserTestApiService,
                 private authService: AuthService,
-                private route: ActivatedRoute) {}
+                private route: ActivatedRoute) {
+    }
+
     ngOnInit(): void {
-        const testId = this.route.snapshot.params['id'];
-        this.userTestApiService.getUserTestResult(
-            this.authService.getCurrentUser()!.id,
-            testId)
-            .pipe(
-                untilDestroyed(this),
-                tap(data => {
+        const testId = this.route.snapshot.queryParamMap.get('id')!;
+        this.userTestApiService.getUserTestResult(this.authService.getCurrentUser()!.id, testId)
+            .pipe(untilDestroyed(this))
+            .subscribe({
+                next: (data) => {
                     this.testResult = data;
-                })
-            )
-            .subscribe()
+                }
+            })
     }
 
     getQuestionCorrectAnswers(question: QuestionResultModel): string {
@@ -146,12 +55,12 @@ export class TestResultComponent implements OnInit {
     }
 
     getScoreInPercents() {
-        return (this.testResult.userScore / this.testResult.totalScore * 100).toPrecision(3);
+        return (this.testResult!.userScore / this.testResult!.totalScore * 100).toPrecision(3);
     }
 
     getTimeSpent() {
-        const diff: number = this.testResult.endingTime.getTime()
-            - this.testResult.startingTime.getTime();
+        const diff: number = new Date(this.testResult!.endingTime).getTime()
+            - new Date(this.testResult!.startingTime).getTime();
 
         const minutes = Math.floor(diff / (1000 * 60));
         const seconds = Math.floor((diff / 1000) % 60);
