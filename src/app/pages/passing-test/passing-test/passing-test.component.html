@@ -19,31 +19,35 @@
     </mat-card>
 
 
-    <mat-card class="question-card">
+    <mat-card class="question-card" *ngIf="currentQuestion != null">
         <mat-card-header class="question-card-header">
             <mat-card-title>Question {{currentQuestionIndex + 1}}</mat-card-title>
 
 
-            <p>Max score: {{currentQuestion?.maxScore}}</p>
+            <p>Max score: {{currentQuestion.maxScore}}</p>
         </mat-card-header>
 
         <mat-divider/>
 
-        <mat-card-content *ngIf="currentQuestion != null" class="question-card-content">
+        <mat-card-content class="question-card-content">
             <div class="question-text">
                 <span>{{currentQuestion.text}}</span>
             </div>
 
             <div class="answers-container">
-                <p>Choose one answer:</p>
+                <p *ngIf="!isMultipleChoice(currentQuestion)">Choose one answer:</p>
+                <p *ngIf="isMultipleChoice(currentQuestion)">Choose correct answers:</p>
 
                 <div *ngFor="let answer of currentQuestion.answers; let i = index">
                     <ng-container *ngIf="isMultipleChoice(currentQuestion)">
-                        <mat-checkbox color="primary" class="answer-field">{{i + 1}}. {{answer.text }}</mat-checkbox>
+                        <mat-checkbox color="primary" class="answer-field" (click)="onAnswerClicked(answer)">
+                            {{i + 1}}. {{answer.text }}
+                        </mat-checkbox>
                     </ng-container>
                     <ng-container *ngIf="!isMultipleChoice(currentQuestion)">
-                        <mat-radio-button color="primary" class="answer-field">{{i + 1}}
-                            . {{answer.text }}</mat-radio-button>
+                        <mat-radio-button color="primary" class="answer-field" (click)="onAnswerClicked(answer)">
+                            {{i + 1}}. {{answer.text }}
+                        </mat-radio-button>
                     </ng-container>
                 </div>
             </div>
@@ -52,11 +56,17 @@
         <mat-card-footer>
             <div class="question-card-footer">
                 <mat-card-actions class="question-card-actions">
-                    <button *ngIf="!isLastQuestion()" mat-raised-button color="primary"
+                    <button *ngIf="!isLastQuestion()"
+                            [disabled]="selectedAnswers.length === 0"
+                            mat-raised-button color="primary"
                             (click)="onNextQuestionButtonClicked()">
                         Next question
                     </button>
-                    <button *ngIf="isLastQuestion()" mat-raised-button color="warn" (click)="onCompleteTestClicked()">
+                    <button *ngIf="isLastQuestion()"
+                            [disabled]="selectedAnswers.length === 0"
+                            mat-raised-button
+                            color="warn"
+                            (click)="onCompleteTestClicked()">
                         Complete test
                     </button>
                 </mat-card-actions>
@@ -64,5 +74,5 @@
         </mat-card-footer>
     </mat-card>
 
-    <timer-item [millis]="5000"></timer-item>
+    <timer-item *ngIf="userTest !== null" [millis]="remainingTime" (timeOut)="onCompleteTestClicked()"></timer-item>
 </div>

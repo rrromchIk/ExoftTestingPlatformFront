@@ -2,37 +2,105 @@ import {Injectable} from "@angular/core";
 import {UserQuestionModel} from "../../../core/interfaces/user-question/user-question.model";
 import {QuestionsPoolDetailsModel} from "../../../core/interfaces/user-question/questions-pool-details.model";
 import {UserQuestionApiService} from "../../../core/services/api/user-question.api.service";
-import {map, Observable} from "rxjs";
+import {BehaviorSubject, catchError, map, Observable, switchMap, tap, throwError} from "rxjs";
 import {UserTestApiService} from "../../../core/services/api/user-test.api.service";
 import {GenerationStrategy} from "../../../core/interfaces/questions-pool/generation-strategy.enum";
+import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
+import {HttpStatusCode} from "@angular/common/http";
+import {TestApiService} from "../../../core/services/api/test.api.service";
+import {AnswerModel} from "../../../core/interfaces/answer/answer.model";
+import {UserAnswerApiService} from "../../../core/services/api/user-answer.api.service";
+import {Router} from "@angular/router";
+import {UserTestModel} from "../../../core/interfaces/user-test/user-test.model";
 
+@UntilDestroy()
 @Injectable({
     providedIn: 'root'
 })
 export class PassTestService {
-    constructor(private userQuestionService: UserQuestionApiService, private userTestService: UserTestApiService) {}
+    private userQuestionsSubject: BehaviorSubject<UserQuestionModel[] | null> = new BehaviorSubject<UserQuestionModel[] | null>(null);
+    userQuestions$: Observable<UserQuestionModel[] | null> = this.userQuestionsSubject.asObservable();
+
+
+    private userTestSubject: BehaviorSubject<UserTestModel | null> = new BehaviorSubject<UserTestModel | null>(null);
+    userTest$: Observable<UserTestModel | null> = this.userTestSubject.asObservable();
+
+    constructor(private userQuestionApiService: UserQuestionApiService,
+                private userTestApiService: UserTestApiService,
+                private userAnswerApiService: UserAnswerApiService,
+                private router: Router) {
+    }
+
+    startTest(userId: string, testId: string) {
+        this.userTestApiService.getUserTest(userId, testId)
+            .pipe(
+                untilDestroyed(this),
+                tap((userTest) => {
+                    this.userTestSubject.next(userTest);
+                }),
+                switchMap(() => this.getUserQuestionsForStartedTest(userId, testId)),
+                catchError((err) => {
+                    if (err.error.status == HttpStatusCode.NotFound) {
+                        console.log("user test not found");
+                        return this.createUserTest(userId, testId)
+                            .pipe(
+                                tap((data) => this.userTestSubject.next(data)),
+                                switchMap((data) =>
+                                    this.getUserQuestionsForNewTest(data.userId, data.test.id)
+                                        .pipe(
+                                            tap((data) =>
+                                                this.createUserQuestions(data))
+                                        )
+                                )
+                            )
+                    }
+                    return throwError(() => err);
+                }),
+            )
+            .subscribe({
+                next: (data) => {
+                    this.userQuestionsSubject.next(data);
+                },
+                error: (err) => {
+                    console.log(err);
+                }
+            })
+    }
+
 
     createUserTest(userId: string, testId: string) {
-        this.userTestService.createUserTest(userId, testId)
-            .subscribe(data => console.log(data));
+        return this.userTestApiService.createUserTest(userId, testId);
     }
 
-    getUserQuestions() {
-        //if user test exists
-        //getUserQuestionsForStartedTest
-
-        //else
-        //getUserQuestionsForNewTest
-    }
-
-    getUserQuestionsForNewTest(userId: string, testId: string): Observable<UserQuestionModel[]> {
-        return this.userQuestionService.getQuestionsPoolDetailsForTest(testId).pipe(
-            map((questionsPools: QuestionsPoolDetailsModel[]) => this.generateUserQuestions(userId, questionsPools))
-        );
+    getUserQuestionsForNewTest(userId: string, testId: string) {
+        return this.userQuestionApiService.getQuestionsPoolDetailsForTest(testId)
+            .pipe(
+                map((questionsPools) =>
+                    this.generateUserQuestions(userId, questionsPools))
+            )
     }
 
     getUserQuestionsForStartedTest(userId: string, testId: string) {
-        return this.userQuestionService.getUserQuestions(userId, testId);
+        return this.userQuestionApiService.getUserQuestions(userId, testId);
+    }
+
+    createUserQuestions(userQuestionsModel: UserQuestionModel[]) {
+        const userQuestionsToCreate = userQuestionsModel.map(uq => ({
+            userId: uq.userId,
+            questionId: uq.questionId
+        }));
+        this.userQuestionApiService.createUserQuestions(userQuestionsToCreate)
+            .pipe(untilDestroyed(this))
+            .subscribe();
+    }
+
+
+    createUserAnswers(userId: string, selectedAnswers: AnswerModel[]) {
+        for (let answer of selectedAnswers) {
+            this.userAnswerApiService.createUserAnswer(userId, answer.id, answer.questionId)
+                .pipe(untilDestroyed(this))
+                .subscribe();
+        }
     }
 
     private generateUserQuestions(userId: string, questionsPools: QuestionsPoolDetailsModel[]): UserQuestionModel[] {
@@ -56,8 +124,6 @@ export class PassTestService {
             );
         }
 
-        console.log(concatenatedQuestions);
-
         return concatenatedQuestions;
     }
 
@@ -66,5 +132,21 @@ export class PassTestService {
             const j = Math.floor(Math.random() * (i + 1));
             [array[i], array[j]] = [array[j], array[i]];
         }
+    }
+
+    completeUserTest(userId: string, testId: string) {
+        this.userTestApiService.complete(userId, testId)
+            .pipe(untilDestroyed(this))
+            .subscribe({
+                next: () => {
+                    this.router.navigate(
+                        ['/test-result'],
+                        {
+                            queryParams: {
+                                id: testId
+                            }
+                        })
+                }
+            })
     }
 }

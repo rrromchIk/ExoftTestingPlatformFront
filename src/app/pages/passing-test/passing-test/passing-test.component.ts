@@ -1,53 +1,63 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {UserQuestionModel} from "../../../core/interfaces/user-question/user-question.model";
 import {QuestionModel} from "../../../core/interfaces/question/question.model";
 import {PassTestService} from "../services/pass-test.service";
 import {QuestionApiService} from "../../../core/services/api/question.api.service";
-import {UserTestApiService} from "../../../core/services/api/user-test.api.service";
+import {AuthService} from "../../../shared/services/auth.service";
+import {ActivatedRoute} from "@angular/router";
+import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
+import {AnswerModel} from "../../../core/interfaces/answer/answer.model";
 import {UserTestModel} from "../../../core/interfaces/user-test/user-test.model";
-import {TestModel} from "../../../core/interfaces/test/test.model";
-import {TestApiService} from "../../../core/services/api/test.api.service";
 
+@UntilDestroy()
 @Component({
     selector: 'app-passing-test',
     templateUrl: './passing-test.component.html',
     styleUrl: './passing-test.component.scss'
 })
 export class PassingTestComponent implements OnInit {
+    userId!: string;
     userTest: UserTestModel | null = null;
-    test!: TestModel;
 
     userQuestions: UserQuestionModel[] = [];
-    currentQuestionIndex: number = 1;
+    currentQuestionIndex!: number;
     currentQuestion: QuestionModel | null = null;
     preloadedNextQuestion: QuestionModel | null = null;
-
-    userId: string = "f9884071-88d7-46af-d332-08dc45be50ce";
+    selectedAnswers: AnswerModel[] = [];
+    remainingTime!: number;
 
     constructor(private passTestService: PassTestService,
                 private questionService: QuestionApiService,
-                private userTestService: UserTestApiService,
-                private testService: TestApiService) {
-    }
-
-    @Input()
-    set id(testId: string) {
-        this.userTestService.getUserTest(this.userId, testId)
-            .subscribe(response => {
-                console.log(response);
-                this.userTest = response;
-            });
+                private authService: AuthService,
+                private route: ActivatedRoute) {
     }
 
     ngOnInit(): void {
-        this.passTestService.getUserQuestionsForNewTest(this.userId, "69567ec1-e01d-4c91-4753-08dc4447a825")
+        this.userId = this.authService.getCurrentUser()!.id;
+        const testId = this.route.snapshot.queryParamMap.get('id')!;
+
+        this.passTestService.startTest(this.userId, testId);
+
+        this.passTestService.userQuestions$
+            .pipe(untilDestroyed(this))
             .subscribe(data => {
-                console.log(data);
+                if (data) {
+                    console.log(data);
+                    this.userQuestions = data;
+                    this.currentQuestionIndex = this.calculateCurrentQuestionIndex();
 
-                this.userQuestions = this.userQuestions.concat(data);
-                this.currentQuestionIndex = 0;
+                    this.preloadedNextQuestion = null;
+                    this.setCurrentQuestion();
+                }
+            });
 
-                this.setCurrentQuestion();
+        this.passTestService.userTest$
+            .pipe(untilDestroyed(this))
+            .subscribe(data => {
+                if (data) {
+                    this.userTest = data;
+                    this.calculateRemainingTime();
+                }
             });
     }
 
@@ -55,9 +65,9 @@ export class PassingTestComponent implements OnInit {
         if (this.preloadedNextQuestion) {
             this.currentQuestion = this.preloadedNextQuestion;
         } else {
-            this.questionService.getQuestionById(this.userQuestions[this.currentQuestionIndex].questionId).subscribe(
-                data => this.currentQuestion = data
-            )
+            this.questionService.getQuestionById(this.userQuestions[this.currentQuestionIndex].questionId)
+                .pipe(untilDestroyed(this))
+                .subscribe(data => this.currentQuestion = data)
         }
 
         this.preloadNextQuestion();
@@ -65,9 +75,9 @@ export class PassingTestComponent implements OnInit {
 
     preloadNextQuestion() {
         if (this.currentQuestionIndex < this.userQuestions.length - 1) {
-            this.questionService.getQuestionById(this.userQuestions[this.currentQuestionIndex + 1].questionId).subscribe(
-                data => this.preloadedNextQuestion = data
-            )
+            this.questionService.getQuestionById(this.userQuestions[this.currentQuestionIndex + 1].questionId)
+                .pipe(untilDestroyed(this))
+                .subscribe(data => this.preloadedNextQuestion = data)
         } else {
             this.preloadedNextQuestion = null;
         }
@@ -81,14 +91,46 @@ export class PassingTestComponent implements OnInit {
         return this.currentQuestionIndex == this.userQuestions.length - 1;
     }
 
+    calculateCurrentQuestionIndex() {
+        const lastIndexOfAnsweredQuestion = this.userQuestions.map(q => q.isAnswered).lastIndexOf(true);
+        return lastIndexOfAnsweredQuestion + 1;
+    }
+
+    calculateRemainingTime() {
+        const testDurationMillis = this.userTest!.test.duration * 60 * 1000;
+        const startingTimeMillis = new Date(this.userTest!.startingTime).getTime();
+        const currentTimeMillis = new Date().getTime();
+        const limitTimeMillis = startingTimeMillis + testDurationMillis;
+
+        this.remainingTime = limitTimeMillis - currentTimeMillis;
+    }
+
     onNextQuestionButtonClicked() {
+        this.passTestService.createUserAnswers(this.userId, this.selectedAnswers);
+
+        this.selectedAnswers = [];
         this.userQuestions[this.currentQuestionIndex].isAnswered = true;
 
         this.currentQuestionIndex++;
         this.setCurrentQuestion();
     }
 
+    onAnswerClicked(answer: AnswerModel, ) {
+        if (this.isMultipleChoice(this.currentQuestion!)) {
+            const answerIndex = this.selectedAnswers.indexOf(answer);
+
+            if (answerIndex >= 0) {
+                this.selectedAnswers.splice(answerIndex, 1);
+            } else {
+                this.selectedAnswers.push(answer);
+            }
+        } else {
+            this.selectedAnswers = [answer];
+        }
+    }
+
     onCompleteTestClicked() {
-        console.log("complete test")
+        this.passTestService.createUserAnswers(this.userId, this.selectedAnswers);
+        this.passTestService.completeUserTest(this.userId, this.userTest!.test.id);
     }
 }
