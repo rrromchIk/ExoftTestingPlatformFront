@@ -19,6 +19,7 @@ import {DialogDataDto} from "../../../core/interfaces/dialog/dialog-data.dto";
 import {ConfirmationDialogComponent} from "../../../shared/components/dialog/confirmation-dialog.component";
 import {filter} from "rxjs";
 import {MatDialog} from "@angular/material/dialog";
+import {AlertService} from "../../../shared/services/alert.service";
 
 @UntilDestroy()
 @Component({
@@ -45,7 +46,8 @@ export class TestEditComponent {
     constructor(private fb: FormBuilder,
                 private testEditPageService: TestEditPageService,
                 private route: ActivatedRoute,
-                private dialog: MatDialog) {
+                private dialog: MatDialog,
+                private alertService: AlertService) {
     }
 
     ngOnInit() {
@@ -146,6 +148,8 @@ export class TestEditComponent {
 
             this.questionPoolsFormArray.removeAt(index);
             this.testEditPageService.createQuestionPool(this.test.id, questionPoolDto);
+        } else {
+            this.alertService.error('Fill all fields');
         }
     }
 
