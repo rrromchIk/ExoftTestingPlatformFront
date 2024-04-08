@@ -176,7 +176,6 @@
                                             <mat-label>Answer text</mat-label>
                                             <textarea matInput rows="1" placeholder="Write answer"
                                                       formControlName="answerText"></textarea>
-<!--                                            <input matInput placeholder="Write answer" formControlName="answerText">-->
 
                                             <mat-error *ngIf="answer.get('answerText')?.hasError('maxlength') &&
                                                              !answer.get('answerText')?.hasError('required')">
