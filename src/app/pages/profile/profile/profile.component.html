@@ -15,7 +15,7 @@
                 [imageUrl]="avatarLinkToDisplay"
                 (imageUploadedEvent)="onImageUploadedEvent($event)"/>
 
-            <form [formGroup]="profileFormUserForm" (ngSubmit)="onFormSubmit()">
+            <form [formGroup]="profileUserForm" (ngSubmit)="onFormSubmit()">
                 <mat-form-field class="form-card-field full-width-field field-bottom-margin">
                     <mat-label>First name</mat-label>
                     <input matInput placeholder="First Name" formControlName="firstName">

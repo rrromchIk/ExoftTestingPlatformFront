@@ -6,12 +6,9 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {FIRST_AND_LAST_NAMES_PATTERN} from "../../../core/constants/validation.constants";
 import {environment} from "../../../../environments/environment";
 import {UpdatedUserDto} from "../../../core/interfaces/user/updated-user.dto";
-import {UserApiService} from "../../../core/services/api/user.api.service";
 import {AlertService} from "../../../shared/services/alert.service";
 import {AuthApiService} from "../../../core/services/api/auth.api.service";
 import {EditUserService} from "../../../shared/services/edit-user.service";
-import {ConfirmationDialogComponent} from "../../../shared/components/dialog/confirmation-dialog.component";
-import {filter} from "rxjs";
 import {MatDialog} from "@angular/material/dialog";
 import {ChangePasswordDialogComponent} from "../change-password-dialog/change-password-dialog.component";
 
@@ -23,7 +20,7 @@ import {ChangePasswordDialogComponent} from "../change-password-dialog/change-pa
 })
 export class ProfileComponent implements OnInit {
     user: UserModel | null = null;
-    profileFormUserForm!: FormGroup;
+    profileUserForm!: FormGroup;
     avatarLinkToDisplay: string | null = null;
     uploadedUserAvatar: File | null = null;
     userDataChanges: boolean = false;
@@ -40,7 +37,7 @@ export class ProfileComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.profileFormUserForm = this.fb.group({
+        this.profileUserForm = this.fb.group({
             firstName: ['', [Validators.required, Validators.pattern(FIRST_AND_LAST_NAMES_PATTERN)]],
             lastName: ['', [Validators.required, Validators.pattern(FIRST_AND_LAST_NAMES_PATTERN)]],
             email: [''],
@@ -60,8 +57,8 @@ export class ProfileComponent implements OnInit {
                         this.authService.setCurrentUser(this.user);
                         this.setUserDataToFormFields();
 
-                        const initialFormValues = {...this.profileFormUserForm.value};
-                        this.profileFormUserForm.valueChanges
+                        const initialFormValues = {...this.profileUserForm.value};
+                        this.profileUserForm.valueChanges
                             .pipe(untilDestroyed(this))
                             .subscribe(() => {
                                 this.userDataChanges = this.isFormChanged(initialFormValues);
@@ -72,14 +69,14 @@ export class ProfileComponent implements OnInit {
     }
 
     getFormControl(name: string) {
-        return this.profileFormUserForm.get(name);
+        return this.profileUserForm.get(name);
     }
 
     onFormSubmit() {
-        if (this.profileFormUserForm.valid && this.userDataChanges) {
+        if (this.profileUserForm.valid && this.userDataChanges) {
             const userToUpdateDto: UpdatedUserDto = {
-                firstName: this.profileFormUserForm.value.firstName,
-                lastName: this.profileFormUserForm.value.lastName
+                firstName: this.profileUserForm.value.firstName,
+                lastName: this.profileUserForm.value.lastName
             }
 
             this.userEditService.updateUser(this.user!.id, userToUpdateDto);
@@ -115,7 +112,7 @@ export class ProfileComponent implements OnInit {
     }
 
     setUserDataToFormFields() {
-        this.profileFormUserForm.patchValue({
+        this.profileUserForm.patchValue({
             firstName: this.user?.firstName,
             lastName: this.user?.lastName,
             email: this.user?.email,
@@ -131,6 +128,6 @@ export class ProfileComponent implements OnInit {
     }
 
     private isFormChanged(initialFormValues: any) {
-        return JSON.stringify(initialFormValues) !== JSON.stringify(this.profileFormUserForm.value);
+        return JSON.stringify(initialFormValues) !== JSON.stringify(this.profileUserForm.value);
     }
 }
