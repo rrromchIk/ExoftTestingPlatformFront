@@ -41,4 +41,8 @@ export class AuthApiService {
     confirmEmail(userId: string, token: string) {
         return this.http.post(`${this.apiUrl}/api/users/email/confirm`, {userId, token});
     }
+
+    confirmEmailRequest() {
+        return this.http.get(`${this.authEndpoint}/email/confirm/request`);
+    }
 }
