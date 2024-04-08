@@ -1,0 +1,32 @@
+.content-container {
+    margin: 0 auto;
+    padding: 10px 30px;
+}
+
+.form-card {
+    margin: 0 auto;
+
+    .form-card-header {
+        margin-bottom: 1px;
+    }
+
+
+
+    .email-field {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        justify-content: start;
+        margin-bottom: 15px;
+
+        .field-bottom-margin {
+            margin-bottom: 5px;
+        }
+    }
+
+    .change-password-container {
+        display: flex;
+        justify-content: start;
+        margin-bottom: 10px;
+    }
+}

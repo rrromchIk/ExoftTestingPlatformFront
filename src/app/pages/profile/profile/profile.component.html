@@ -1,0 +1,89 @@
+<div class="content-container">
+    <div>
+        <button mat-stroked-button backButton>
+            <mat-icon>arrow_back</mat-icon>
+            Back
+        </button>
+    </div>
+    <mat-card class="form-card" *ngIf="user !== null">
+        <mat-card-header class="form-card-header">
+            <mat-card-title class="form-card-tittle">Profile</mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+            <app-user-avatar-uploader
+                [imageUrl]="avatarLinkToDisplay"
+                (imageUploadedEvent)="onImageUploadedEvent($event)"/>
+
+            <form [formGroup]="profileFormUserForm" (ngSubmit)="onFormSubmit()">
+                <mat-form-field class="form-card-field full-width-field field-bottom-margin">
+                    <mat-label>First name</mat-label>
+                    <input matInput placeholder="First Name" formControlName="firstName">
+
+                    <mat-error *ngIf="getFormControl('firstName')?.hasError('pattern') &&
+                                !getFormControl('firstName')?.hasError('required')">
+                        Last name can only contain letters, numbers, and spaces
+                    </mat-error>
+
+                    <mat-error *ngIf="getFormControl('firstName')?.hasError('required')">
+                        First name is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="form-card-field full-width-field field-bottom-margin">
+                    <mat-label>Last name</mat-label>
+                    <input matInput placeholder="Last Name" formControlName="lastName">
+
+                    <mat-error *ngIf="getFormControl('lastName')?.hasError('pattern') &&
+                                !getFormControl('lastName')?.hasError('required')">
+                        Last name can only contain letters, numbers, and spaces
+                    </mat-error>
+
+                    <mat-error *ngIf="getFormControl('lastName')?.hasError('required')">
+                        Last name is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+
+                <div class="email-field">
+                    <mat-form-field class="form-card-field field-bottom-margin full-width-field">
+                        <mat-label>Email</mat-label>
+                        <input matInput readonly formControlName="email">
+                        <mat-icon *ngIf="user && user.emailConfirmed" matSuffix>verified_user</mat-icon>
+                    </mat-form-field>
+
+                    <button *ngIf="user && !user.emailConfirmed" mat-button class="green-button"
+                            (click)="onVerifyEmailButtonClicked()">
+                        Verify email
+                    </button>
+                </div>
+
+                <mat-form-field class="form-card-field full-width-field field-bottom-margin">
+                    <mat-label>Role</mat-label>
+                    <input matInput formControlName="role" readonly>
+                </mat-form-field>
+
+                <div class="change-password-container">
+                    <a class="link" (click)="openChangePasswordDialog()">Change password</a>
+                </div>
+
+
+                <div class="form-actions">
+                    <button mat-stroked-button
+                            color="warn"
+                            [disabled]="!userDataChanges && !userAvatarChanges"
+                            (click)="setUserDataToFormFields()"
+                            class="button-right-margin">
+                        Reset
+                    </button>
+
+                    <button mat-raised-button
+                            color="primary"
+                            type="submit"
+                            [disabled]="!userDataChanges && !userAvatarChanges">
+                        Submit
+                    </button>
+                </div>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>

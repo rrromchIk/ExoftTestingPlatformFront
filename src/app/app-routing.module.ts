@@ -21,6 +21,7 @@ import {ForbiddenComponent} from "./pages/forbidden/forbidden/forbidden.componen
 import {TestEditComponent} from "./pages/admin-main/test-edit/test-edit.component";
 import {QuestionsPoolEditComponent} from "./pages/admin-main/questions-pool-edit/questions-pool-edit.component";
 import {EmailConfirmComponent} from "./pages/email-confirm/email-confirm/email-confirm.component";
+import {ProfileComponent} from "./pages/profile/profile/profile.component";
 
 
 const routes: Routes = [
@@ -82,6 +83,10 @@ const routes: Routes = [
     {
         path: 'email-confirm',
         component: EmailConfirmComponent
+    },
+    {
+        path: 'profile',
+        component: ProfileComponent
     },
     // {
     //     path: 'admin',

@@ -7,6 +7,7 @@ import {ResetPasswordDto} from "../../interfaces/auth/reset-password.dto";
 import {environment} from "../../../../environments/environment";
 import {UserLoginResponseDto} from "../../interfaces/user/user-login-response.dto";
 import {TokenModel} from "../../interfaces/auth/token.model";
+import {ChangePasswordDto} from "../../interfaces/auth/change-password.dto";
 
 @Injectable({
     providedIn: 'root'
@@ -44,5 +45,9 @@ export class AuthApiService {
 
     confirmEmailRequest() {
         return this.http.get(`${this.authEndpoint}/email/confirm/request`);
+    }
+
+    changePassword(changePasswordDto: ChangePasswordDto) {
+        return this.http.post(`${this.authEndpoint}/password/change`, changePasswordDto)
     }
 }
