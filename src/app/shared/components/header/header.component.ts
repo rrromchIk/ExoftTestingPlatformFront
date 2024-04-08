@@ -28,7 +28,6 @@ export class HeaderComponent implements OnInit {
             .pipe(untilDestroyed(this))
             .subscribe(
             data => {
-                console.log(data);
                 this.currentUser = data;
 
                 if(data) {
