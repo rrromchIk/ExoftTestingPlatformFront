@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {PagingSettings} from "../../interfaces/paging-settings";
+import {PagingSettings} from "../../interfaces/filters/paging-settings";
 import {Observable} from "rxjs";
 import {PagedListModel} from "../../interfaces/paged-list.model";
 import {TestTemplateModel} from "../../interfaces/test-template/test-template.model";

@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {PageEvent} from "@angular/material/paginator";
-import {PagingSettings} from "../../../core/interfaces/paging-settings";
+import {PagingSettings} from "../../../core/interfaces/filters/paging-settings";
 
 @Component({
     selector: 'app-paginator',

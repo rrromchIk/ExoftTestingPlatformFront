@@ -2,7 +2,7 @@ import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 import {Injectable} from "@angular/core";
 import {BehaviorSubject, catchError, combineLatest, Observable, of, switchMap, tap} from "rxjs";
 import {Filters} from "../../../core/interfaces/filters/filters";
-import {PagingSettings} from "../../../core/interfaces/paging-settings";
+import {PagingSettings} from "../../../core/interfaces/filters/paging-settings";
 import {PagedListModel} from "../../../core/interfaces/paged-list.model";
 import {TestTmplApiService} from "../../../core/services/api/test-tmpl.api.service";
 import {TestTemplateModel} from "../../../core/interfaces/test-template/test-template.model";

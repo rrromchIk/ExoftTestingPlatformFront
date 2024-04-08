@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {PagedListModel} from "../../interfaces/paged-list.model";
-import {PagingSettings} from "../../interfaces/paging-settings";
+import {PagingSettings} from "../../interfaces/filters/paging-settings";
 import {TestToPassModel} from "../../interfaces/user-test/test-to-pass.model";
 import {StartedTestModel} from "../../interfaces/user-test/started-test.model";
 import {environment} from "../../../../environments/environment";

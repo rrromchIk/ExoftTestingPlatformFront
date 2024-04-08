@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams, HttpResponse} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {PagedListModel} from "../../interfaces/paged-list.model";
-import {PagingSettings} from "../../interfaces/paging-settings";
+import {PagingSettings} from "../../interfaces/filters/paging-settings";
 import {TestModel} from "../../interfaces/test/test.model";
 import {environment} from "../../../../environments/environment";
 import {TestCreateDto} from "../../interfaces/test/test-create.dto";

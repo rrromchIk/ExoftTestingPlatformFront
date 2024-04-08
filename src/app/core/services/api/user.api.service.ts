@@ -3,7 +3,7 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {PagedListModel} from "../../interfaces/paged-list.model";
 import {UserModel} from "../../interfaces/user/user.model";
-import {PagingSettings} from "../../interfaces/paging-settings";
+import {PagingSettings} from "../../interfaces/filters/paging-settings";
 import {UpdatedUserDto} from "../../interfaces/user/updated-user.dto";
 import {environment} from "../../../../environments/environment";
 import {Filters} from "../../interfaces/filters/filters";

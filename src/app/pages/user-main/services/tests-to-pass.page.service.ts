@@ -11,7 +11,7 @@ import {
     tap
 } from "rxjs";
 import {Filters} from "../../../core/interfaces/filters/filters";
-import {PagingSettings} from "../../../core/interfaces/paging-settings";
+import {PagingSettings} from "../../../core/interfaces/filters/paging-settings";
 import {PagedListModel} from "../../../core/interfaces/paged-list.model";
 import {UserTestApiService} from "../../../core/services/api/user-test.api.service";
 import {AuthService} from "../../../shared/services/auth.service";

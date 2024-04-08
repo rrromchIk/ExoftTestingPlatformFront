@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {PagedListModel} from "../../../core/interfaces/paged-list.model";
-import {PagingSettings} from "../../../core/interfaces/paging-settings";
+import {PagingSettings} from "../../../core/interfaces/filters/paging-settings";
 import {StartedTestModel} from "../../../core/interfaces/user-test/started-test.model";
 import {SelectFilter} from "../../../core/interfaces/filters/select-filter";
 import {SortCriteria} from "../../../core/interfaces/filters/sort-criteria";
