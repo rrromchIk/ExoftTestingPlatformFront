@@ -1,12 +1,9 @@
-import {ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot} from "@angular/router";
+import {CanActivateFn, Router} from "@angular/router";
 import {inject} from "@angular/core";
 import {AuthService} from "../../shared/services/auth.service";
 import {AlertService} from "../../shared/services/alert.service";
 
-export const AdminGuard: CanActivateFn = (
-    next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): boolean => {
-
+export const AdminGuard: CanActivateFn = () => {
     const authService = inject(AuthService);
     const router = inject(Router);
     const alertService = inject(AlertService);
