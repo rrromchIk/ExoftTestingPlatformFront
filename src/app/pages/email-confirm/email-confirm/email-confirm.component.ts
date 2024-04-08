@@ -18,6 +18,7 @@ export class EmailConfirmComponent implements OnInit {
 
     constructor(private route: ActivatedRoute,
                 private authApiService: AuthApiService,
+                private authService: AuthService,
                 private alertService: AlertService) {
     }
 
@@ -35,6 +36,12 @@ export class EmailConfirmComponent implements OnInit {
                             next: () => {
                                 this.alertService.success('Email confirmed successfully');
                                 this.confirmationSuccess = true;
+
+                                const currentUser = this.authService.getCurrentUser();
+                                if(currentUser != null) {
+                                    currentUser.emailConfirmed = true;
+                                    this.authService.setCurrentUser(currentUser);
+                                }
                             },
                             error: (err) => {
                                 this.confirmationSuccess = false;
