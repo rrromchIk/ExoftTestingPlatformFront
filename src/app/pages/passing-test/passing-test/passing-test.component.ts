@@ -42,7 +42,6 @@ export class PassingTestComponent implements OnInit {
             .pipe(untilDestroyed(this))
             .subscribe(data => {
                 if (data) {
-                    console.log(data);
                     this.userQuestions = data;
                     this.currentQuestionIndex = this.calculateCurrentQuestionIndex();
 
