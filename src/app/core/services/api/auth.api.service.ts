@@ -23,7 +23,7 @@ export class AuthApiService {
         return this.http.post<UserLoginResponseDto>(this.authEndpoint+ "/login", userLoginDto);
     }
 
-    signUp(userSignUpDto: UserSignupDto) {
+    register(userSignUpDto: UserSignupDto) {
         return this.http.post<UserModel>(`${this.apiUrl}/api/users/register`, userSignUpDto);
     }
 

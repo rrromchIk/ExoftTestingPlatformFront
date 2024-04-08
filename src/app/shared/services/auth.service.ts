@@ -53,7 +53,7 @@ export class AuthService {
 
 
     signUp(userSignUpDto: UserSignupDto) {
-        this.authApiService.signUp(userSignUpDto)
+        this.authApiService.register(userSignUpDto)
             .pipe(untilDestroyed(this))
             .subscribe({
                 next: () => {
