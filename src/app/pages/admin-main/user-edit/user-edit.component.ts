@@ -5,7 +5,7 @@ import {environment} from "../../../../environments/environment";
 import {UpdatedUserDto} from "../../../core/interfaces/user/updated-user.dto";
 import {FIRST_AND_LAST_NAMES_PATTERN} from "../../../core/constants/validation.constants";
 import {ActivatedRoute} from "@angular/router";
-import {EditUserPageService} from "../services/edit-user.page.service";
+import {EditUserService} from "../../../shared/services/edit-user.service";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 
 @UntilDestroy()
@@ -13,7 +13,6 @@ import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
     selector: 'app-user-edit',
     templateUrl: './user-edit.component.html',
     styleUrl: './user-edit.component.scss',
-    providers: [EditUserPageService]
 })
 export class UserEditComponent implements OnInit {
     user!: UserModel;
@@ -26,7 +25,7 @@ export class UserEditComponent implements OnInit {
     constructor(
         private fb: FormBuilder,
         private route: ActivatedRoute,
-        private editUserPageService: EditUserPageService
+        private editUserPageService: EditUserService
     ) {
     }
     ngOnInit() {
@@ -80,7 +79,6 @@ export class UserEditComponent implements OnInit {
 
         if(this.uploadedUserAvatar && this.userAvatarChanges) {
             this.editUserPageService.updateUserAvatar(this.user.id, this.uploadedUserAvatar);
-            this.userAvatarChanges = false;
         }
     }
 

@@ -1,14 +1,16 @@
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 import {Injectable} from "@angular/core";
-import {AlertService} from "../../../shared/services/alert.service";
+import {AlertService} from "./alert.service";
 import {BehaviorSubject, Observable} from "rxjs";
-import {UserModel} from "../../../core/interfaces/user/user.model";
-import {UserApiService} from "../../../core/services/api/user.api.service";
-import {UpdatedUserDto} from "../../../core/interfaces/user/updated-user.dto";
+import {UserModel} from "../../core/interfaces/user/user.model";
+import {UserApiService} from "../../core/services/api/user.api.service";
+import {UpdatedUserDto} from "../../core/interfaces/user/updated-user.dto";
 
 @UntilDestroy()
-@Injectable()
-export class EditUserPageService {
+@Injectable({
+    providedIn: "root"
+})
+export class EditUserService {
     private userSubject: BehaviorSubject<UserModel | null> = new BehaviorSubject<UserModel | null>(null);
     public user$: Observable<UserModel  | null> = this.userSubject.asObservable();
 
@@ -58,6 +60,7 @@ export class EditUserPageService {
             .subscribe({
                 next: () => {
                     this.alertService.success("User avatar updated successfully");
+                    this.userSubject.next(this.userSubject.getValue());
                 },
                 error: () => {
                     this.alertService.success("Unable to updated avatar");
