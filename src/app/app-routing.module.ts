@@ -22,6 +22,7 @@ import {TestEditComponent} from "./pages/admin-main/test-edit/test-edit.componen
 import {QuestionsPoolEditComponent} from "./pages/admin-main/questions-pool-edit/questions-pool-edit.component";
 import {EmailConfirmComponent} from "./pages/email-confirm/email-confirm/email-confirm.component";
 import {ProfileComponent} from "./pages/profile/profile/profile.component";
+import {RegisterUserComponent} from "./pages/register-user/register-user/register-user.component";
 
 
 const routes: Routes = [
@@ -129,6 +130,10 @@ const routes: Routes = [
             {
                 path: 'questions-pool/:id/edit',
                 component: QuestionsPoolEditComponent
+            },
+            {
+                path: 'register-user',
+                component: RegisterUserComponent
             }
         ]
     },

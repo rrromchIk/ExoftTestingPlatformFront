@@ -17,6 +17,7 @@ import {ForgotPasswordModule} from "./pages/forgot-password/forgot-password.modu
 import {ResetPasswordModule} from "./pages/reset-password/reset-password.module";
 import {EmailConfirmModule} from "./pages/email-confirm/email-confirm.module";
 import {ProfileModule} from "./pages/profile/profile.module";
+import {RegisterUserModule} from "./pages/register-user/register-user.module";
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import {ProfileModule} from "./pages/profile/profile.module";
         ForgotPasswordModule,
         ResetPasswordModule,
         EmailConfirmModule,
-        ProfileModule
+        ProfileModule,
+        RegisterUserModule
     ],
     providers: [
         {

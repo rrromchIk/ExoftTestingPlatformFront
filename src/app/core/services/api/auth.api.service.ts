@@ -27,6 +27,10 @@ export class AuthApiService {
         return this.http.post<UserModel>(`${this.apiUrl}/api/users/register`, userSignUpDto);
     }
 
+    registerAdmin(userSignUpDto: UserSignupDto) {
+        return this.http.post<UserModel>(`${this.apiUrl}/api/users/register/admin`, userSignUpDto);
+    }
+
     forgotPassword(email: string) {
         return this.http.post(this.authEndpoint + "/password/forgot", { email });
     }
