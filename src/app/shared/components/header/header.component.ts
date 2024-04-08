@@ -31,11 +31,10 @@ export class HeaderComponent implements OnInit {
                 this.currentUser = data;
 
                 if(data) {
-                    this.profilePictureLink = `${environment.apiUrl}/api/users/${data.id}/avatar/download`;
+                    this.profilePictureLink = `${environment.apiUrl}/api/users/${data.id}/avatar/download?randomise=${Math.random()}`;
                     this.showProfilePicture = true;
                     this.showDefaultProfilePicture = false;
                 } else {
-                    this.showDefaultProfilePicture = true;
                     this.showProfilePicture = false;
                 }
             }

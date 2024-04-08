@@ -19,11 +19,13 @@
          [src]="profilePictureLink"
          class="current-user-image"
          (error)="showDefaultProfilePicture = true"
-         alt="userAvatar" />
+         alt="userAvatar"
+         [routerLink]="['/profile']"/>
 
     <img *ngIf="showDefaultProfilePicture && showProfilePicture"
          src="./assets/images/default-avatar.png"
          class="current-user-image"
-         alt="userAvatar" />
+         alt="userAvatar"
+         [routerLink]="['/profile']"/>
 
 </mat-toolbar>
