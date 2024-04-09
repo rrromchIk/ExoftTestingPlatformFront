@@ -4,8 +4,6 @@ import {
     BehaviorSubject,
     catchError,
     combineLatest,
-    debounceTime,
-    distinctUntilChanged,
     Observable, of,
     switchMap,
     tap
@@ -45,7 +43,7 @@ export class TestsToPassPageService {
         this.onFiltersAndPagingChange();
     }
 
-    updateFilters(newFilters: Filters): void {
+    updateFilters(newFilters: Filters) {
         this.resetPagingSettings();
         this.filtersSubject.next(newFilters);
     }
@@ -61,19 +59,19 @@ export class TestsToPassPageService {
         });
     }
 
-    private onFiltersAndPagingChange(): void {
+    private onFiltersAndPagingChange() {
         combineLatest([this.filters$, this.pagingSetting$])
             .pipe(
                 untilDestroyed(this),
                 switchMap(([filters, pagedListSettings]) => {
-                        return this.loadTestsToPassList$(filters, pagedListSettings)
+                        return this.loadTestsToPassList(filters, pagedListSettings)
                     }
                 )
             )
             .subscribe();
     }
 
-    private loadTestsToPassList$(filters: Filters, pagedListSettings: PagingSettings) {
+    private loadTestsToPassList(filters: Filters, pagedListSettings: PagingSettings) {
         return this.userTestApiService
             .getAllTestsToPassForUser(
                 this.authService.getCurrentUser()!.id,

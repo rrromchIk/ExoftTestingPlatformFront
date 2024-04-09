@@ -5,8 +5,6 @@ import {
     BehaviorSubject,
     catchError,
     combineLatest,
-    debounceTime,
-    distinctUntilChanged,
     Observable,
     of,
     switchMap,
@@ -45,7 +43,7 @@ export class StartedTestsPageService {
         this.onFiltersAndPagingChange();
     }
 
-    updateFilters(newFilters: Filters): void {
+    updateFilters(newFilters: Filters) {
         this.resetPagingSettings();
         this.filtersSubject.next(newFilters);
     }
@@ -61,19 +59,19 @@ export class StartedTestsPageService {
         });
     }
 
-    private onFiltersAndPagingChange(): void {
+    private onFiltersAndPagingChange() {
         combineLatest([this.filters$, this.pagingSetting$])
             .pipe(
                 untilDestroyed(this),
                 switchMap(([filters, pagedListSettings]) => {
-                        return this.loadStartedTestsList$(filters, pagedListSettings)
+                        return this.loadStartedTestsList(filters, pagedListSettings)
                     }
                 ),
             )
             .subscribe();
     }
 
-    private loadStartedTestsList$(filters: Filters, pagedListSettings: PagingSettings) {
+    private loadStartedTestsList(filters: Filters, pagedListSettings: PagingSettings) {
         return this.userTestApiService
             .getAllStartedTestsForUser(
                 this.authService.getCurrentUser()!.id,
