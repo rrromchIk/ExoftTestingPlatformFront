@@ -30,27 +30,27 @@ import {AlertService} from "../../../shared/services/alert.service";
     providers: [QuestionsPoolEditPageService]
 })
 export class QuestionsPoolEditComponent {
-    protected readonly MAX_QUESTION_POOL_NAME_LENGTH = MAX_QUESTION_POOL_NAME_LENGTH;
-    protected readonly MIN_NUMBER_OF_QUEST_TO_GENERATE = MIN_NUMBER_OF_QUEST_TO_GENERATE;
-    protected readonly MAX_QUESTION_TEXT_LENGTH = MAX_QUESTION_TEXT_LENGTH;
-    protected readonly MIN_QUESTION_SCORE_VALUE = MIN_QUESTION_SCORE_VALUE;
-    protected readonly MAX_ANSWER_TEXT_LENGTH = MAX_ANSWER_TEXT_LENGTH;
+    protected readonly MAX_QUESTION_POOL_NAME_LENGTH: number = MAX_QUESTION_POOL_NAME_LENGTH;
+    protected readonly MIN_NUMBER_OF_QUEST_TO_GENERATE: number = MIN_NUMBER_OF_QUEST_TO_GENERATE;
+    protected readonly MAX_QUESTION_TEXT_LENGTH: number = MAX_QUESTION_TEXT_LENGTH;
+    protected readonly MIN_QUESTION_SCORE_VALUE: number = MIN_QUESTION_SCORE_VALUE;
+    protected readonly MAX_ANSWER_TEXT_LENGTH: number = MAX_ANSWER_TEXT_LENGTH;
     protected readonly GENERATION_STRATEGIES_VALUES: string[] = GENERATION_STRATEGIES_VALUES;
 
-    questionsPool!: QuestionsPoolModel;
-    questions!: QuestionModel[];
+    questionsPool: QuestionsPoolModel;
+    questions: QuestionModel[];
 
-    editQuestionsPoolForm!: FormGroup;
+    editQuestionsPoolForm: FormGroup;
     questionsPoolDataChanges: boolean = false;
 
-    questionsFormGroup!: FormGroup;
+    questionsFormGroup: FormGroup;
 
     constructor(private fb: FormBuilder,
                 private questionsPoolEditService: QuestionsPoolEditPageService,
                 private route: ActivatedRoute,
                 private dialog: MatDialog,
-                private alertService: AlertService) {
-    }
+                private alertService: AlertService
+    ) {}
 
     ngOnInit() {
         this.editQuestionsPoolForm = this.fb.group({

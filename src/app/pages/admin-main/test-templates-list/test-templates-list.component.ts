@@ -36,11 +36,11 @@ export class TestTemplatesListComponent implements OnInit {
                 private dialog: MatDialog) {
     }
 
-    ngOnInit(): void {
+    ngOnInit() {
         this.loadTestTemplates();
     }
 
-    loadTestTemplates(): void {
+    loadTestTemplates() {
         this.testTmplsPageService.pagedListOfTestTemplates$.pipe(untilDestroyed(this)).subscribe(
             response => {
                 this.pagedList = response;

@@ -18,9 +18,8 @@ export class TestEditPageService {
 
     constructor(private alertService: AlertService,
                 private testApiService: TestApiService,
-                private questionsPoolApiService: QuestionsPoolApiService) {
-
-    }
+                private questionsPoolApiService: QuestionsPoolApiService
+    ) {}
 
     getTestById(testId: string) {
         this.testApiService.getTestById(testId)

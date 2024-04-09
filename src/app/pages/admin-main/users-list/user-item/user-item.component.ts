@@ -8,7 +8,7 @@ import {AuthService} from "../../../../shared/services/auth.service";
     styleUrls: ['./user-item.component.scss']
 })
 export class UserItemComponent {
-    @Input() user!: UserModel;
+    @Input() user: UserModel;
     @Output() deleteUserEvent: EventEmitter<string> = new EventEmitter<string>();
     currentUser: UserModel | null;
 

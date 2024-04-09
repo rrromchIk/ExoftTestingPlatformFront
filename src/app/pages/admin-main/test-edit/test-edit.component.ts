@@ -35,20 +35,20 @@ export class TestEditComponent {
     protected readonly DIFFICULTY_VALUES: string[] = DIFFICULTY_VALUES;
     protected readonly GENERATION_STRATEGIES_VALUES: string[] = GENERATION_STRATEGIES_VALUES;
     protected readonly MIN_NUMBER_OF_QUEST_TO_GENERATE: number = MIN_NUMBER_OF_QUEST_TO_GENERATE;
-    protected readonly MAX_QUESTION_POOL_NAME_LENGTH = MAX_QUESTION_POOL_NAME_LENGTH;
+    protected readonly MAX_QUESTION_POOL_NAME_LENGTH: number = MAX_QUESTION_POOL_NAME_LENGTH;
 
-    test!: TestModel
-    editTestForm!: FormGroup;
+    test: TestModel
+    editTestForm: FormGroup;
     testDataChanges: boolean = false;
 
-    questionsPoolFormGroup!: FormGroup;
+    questionsPoolFormGroup: FormGroup;
 
     constructor(private fb: FormBuilder,
                 private testEditPageService: TestEditPageService,
                 private route: ActivatedRoute,
                 private dialog: MatDialog,
-                private alertService: AlertService) {
-    }
+                private alertService: AlertService
+    ) {}
 
     ngOnInit() {
         this.editTestForm = this.fb.group({

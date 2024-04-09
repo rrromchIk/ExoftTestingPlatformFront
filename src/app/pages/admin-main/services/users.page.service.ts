@@ -79,14 +79,14 @@ export class UsersPageService {
             .pipe(
                 untilDestroyed(this),
                 switchMap(([filters, pagedListSettings]) => {
-                        return this.loadTestsList$(filters, pagedListSettings)
+                        return this.loadTestsList(filters, pagedListSettings)
                     }
                 )
             )
             .subscribe();
     }
 
-    private loadTestsList$(filters: Filters, pagedListSettings: PagingSettings) {
+    private loadTestsList(filters: Filters, pagedListSettings: PagingSettings) {
         return this.userApiService
             .getAllUsers(pagedListSettings, filters)
             .pipe(
@@ -103,6 +103,6 @@ export class UsersPageService {
     private refreshUsers() {
         const currentFilters = this.filtersSubject.value;
         const currentPagedListSettings = this.pagingSettingSubject.value;
-        this.loadTestsList$(currentFilters, currentPagedListSettings).pipe(untilDestroyed(this)).subscribe();
+        this.loadTestsList(currentFilters, currentPagedListSettings).pipe(untilDestroyed(this)).subscribe();
     }
 }

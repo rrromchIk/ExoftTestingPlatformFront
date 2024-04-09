@@ -7,7 +7,7 @@ import {TestModel} from "../../../../core/interfaces/test/test.model";
     styleUrls: ['./test-item.component.scss']
 })
 export class TestItemComponent {
-    @Input() test!: TestModel;
+    @Input() test: TestModel;
     @Output() deleteTestEvent: EventEmitter<string> = new EventEmitter<string>();
     @Output() changePublishedStatusEvent: EventEmitter<TestModel> = new EventEmitter<TestModel>();
 

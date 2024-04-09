@@ -79,14 +79,14 @@ export class TestTemplatesPageService {
             .pipe(
                 untilDestroyed(this),
                 switchMap(([filters, pagedListSettings]) => {
-                        return this.loadTestTemplatesList$(filters, pagedListSettings)
+                        return this.loadTestTemplatesList(filters, pagedListSettings)
                     }
                 ),
             )
             .subscribe();
     }
 
-    private loadTestTemplatesList$(filters: Filters, pagedListSettings: PagingSettings) {
+    private loadTestTemplatesList(filters: Filters, pagedListSettings: PagingSettings) {
         return this.testTemplateApiService
             .getAllTestTemplates(pagedListSettings, filters)
             .pipe(
@@ -103,6 +103,6 @@ export class TestTemplatesPageService {
     private refreshTests() {
         const currentFilters = this.filtersSubject.value;
         const currentPagedListSettings = this.pagingSettingSubject.value;
-        this.loadTestTemplatesList$(currentFilters, currentPagedListSettings).pipe(untilDestroyed(this)).subscribe();
+        this.loadTestTemplatesList(currentFilters, currentPagedListSettings).pipe(untilDestroyed(this)).subscribe();
     }
 }

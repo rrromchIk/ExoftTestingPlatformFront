@@ -35,14 +35,13 @@ export class TestsListComponent implements OnInit {
     sortCriterias: SortCriteria[] = Array.of(DURATION_SORT_CRITERIA, CREATION_DATE_SORT_CRITERIA, MODIFICATION_DATE_SORT_CRITERIA);
 
 
-    constructor(private testsPageService: TestsPageService, private dialog: MatDialog) {
-    }
+    constructor(private testsPageService: TestsPageService, private dialog: MatDialog) {}
 
-    ngOnInit(): void {
+    ngOnInit() {
         this.loadTests();
     }
 
-    loadTests(): void {
+    loadTests() {
         this.testsPageService.pagedListOfTests$.pipe(untilDestroyed(this)).subscribe(
             response => {
                 this.pagedList = response;

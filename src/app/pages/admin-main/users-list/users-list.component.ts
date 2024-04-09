@@ -35,11 +35,11 @@ export class UsersListComponent {
                 private dialog: MatDialog) {
     }
 
-    ngOnInit(): void {
+    ngOnInit() {
         this.loadUsers();
     }
 
-    loadUsers(): void {
+    loadUsers() {
         this.usersPageService.pagedListOfUsers$.pipe(untilDestroyed(this)).subscribe(
             response => {
                 this.pagedListOfUsers = response;

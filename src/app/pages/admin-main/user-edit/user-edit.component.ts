@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {UserModel} from "../../../core/interfaces/user/user.model";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {environment} from "../../../../environments/environment";
@@ -15,8 +15,8 @@ import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
     styleUrl: './user-edit.component.scss',
 })
 export class UserEditComponent implements OnInit {
-    user!: UserModel;
-    editUserForm!: FormGroup;
+    user: UserModel;
+    editUserForm: FormGroup;
     avatarLinkToDisplay: string | null = null;
     uploadedUserAvatar: File | null = null;
     userDataChanges: boolean = false;
@@ -26,8 +26,8 @@ export class UserEditComponent implements OnInit {
         private fb: FormBuilder,
         private route: ActivatedRoute,
         private editUserPageService: EditUserService
-    ) {
-    }
+    ) {}
+
     ngOnInit() {
         this.editUserForm = this.fb.group({
             firstName: ['', [Validators.required, Validators.pattern(FIRST_AND_LAST_NAMES_PATTERN)]],

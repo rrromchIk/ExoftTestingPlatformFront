@@ -7,7 +7,7 @@ import {TestTemplateModel} from "../../../../core/interfaces/test-template/test-
   styleUrl: './test-template-item.component.scss'
 })
 export class TestTemplateItemComponent {
-    @Input() testTemplate!: TestTemplateModel;
+    @Input() testTemplate: TestTemplateModel;
     @Output() deleteTestTemplateEvent: EventEmitter<string> = new EventEmitter<string>();
 
     onDeleteTestTemplate(testTemplate: TestTemplateModel) {
