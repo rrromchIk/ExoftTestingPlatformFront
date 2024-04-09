@@ -35,7 +35,7 @@ export class TestTmplApiService {
     }
 
     getTestTmplById(testTmplId: string) {
-        return this.http.get<TestTemplateModel>(`${this.testTemplatesEndpoint}/${testTmplId}`);
+        return this.http.get<TestTemplateModel>(`${this.testTemplatesEndpoint}/${testTmplId}/questions-pools/templates`);
     }
 
     updateTestTmpl(testTmplId: string, testTmplUpdateDto: TestTmplUpdateDto) {
