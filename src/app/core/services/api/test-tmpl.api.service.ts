@@ -8,6 +8,7 @@ import {environment} from "../../../../environments/environment";
 import {Filters} from "../../interfaces/filters/filters";
 import {HttpParamsHelper} from "../../helpers/http-params.helper";
 import {TestTemplateCreateDto} from "../../interfaces/test-template/test-template-create.dto";
+import {TestTmplUpdateDto} from "../../interfaces/test-template/test-tmpl-update.dto";
 
 @Injectable({
     providedIn: 'root'
@@ -31,5 +32,13 @@ export class TestTmplApiService {
 
     createTestTemplate(testTemplateCreateDto: TestTemplateCreateDto) {
         return this.http.post(this.testTemplatesEndpoint, testTemplateCreateDto);
+    }
+
+    getTestTmplById(testTmplId: string) {
+        return this.http.get<TestTemplateModel>(`${this.testTemplatesEndpoint}/${testTmplId}`);
+    }
+
+    updateTestTmpl(testTmplId: string, testTmplUpdateDto: TestTmplUpdateDto) {
+        return this.http.put(`${this.testTemplatesEndpoint}/${testTmplId}`, testTmplUpdateDto)
     }
 }
