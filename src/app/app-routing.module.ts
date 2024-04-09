@@ -1,9 +1,9 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {UserMainComponent} from "./pages/user-main/user-main.component";
-import {TestsToPassListComponent} from "./pages/user-main/tests-to-pass-list/tests-to-pass-list.component";
-import {StartedTestsListComponent} from "./pages/user-main/started-tests-list/started-tests-list.component";
-import {PassingTestComponent} from "./pages/passing-test/passing-test/passing-test.component";
+import {TestsToPassListComponent} from "./pages/user-main/components/tests-to-pass-list/tests-to-pass-list.component";
+import {StartedTestsListComponent} from "./pages/user-main/components/started-tests-list/started-tests-list.component";
+import {PassingTestComponent} from "./pages/passing-test/passing-test.component";
 import {TestResultComponent} from "./pages/test-result/test-result.component";
 import {LoginComponent} from "./pages/login/login.component";
 import {SignupComponent} from "./pages/signup/signup.component";
@@ -21,7 +21,7 @@ import {ForbiddenComponent} from "./pages/forbidden/forbidden.component";
 import {TestEditComponent} from "./pages/admin-main/test-edit/test-edit.component";
 import {QuestionsPoolEditComponent} from "./pages/admin-main/questions-pool-edit/questions-pool-edit.component";
 import {EmailConfirmComponent} from "./pages/email-confirm/email-confirm.component";
-import {ProfileComponent} from "./pages/profile/profile/profile.component";
+import {ProfileComponent} from "./pages/profile/profile.component";
 import {RegisterUserComponent} from "./pages/register-user/register-user.component";
 
 

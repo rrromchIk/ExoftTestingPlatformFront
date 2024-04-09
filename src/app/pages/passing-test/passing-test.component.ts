@@ -1,13 +1,13 @@
 import {Component, OnInit} from '@angular/core';
-import {UserQuestionModel} from "../../../core/interfaces/user-question/user-question.model";
-import {QuestionModel} from "../../../core/interfaces/question/question.model";
-import {PassTestService} from "../services/pass-test.service";
-import {QuestionApiService} from "../../../core/services/api/question.api.service";
-import {AuthService} from "../../../shared/services/auth.service";
+import {UserQuestionModel} from "../../core/interfaces/user-question/user-question.model";
+import {QuestionModel} from "../../core/interfaces/question/question.model";
+import {PassTestService} from "./pass-test.service";
+import {QuestionApiService} from "../../core/services/api/question.api.service";
+import {AuthService} from "../../shared/services/auth.service";
 import {ActivatedRoute} from "@angular/router";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
-import {AnswerModel} from "../../../core/interfaces/answer/answer.model";
-import {UserTestModel} from "../../../core/interfaces/user-test/user-test.model";
+import {AnswerModel} from "../../core/interfaces/answer/answer.model";
+import {UserTestModel} from "../../core/interfaces/user-test/user-test.model";
 
 @UntilDestroy()
 @Component({
@@ -16,15 +16,15 @@ import {UserTestModel} from "../../../core/interfaces/user-test/user-test.model"
     styleUrl: './passing-test.component.scss'
 })
 export class PassingTestComponent implements OnInit {
-    userId!: string;
+    userId: string;
     userTest: UserTestModel | null = null;
 
     userQuestions: UserQuestionModel[] = [];
-    currentQuestionIndex!: number;
+    currentQuestionIndex: number;
     currentQuestion: QuestionModel | null = null;
     preloadedNextQuestion: QuestionModel | null = null;
     selectedAnswers: AnswerModel[] = [];
-    remainingTime!: number;
+    remainingTime: number;
 
     constructor(private passTestService: PassTestService,
                 private questionService: QuestionApiService,

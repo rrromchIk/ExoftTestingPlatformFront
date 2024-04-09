@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {PassingTestComponent} from "./passing-test/passing-test.component";
+import {PassingTestComponent} from "./passing-test.component";
 import {TimerItemComponent} from "./timer-item/timer-item.component";
 import {AppMaterialModule} from "../../shared/modules/app-material/app-material.module";
 

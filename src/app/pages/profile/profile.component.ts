@@ -1,16 +1,16 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthService} from "../../../shared/services/auth.service";
+import {AuthService} from "../../shared/services/auth.service";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
-import {UserModel} from "../../../core/interfaces/user/user.model";
+import {UserModel} from "../../core/interfaces/user/user.model";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {FIRST_AND_LAST_NAMES_PATTERN} from "../../../core/constants/validation.constants";
-import {environment} from "../../../../environments/environment";
-import {UpdatedUserDto} from "../../../core/interfaces/user/updated-user.dto";
-import {AlertService} from "../../../shared/services/alert.service";
-import {AuthApiService} from "../../../core/services/api/auth.api.service";
-import {EditUserService} from "../../../shared/services/edit-user.service";
+import {FIRST_AND_LAST_NAMES_PATTERN} from "../../core/constants/validation.constants";
+import {environment} from "../../../environments/environment";
+import {UpdatedUserDto} from "../../core/interfaces/user/updated-user.dto";
+import {AlertService} from "../../shared/services/alert.service";
+import {AuthApiService} from "../../core/services/api/auth.api.service";
+import {EditUserService} from "../../shared/services/edit-user.service";
 import {MatDialog} from "@angular/material/dialog";
-import {ChangePasswordDialogComponent} from "../change-password-dialog/change-password-dialog.component";
+import {ChangePasswordDialogComponent} from "./change-password-dialog/change-password-dialog.component";
 
 @UntilDestroy()
 @Component({

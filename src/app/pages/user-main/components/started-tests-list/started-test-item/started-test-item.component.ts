@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {StartedTestModel} from "../../../../core/interfaces/user-test/started-test.model";
+import {StartedTestModel} from "../../../../../core/interfaces/user-test/started-test.model";
 import {Router} from "@angular/router";
 
 @Component({

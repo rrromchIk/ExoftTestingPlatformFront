@@ -1,8 +1,8 @@
 import {RouterModule, Routes} from "@angular/router";
 import {NgModule} from "@angular/core";
 import {UserMainComponent} from "./user-main.component";
-import {TestsToPassListComponent} from "./tests-to-pass-list/tests-to-pass-list.component";
-import {StartedTestsListComponent} from "./started-tests-list/started-tests-list.component";
+import {TestsToPassListComponent} from "./components/tests-to-pass-list/tests-to-pass-list.component";
+import {StartedTestsListComponent} from "./components/started-tests-list/started-tests-list.component";
 
 const routes: Routes = [
     // {

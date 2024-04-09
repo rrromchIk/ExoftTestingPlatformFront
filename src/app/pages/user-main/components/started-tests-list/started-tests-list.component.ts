@@ -1,16 +1,16 @@
 import {Component, OnInit} from '@angular/core';
-import {PagedListModel} from "../../../core/interfaces/paged-list.model";
-import {PagingSettings} from "../../../core/interfaces/filters/paging-settings";
-import {StartedTestModel} from "../../../core/interfaces/user-test/started-test.model";
-import {SelectFilter} from "../../../core/interfaces/filters/select-filter";
-import {SortCriteria} from "../../../core/interfaces/filters/sort-criteria";
-import {Filters} from "../../../core/interfaces/filters/filters";
+import {PagedListModel} from "../../../../core/interfaces/paged-list.model";
+import {PagingSettings} from "../../../../core/interfaces/filters/paging-settings";
+import {StartedTestModel} from "../../../../core/interfaces/user-test/started-test.model";
+import {SelectFilter} from "../../../../core/interfaces/filters/select-filter";
+import {SortCriteria} from "../../../../core/interfaces/filters/sort-criteria";
+import {Filters} from "../../../../core/interfaces/filters/filters";
 import {
     DIFFICULTY_FILTER,
     SCORE_SORT_CRITERIA, STARTING_TIME_SORT_CRITERIA,
     USER_TEST_STATUS_FILTER
-} from "../../../core/constants/filters.constants";
-import {StartedTestsPageService} from "../services/started-tests.page.service";
+} from "../../../../core/constants/filters.constants";
+import {StartedTestsPageService} from "../../services/started-tests.page.service";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 
 @UntilDestroy()

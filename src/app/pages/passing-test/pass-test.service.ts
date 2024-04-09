@@ -1,17 +1,16 @@
 import {Injectable} from "@angular/core";
-import {UserQuestionModel} from "../../../core/interfaces/user-question/user-question.model";
-import {QuestionsPoolDetailsModel} from "../../../core/interfaces/user-question/questions-pool-details.model";
-import {UserQuestionApiService} from "../../../core/services/api/user-question.api.service";
+import {UserQuestionModel} from "../../core/interfaces/user-question/user-question.model";
+import {QuestionsPoolDetailsModel} from "../../core/interfaces/user-question/questions-pool-details.model";
+import {UserQuestionApiService} from "../../core/services/api/user-question.api.service";
 import {BehaviorSubject, catchError, map, Observable, switchMap, tap, throwError} from "rxjs";
-import {UserTestApiService} from "../../../core/services/api/user-test.api.service";
-import {GenerationStrategy} from "../../../core/interfaces/questions-pool/generation-strategy.enum";
+import {UserTestApiService} from "../../core/services/api/user-test.api.service";
+import {GenerationStrategy} from "../../core/interfaces/questions-pool/generation-strategy.enum";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 import {HttpStatusCode} from "@angular/common/http";
-import {TestApiService} from "../../../core/services/api/test.api.service";
-import {AnswerModel} from "../../../core/interfaces/answer/answer.model";
-import {UserAnswerApiService} from "../../../core/services/api/user-answer.api.service";
+import {AnswerModel} from "../../core/interfaces/answer/answer.model";
+import {UserAnswerApiService} from "../../core/services/api/user-answer.api.service";
 import {Router} from "@angular/router";
-import {UserTestModel} from "../../../core/interfaces/user-test/user-test.model";
+import {UserTestModel} from "../../core/interfaces/user-test/user-test.model";
 
 @UntilDestroy()
 @Injectable({

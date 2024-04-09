@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
-import {TestToPassModel} from "../../../../core/interfaces/user-test/test-to-pass.model";
-import {UserTestStatus} from "../../../../core/interfaces/user-test/user-test-status.enum";
+import {TestToPassModel} from "../../../../../core/interfaces/user-test/test-to-pass.model";
+import {UserTestStatus} from "../../../../../core/interfaces/user-test/user-test-status.enum";
 import {Router} from "@angular/router";
 
 @Component({
