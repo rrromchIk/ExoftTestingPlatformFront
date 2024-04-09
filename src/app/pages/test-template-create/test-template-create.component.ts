@@ -73,38 +73,8 @@ export class TestTemplateCreateComponent {
     }
 
     onSubmit() {
-
         if (this.createTestTmplForm.valid) {
-            const templateName = this.createTestTmplForm.value.templateName;
-            const defaultSubject = this.createTestTmplForm.value.defaultSubject;
-            const defaultDuration = this.createTestTmplForm.value.defaultDuration;
-            const defaultTestDifficulty = this.createTestTmplForm.value.defaultTestDifficulty;
-
-            console.log(this.questionPoolTemplatesFormArray.controls);
-            const questionPoolsTmpl: QuestionsPoolTmplCreateDto[] = this.questionPoolTemplatesFormArray.controls.map(
-                control => {
-                    const defaultName = control.value.defaultName;
-                    const numOfQuestRestr = control.value.numOfQuestionsToBeGeneratedRestriction;
-                    const genStrategyRestr = control.value.generationStrategyRestriction;
-
-                    return {
-                        defaultName: defaultName !== '' ? defaultName : null,
-                        numOfQuestionsToBeGeneratedRestriction: numOfQuestRestr != '' ? numOfQuestRestr : null,
-                        generationStrategyRestriction: genStrategyRestr !== '' ? genStrategyRestr : null
-                    };
-                });
-
-            const testTmplCreateDto: TestTemplateCreateDto = {
-                templateName: templateName,
-                defaultSubject: defaultSubject !== '' ? defaultSubject : null,
-                defaultDuration: defaultDuration !== '' ? defaultDuration : null,
-                defaultTestDifficulty: defaultTestDifficulty !== '' ? defaultTestDifficulty : null,
-                questionsPoolTemplates: questionPoolsTmpl
-            };
-
-            console.log(testTmplCreateDto);
-
-
+            const testTmplCreateDto = this.createTestTmplDtoFromForm();
             this.testTemplateApiService.createTestTemplate(testTmplCreateDto)
                 .pipe(untilDestroyed(this))
                 .subscribe({
@@ -123,5 +93,34 @@ export class TestTemplateCreateComponent {
                     }
                 });
         }
+    }
+
+
+    private createTestTmplDtoFromForm() {
+        const templateName = this.createTestTmplForm.value.templateName;
+        const defaultSubject = this.createTestTmplForm.value.defaultSubject;
+        const defaultDuration = this.createTestTmplForm.value.defaultDuration;
+        const defaultTestDifficulty = this.createTestTmplForm.value.defaultTestDifficulty;
+
+        const questionPoolsTmpl: QuestionsPoolTmplCreateDto[] = this.questionPoolTemplatesFormArray.controls.map(
+            control => {
+                const defaultName = control.value.defaultName;
+                const numOfQuestRestr = control.value.numOfQuestionsToBeGeneratedRestriction;
+                const genStrategyRestr = control.value.generationStrategyRestriction;
+
+                return {
+                    defaultName: defaultName !== '' ? defaultName : null,
+                    numOfQuestionsToBeGeneratedRestriction: numOfQuestRestr != '' ? numOfQuestRestr : null,
+                    generationStrategyRestriction: genStrategyRestr !== '' ? genStrategyRestr : null
+                };
+            });
+
+        return {
+            templateName: templateName,
+            defaultSubject: defaultSubject !== '' ? defaultSubject : null,
+            defaultDuration: defaultDuration !== '' ? defaultDuration : null,
+            defaultTestDifficulty: defaultTestDifficulty !== '' ? defaultTestDifficulty : null,
+            questionsPoolTemplates: questionPoolsTmpl
+        };
     }
 }
