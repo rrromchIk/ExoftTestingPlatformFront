@@ -106,7 +106,7 @@
                                     </mat-error>
 
                                     <mat-error *ngIf="control.get('numOfQuestionsToBeGenerated')?.hasError('required') &&
-                                                      control.get('questionPoolName')?.touched">
+                                                      control.get('numOfQuestionsToBeGenerated')?.touched">
                                         Field is <strong>required</strong>
                                     </mat-error>
                                 </mat-form-field>
@@ -121,7 +121,7 @@
                                     </mat-select>
 
                                     <mat-error *ngIf="control.get('generationStrategy')?.hasError('required') &&
-                                                      control.get('questionPoolName')?.touched">
+                                                      control.get('generationStrategy')?.touched">
                                         Generation strategy is <strong>required</strong>
                                     </mat-error>
                                 </mat-form-field>
