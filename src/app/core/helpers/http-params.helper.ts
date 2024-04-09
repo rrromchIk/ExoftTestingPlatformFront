@@ -28,8 +28,6 @@ export class HttpParamsHelper {
             }
         }
 
-        console.log(params);
-
         return params;
     }
 }
