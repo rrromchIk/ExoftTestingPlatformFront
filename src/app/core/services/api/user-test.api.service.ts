@@ -16,8 +16,7 @@ import {TestResultModel} from "../../interfaces/test-result/test-result.model";
 export class UserTestApiService {
     private apiUrl: string = environment.apiUrl;
 
-    constructor(private http: HttpClient) {
-    }
+    constructor(private http: HttpClient) {}
 
     getAllTestsToPassForUser(userId: string, pagingSettings: PagingSettings, filters: Filters) {
         let queryParams = new HttpParams();
@@ -25,12 +24,7 @@ export class UserTestApiService {
         queryParams = HttpParamsHelper.applyFilters(queryParams, filters);
 
         const url = `${this.apiUrl}/api/users/${userId}/tests`
-        return this.http.get<PagedListModel<TestToPassModel>>(
-            url,
-            {
-                params: queryParams
-            }
-        );
+        return this.http.get<PagedListModel<TestToPassModel>>(url, {params: queryParams});
     }
 
     getAllStartedTestsForUser(userId: string, pagingSettings: PagingSettings, filters: Filters) {
@@ -39,12 +33,7 @@ export class UserTestApiService {
         queryParams = HttpParamsHelper.applyFilters(queryParams, filters);
 
         const url = `${this.apiUrl}/api/users/${userId}/tests/started`
-        return this.http.get<PagedListModel<StartedTestModel>>(
-            url,
-            {
-                params: queryParams
-            }
-        );
+        return this.http.get<PagedListModel<StartedTestModel>>(url, {params: queryParams});
     }
 
     createUserTest(userId: string, testId: string) {

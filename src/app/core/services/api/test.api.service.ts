@@ -14,21 +14,16 @@ import {TestUpdateDto} from "../../interfaces/test/test-update.dto";
     providedIn: 'root'
 })
 export class TestApiService {
-    private testsEndpoint = `${environment.apiUrl}/api/tests`;
+    private testsEndpoint: string = `${environment.apiUrl}/api/tests`;
 
     constructor(private http: HttpClient) {}
 
-    getAllTests(pagingSettings: PagingSettings, filters: Filters): Observable<PagedListModel<TestModel>> {
+    getAllTests(pagingSettings: PagingSettings, filters: Filters) {
         let queryParams = new HttpParams();
         queryParams = HttpParamsHelper.applyPaging(queryParams, pagingSettings);
         queryParams = HttpParamsHelper.applyFilters(queryParams, filters);
 
-        return this.http.get<PagedListModel<TestModel>>(
-            this.testsEndpoint,
-            {
-                params: queryParams
-            }
-        );
+        return this.http.get<PagedListModel<TestModel>>(this.testsEndpoint, {params: queryParams});
     }
 
     deleteTest(testId: string) {
@@ -39,12 +34,8 @@ export class TestApiService {
         let queryParams = new HttpParams();
         queryParams = queryParams.append("isPublished", updatedStatus);
 
-        return this.http.patch<HttpResponse<any>>(
-            this.testsEndpoint + `/${testId}/publish`,
-            null,
-            {
-                params: queryParams
-            }
+        return this.http.patch<HttpResponse<any>>(this.testsEndpoint + `/${testId}/publish`, null,
+            {params: queryParams}
         );
     }
 

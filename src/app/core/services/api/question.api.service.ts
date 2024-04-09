@@ -8,8 +8,8 @@ import {QuestionCreateDto} from "../../interfaces/question/question-create.dto";
     providedIn: 'root'
 })
 export class QuestionApiService {
-    private apiUrl = environment.apiUrl;
-    private questionsEndpoint = `${this.apiUrl}/api/tests/questions-pools/questions/`;
+    private apiUrl: string  = environment.apiUrl;
+    private questionsEndpoint: string = `${this.apiUrl}/api/tests/questions-pools/questions/`;
 
     constructor(private http: HttpClient) {}
 

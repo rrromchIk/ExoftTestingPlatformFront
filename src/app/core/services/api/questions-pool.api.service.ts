@@ -9,10 +9,9 @@ import {QuestionsPoolUpdateDto} from "../../interfaces/questions-pool/questions-
     providedIn: "root"
 })
 export class QuestionsPoolApiService {
-    private apiUrl = environment.apiUrl;
+    private apiUrl: string = environment.apiUrl;
 
-    constructor(private http: HttpClient) {
-    }
+    constructor(private http: HttpClient) {}
 
     getQuestionsPoolById(questionsPoolId: string) {
         return this.http.get<QuestionsPoolModel>(this.apiUrl + `/api/tests/questions-pools/${questionsPoolId}`);

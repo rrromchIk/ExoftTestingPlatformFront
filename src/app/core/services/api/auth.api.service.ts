@@ -16,8 +16,7 @@ export class AuthApiService {
     private apiUrl: string = environment.apiUrl;
     private authEndpoint: string = `${environment.securityUrl}/api/auth`
 
-    constructor(private http: HttpClient) {
-    }
+    constructor(private http: HttpClient) {}
 
     logIn(userLoginDto: UserLoginDto) {
         return this.http.post<UserLoginResponseDto>(this.authEndpoint+ "/login", userLoginDto);

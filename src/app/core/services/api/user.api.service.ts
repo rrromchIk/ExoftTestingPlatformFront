@@ -13,12 +13,11 @@ import {HttpParamsHelper} from "../../helpers/http-params.helper";
     providedIn: 'root'
 })
 export class UserApiService {
-    private usersEndpoint = `${environment.apiUrl}/api/users`;
+    private usersEndpoint: string = `${environment.apiUrl}/api/users`;
 
-    constructor(private http: HttpClient) {
-    }
+    constructor(private http: HttpClient) {}
 
-    getAllUsers(pagingSettings: PagingSettings, filters: Filters): Observable<PagedListModel<UserModel>> {
+    getAllUsers(pagingSettings: PagingSettings, filters: Filters) {
         let queryParams = new HttpParams();
         queryParams = HttpParamsHelper.applyPaging(queryParams, pagingSettings);
         queryParams = HttpParamsHelper.applyFilters(queryParams, filters);

@@ -12,7 +12,7 @@ import {HttpParamsHelper} from "../../helpers/http-params.helper";
     providedIn: 'root'
 })
 export class TestTmplApiService {
-    private testTemplatesEndpoint = `${environment.apiUrl}/api/tests/templates`;
+    private testTemplatesEndpoint: string = `${environment.apiUrl}/api/tests/templates`;
 
     constructor(private http: HttpClient) {}
 
@@ -21,12 +21,7 @@ export class TestTmplApiService {
         queryParams = HttpParamsHelper.applyPaging(queryParams, pagingSettings);
         queryParams = HttpParamsHelper.applyFilters(queryParams, filters);
 
-        return this.http.get<PagedListModel<TestTemplateModel>>(
-            this.testTemplatesEndpoint,
-            {
-                params: queryParams
-            }
-        );
+        return this.http.get<PagedListModel<TestTemplateModel>>(this.testTemplatesEndpoint, {params: queryParams});
     }
 
     deleteTestTemplate(testTemplateId: string) {

@@ -8,8 +8,7 @@ import {Injectable} from "@angular/core";
 export class UserAnswerApiService {
     private userAnswersEndpoint: string = `${environment.apiUrl}/api/users/answers`;
 
-    constructor(private http: HttpClient) {
-    }
+    constructor(private http: HttpClient) {}
 
     createUserAnswer(userId: string, answerId: string, questionId: string) {
         return this.http.post(this.userAnswersEndpoint, {userId, answerId, questionId});
