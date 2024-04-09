@@ -12,7 +12,7 @@ import {AuthService} from "../../shared/services/auth.service";
 })
 export class LoginComponent implements OnInit {
     hidePassword: boolean = true;
-    loginForm!: FormGroup;
+    loginForm: FormGroup;
 
     constructor(
         private fb: FormBuilder,

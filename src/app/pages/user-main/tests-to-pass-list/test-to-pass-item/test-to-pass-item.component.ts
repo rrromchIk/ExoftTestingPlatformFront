@@ -10,13 +10,11 @@ import {Router} from "@angular/router";
 })
 export class TestToPassItemComponent {
     protected readonly UserTestStatus = UserTestStatus;
-    @Input() testToPass!: TestToPassModel;
+    @Input() testToPass: TestToPassModel;
 
-    constructor(private router: Router) {
-    }
+    constructor(private router: Router) {}
 
     onPassTest(test: TestToPassModel) {
-        console.log("pass test event emitted, testId: " + test.id);
         this.router.navigate(['pass-test'], {
             queryParams: {id: test.id}
         })

@@ -20,7 +20,7 @@ import {ChangePasswordDialogComponent} from "../change-password-dialog/change-pa
 })
 export class ProfileComponent implements OnInit {
     user: UserModel | null = null;
-    profileUserForm!: FormGroup;
+    profileUserForm: FormGroup;
     avatarLinkToDisplay: string | null = null;
     uploadedUserAvatar: File | null = null;
     userDataChanges: boolean = false;
@@ -33,8 +33,7 @@ export class ProfileComponent implements OnInit {
         private authApiService: AuthApiService,
         private userEditService: EditUserService,
         private dialog: MatDialog
-    ) {
-    }
+    ) {}
 
     ngOnInit() {
         this.profileUserForm = this.fb.group({
@@ -45,7 +44,7 @@ export class ProfileComponent implements OnInit {
             role: ['']
         });
 
-        this.userEditService.getUserById(this.authService.getCurrentUser()?.id!);
+        this.userEditService.getUserById(this.authService.getCurrentUser().id);
 
         this.userEditService.user$
             .pipe(untilDestroyed(this))

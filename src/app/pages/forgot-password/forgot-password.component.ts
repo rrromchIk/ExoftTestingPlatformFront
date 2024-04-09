@@ -10,13 +10,12 @@ import {AuthService} from "../../shared/services/auth.service";
     styleUrl: './forgot-password.component.scss'
 })
 export class ForgotPasswordComponent implements OnInit {
-    form!: FormGroup;
+    form: FormGroup;
 
     constructor(
         private fb: FormBuilder,
         private authService: AuthService
-    ) {
-    }
+    ) {}
 
     ngOnInit() {
         this.form = this.fb.group({

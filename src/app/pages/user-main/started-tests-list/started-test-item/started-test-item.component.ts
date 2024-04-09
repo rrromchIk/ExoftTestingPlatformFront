@@ -8,13 +8,11 @@ import {Router} from "@angular/router";
   styleUrl: './started-test-item.component.scss'
 })
 export class StartedTestItemComponent {
-    @Input() startedTest!: StartedTestModel;
+    @Input() startedTest: StartedTestModel;
 
-    constructor(private router: Router) {
-    }
+    constructor(private router: Router) {}
 
     checkOutResult(startedTest: StartedTestModel) {
-        console.log("check out test result event emitted, testId: " + startedTest.test.id);
         this.router.navigate(['/test-result'], {
             queryParams: {id: startedTest.test.id}
         })

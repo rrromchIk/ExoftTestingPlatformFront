@@ -19,8 +19,8 @@ import {Observable} from "rxjs";
 })
 export class RegisterUserComponent {
     hidePassword: boolean = true;
-    registerUserForm!: FormGroup;
-    currentUser!: UserModel;
+    registerUserForm: FormGroup;
+    currentUser: UserModel;
 
     constructor(private fb: FormBuilder,
                 private alertService: AlertService,

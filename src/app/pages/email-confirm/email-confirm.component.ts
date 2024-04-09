@@ -12,8 +12,8 @@ import {AlertService} from "../../shared/services/alert.service";
     styleUrl: './email-confirm.component.scss'
 })
 export class EmailConfirmComponent implements OnInit {
-    userId!: string;
-    token!: string;
+    userId: string;
+    token: string;
     confirmationSuccess: boolean | null = null;
 
     constructor(private route: ActivatedRoute,
@@ -52,8 +52,6 @@ export class EmailConfirmComponent implements OnInit {
                     this.alertService.error('Invalid link')
                 }
             });
-
-
 
     }
 }

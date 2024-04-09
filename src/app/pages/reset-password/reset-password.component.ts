@@ -15,10 +15,10 @@ import {AuthService} from "../../shared/services/auth.service";
     styleUrl: './reset-password.component.scss'
 })
 export class ResetPasswordComponent implements OnInit {
-    form!: FormGroup;
+    form: FormGroup;
     hidePassword: boolean = true;
-    userId!: string | null;
-    changePasswordToken!: string | null;
+    userId: string | null;
+    changePasswordToken: string | null;
 
 
     constructor(
@@ -39,9 +39,6 @@ export class ResetPasswordComponent implements OnInit {
 
         this.userId = this.route.snapshot.queryParamMap.get('userId');
         this.changePasswordToken = this.route.snapshot.queryParamMap.get('token');
-
-        console.log(this.userId);
-        console.log(this.changePasswordToken);
     }
 
     getFormControl(name: string) {

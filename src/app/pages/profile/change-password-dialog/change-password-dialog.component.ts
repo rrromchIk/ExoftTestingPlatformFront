@@ -16,7 +16,7 @@ import {AlertService} from "../../../shared/services/alert.service";
     styleUrl: './change-password-dialog.component.scss'
 })
 export class ChangePasswordDialogComponent implements OnInit {
-    changePasswordForm!: FormGroup;
+    changePasswordForm: FormGroup;
     hidePassword: boolean = true;
 
     constructor(

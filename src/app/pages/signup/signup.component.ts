@@ -12,13 +12,12 @@ import {AuthService} from "../../shared/services/auth.service";
 })
 export class SignupComponent implements OnInit {
     hidePassword: boolean = true;
-    signUpForm!: FormGroup;
+    signUpForm: FormGroup;
 
     constructor(
         private fb: FormBuilder,
         private authService: AuthService,
-    ) {
-    }
+    ) {}
 
     ngOnInit() {
         this.signUpForm = this.fb.group({
