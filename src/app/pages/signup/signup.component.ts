@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {passwordsMatchValidator} from "../../../core/helpers/form-validators";
-import {UserSignupDto} from "../../../core/interfaces/user/user-signup.dto";
-import {FIRST_AND_LAST_NAMES_PATTERN, PASSWORD_PATTERN} from "../../../core/constants/validation.constants";
-import {AuthService} from "../../../shared/services/auth.service";
+import {passwordsMatchValidator} from "../../core/helpers/form-validators";
+import {UserSignupDto} from "../../core/interfaces/user/user-signup.dto";
+import {FIRST_AND_LAST_NAMES_PATTERN, PASSWORD_PATTERN} from "../../core/constants/validation.constants";
+import {AuthService} from "../../shared/services/auth.service";
 
 @Component({
     selector: 'app-signup',

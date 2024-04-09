@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
-import {AuthService} from "../../../shared/services/auth.service";
-import {AuthApiService} from "../../../core/services/api/auth.api.service";
-import {AlertService} from "../../../shared/services/alert.service";
+import {AuthService} from "../../shared/services/auth.service";
+import {AuthApiService} from "../../core/services/api/auth.api.service";
+import {AlertService} from "../../shared/services/alert.service";
 
 @UntilDestroy()
 @Component({

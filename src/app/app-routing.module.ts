@@ -4,11 +4,11 @@ import {UserMainComponent} from "./pages/user-main/user-main.component";
 import {TestsToPassListComponent} from "./pages/user-main/tests-to-pass-list/tests-to-pass-list.component";
 import {StartedTestsListComponent} from "./pages/user-main/started-tests-list/started-tests-list.component";
 import {PassingTestComponent} from "./pages/passing-test/passing-test/passing-test.component";
-import {TestResultComponent} from "./pages/test-result/test-result/test-result.component";
-import {LoginComponent} from "./pages/login/login/login.component";
-import {SignupComponent} from "./pages/signup/signup/signup.component";
-import {ForgotPasswordComponent} from "./pages/forgot-password/forgot-password/forgot-password.component";
-import {ResetPasswordComponent} from "./pages/reset-password/reset-password/reset-password.component";
+import {TestResultComponent} from "./pages/test-result/test-result.component";
+import {LoginComponent} from "./pages/login/login.component";
+import {SignupComponent} from "./pages/signup/signup.component";
+import {ForgotPasswordComponent} from "./pages/forgot-password/forgot-password.component";
+import {ResetPasswordComponent} from "./pages/reset-password/reset-password.component";
 import {AdminMainComponent} from "./pages/admin-main/admin-main.component";
 import {TestsListComponent} from "./pages/admin-main/tests-list/tests-list.component";
 import {UsersListComponent} from "./pages/admin-main/users-list/users-list.component";
@@ -16,13 +16,13 @@ import {UserEditComponent} from "./pages/admin-main/user-edit/user-edit.componen
 import {TestTemplatesListComponent} from "./pages/admin-main/test-templates-list/test-templates-list.component";
 import {TestCreateComponent} from "./pages/admin-main/test-create/test-create.component";
 import {AdminGuard, AuthenticatedGuard} from "./core/guards/guards";
-import {NotFoundComponent} from "./pages/not-found/not-found/not-found.component";
-import {ForbiddenComponent} from "./pages/forbidden/forbidden/forbidden.component";
+import {NotFoundComponent} from "./pages/not-found/not-found.component";
+import {ForbiddenComponent} from "./pages/forbidden/forbidden.component";
 import {TestEditComponent} from "./pages/admin-main/test-edit/test-edit.component";
 import {QuestionsPoolEditComponent} from "./pages/admin-main/questions-pool-edit/questions-pool-edit.component";
-import {EmailConfirmComponent} from "./pages/email-confirm/email-confirm/email-confirm.component";
+import {EmailConfirmComponent} from "./pages/email-confirm/email-confirm.component";
 import {ProfileComponent} from "./pages/profile/profile/profile.component";
-import {RegisterUserComponent} from "./pages/register-user/register-user/register-user.component";
+import {RegisterUserComponent} from "./pages/register-user/register-user.component";
 
 
 const routes: Routes = [

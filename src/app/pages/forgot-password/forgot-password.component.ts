@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UntilDestroy} from "@ngneat/until-destroy";
-import {AuthService} from "../../../shared/services/auth.service";
+import {AuthService} from "../../shared/services/auth.service";
 
 @UntilDestroy()
 @Component({

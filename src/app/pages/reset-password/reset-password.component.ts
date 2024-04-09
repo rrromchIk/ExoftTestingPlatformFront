@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {passwordsMatchValidator} from "../../../core/helpers/form-validators";
+import {passwordsMatchValidator} from "../../core/helpers/form-validators";
 import {ActivatedRoute, Router} from "@angular/router";
-import {ResetPasswordDto} from "../../../core/interfaces/auth/reset-password.dto";
-import {PASSWORD_PATTERN} from "../../../core/constants/validation.constants";
-import {AlertService} from "../../../shared/services/alert.service";
+import {ResetPasswordDto} from "../../core/interfaces/auth/reset-password.dto";
+import {PASSWORD_PATTERN} from "../../core/constants/validation.constants";
+import {AlertService} from "../../shared/services/alert.service";
 import {UntilDestroy} from "@ngneat/until-destroy";
-import {AuthService} from "../../../shared/services/auth.service";
+import {AuthService} from "../../shared/services/auth.service";
 
 @UntilDestroy()
 @Component({

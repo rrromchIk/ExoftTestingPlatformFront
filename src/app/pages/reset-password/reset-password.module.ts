@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {ResetPasswordComponent} from "./reset-password/reset-password.component";
+import {ResetPasswordComponent} from "./reset-password.component";
 import {AppMaterialModule} from "../../shared/modules/app-material/app-material.module";
 import {ReactiveFormsModule} from "@angular/forms";
 import {RouterModule} from "@angular/router";

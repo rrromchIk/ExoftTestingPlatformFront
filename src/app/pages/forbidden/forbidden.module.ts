@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {ForbiddenComponent} from './forbidden/forbidden.component';
+import {ForbiddenComponent} from './forbidden.component';
 
 
 @NgModule({

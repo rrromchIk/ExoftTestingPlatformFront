@@ -3,12 +3,12 @@
         <h1>Email Confirmation</h1>
 
         <div class="select-team-content" *ngIf="confirmationSuccess; else failedConfirmation">
-            <img width="120" height="120" src="../../../../assets/images/success-icon.png" alt="Success confirmation">
+            <img width="120" height="120" src="../../../assets/images/success-icon.png" alt="Success confirmation">
             <h3>Your email has been successfully confirmed. You can close this page and continue using application.</h3>
         </div>
 
         <ng-template #failedConfirmation>
-            <img width="100" height="100" src="../../../../assets/images/fail-icon.png" alt="Fail confirmation">
+            <img width="100" height="100" src="../../../assets/images/fail-icon.png" alt="Fail confirmation">
             <h3>Your email has not been confirmed. Something went wrong, please try again later!</h3>
         </ng-template>
     </div>

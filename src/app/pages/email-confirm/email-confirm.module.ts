@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {EmailConfirmComponent} from "./email-confirm/email-confirm.component";
+import {EmailConfirmComponent} from "./email-confirm.component";
 
 
 @NgModule({

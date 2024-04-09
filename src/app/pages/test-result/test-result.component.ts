@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {TestResultModel} from "../../../core/interfaces/test-result/test-result.model";
-import {QuestionResultModel} from "../../../core/interfaces/test-result/question-result.model";
-import {UserTestApiService} from "../../../core/services/api/user-test.api.service";
-import {AuthService} from "../../../shared/services/auth.service";
+import {TestResultModel} from "../../core/interfaces/test-result/test-result.model";
+import {QuestionResultModel} from "../../core/interfaces/test-result/question-result.model";
+import {UserTestApiService} from "../../core/services/api/user-test.api.service";
+import {AuthService} from "../../shared/services/auth.service";
 import {ActivatedRoute} from "@angular/router";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 

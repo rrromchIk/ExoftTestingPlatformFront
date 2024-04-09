@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {FIRST_AND_LAST_NAMES_PATTERN, PASSWORD_PATTERN} from "../../../core/constants/validation.constants";
-import {passwordsMatchValidator} from "../../../core/helpers/form-validators";
-import {UserSignupDto} from "../../../core/interfaces/user/user-signup.dto";
-import {AlertService} from "../../../shared/services/alert.service";
-import {AuthApiService} from "../../../core/services/api/auth.api.service";
+import {FIRST_AND_LAST_NAMES_PATTERN, PASSWORD_PATTERN} from "../../core/constants/validation.constants";
+import {passwordsMatchValidator} from "../../core/helpers/form-validators";
+import {UserSignupDto} from "../../core/interfaces/user/user-signup.dto";
+import {AlertService} from "../../shared/services/alert.service";
+import {AuthApiService} from "../../core/services/api/auth.api.service";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 import {Router} from "@angular/router";
-import {AuthService} from "../../../shared/services/auth.service";
-import {UserModel} from "../../../core/interfaces/user/user.model";
+import {AuthService} from "../../shared/services/auth.service";
+import {UserModel} from "../../core/interfaces/user/user.model";
 import {Observable} from "rxjs";
 
 @UntilDestroy()

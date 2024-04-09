@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {UserLoginDto} from "../../../core/interfaces/user/user-login.dto";
+import {UserLoginDto} from "../../core/interfaces/user/user-login.dto";
 import {UntilDestroy} from "@ngneat/until-destroy";
-import {AuthService} from "../../../shared/services/auth.service";
+import {AuthService} from "../../shared/services/auth.service";
 
 @UntilDestroy()
 @Component({
