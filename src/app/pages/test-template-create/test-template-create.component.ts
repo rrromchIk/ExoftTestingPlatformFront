@@ -14,9 +14,8 @@ import {
     DIFFICULTY_VALUES,
     GENERATION_STRATEGIES_VALUES
 } from "../../core/constants/view.constants";
-import {TestTemplateCreateDto} from "../../core/interfaces/test-template/test-template-create.dto";
 import {TestTmplApiService} from "../../core/services/api/test-tmpl.api.service";
-import {QuestionsPoolTmplCreateDto} from "../../core/interfaces/questions-pool-tmpl/qp-tmpl-create.dto";
+import {QuestionsPoolTmplDto} from "../../core/interfaces/questions-pool-tmpl/quest-pool-tmpl.dto";
 import {HttpStatusCode} from "@angular/common/http";
 
 @UntilDestroy()
@@ -102,7 +101,7 @@ export class TestTemplateCreateComponent {
         const defaultDuration = this.createTestTmplForm.value.defaultDuration;
         const defaultTestDifficulty = this.createTestTmplForm.value.defaultTestDifficulty;
 
-        const questionPoolsTmpl: QuestionsPoolTmplCreateDto[] = this.questionPoolTemplatesFormArray.controls.map(
+        const questionPoolsTmpl: QuestionsPoolTmplDto[] = this.questionPoolTemplatesFormArray.controls.map(
             control => {
                 const defaultName = control.value.defaultName;
                 const numOfQuestRestr = control.value.numOfQuestionsToBeGeneratedRestriction;

@@ -1,4 +1,4 @@
-export interface QuestionsPoolTmplCreateDto {
+export interface QuestionsPoolTmplDto {
     defaultName?: string;
     numOfQuestionsToBeGeneratedRestriction?: number;
     generationStrategyRestriction?: string;

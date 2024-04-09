@@ -6,7 +6,7 @@ import {Injectable} from "@angular/core";
 import {TestTemplateModel} from "../../core/interfaces/test-template/test-template.model";
 import {TestTmplApiService} from "../../core/services/api/test-tmpl.api.service";
 import {TestTmplUpdateDto} from "../../core/interfaces/test-template/test-tmpl-update.dto";
-import {QuestionsPoolTmplCreateDto} from "../../core/interfaces/questions-pool-tmpl/qp-tmpl-create.dto";
+import {QuestionsPoolTmplDto} from "../../core/interfaces/questions-pool-tmpl/quest-pool-tmpl.dto";
 import {QuestionsPoolTmplApiService} from "../../core/services/api/questions-pool-tmpl.api.service";
 import {QuestionsPoolTmplModel} from "../../core/interfaces/questions-pool-tmpl/questions-pool-tmpl.model";
 
@@ -66,7 +66,7 @@ export class TestTmplEditPageService {
             )
     }
 
-    createQuestionPoolTemplate(testTmplId: string, questionPoolTmplDto: QuestionsPoolTmplCreateDto) {
+    createQuestionPoolTemplate(testTmplId: string, questionPoolTmplDto: QuestionsPoolTmplDto) {
         this.questionsPoolTmplApiService.createQuestionsPoolTmpl(testTmplId, questionPoolTmplDto)
             .pipe(untilDestroyed(this))
             .subscribe({

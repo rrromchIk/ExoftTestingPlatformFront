@@ -18,7 +18,7 @@ import {TestTemplateModel} from "../../core/interfaces/test-template/test-templa
 import {TestTmplEditPageService} from "./test-tmpl-edit.page.service";
 import {TestTmplUpdateDto} from "../../core/interfaces/test-template/test-tmpl-update.dto";
 import {QuestionsPoolTmplModel} from "../../core/interfaces/questions-pool-tmpl/questions-pool-tmpl.model";
-import {QuestionsPoolTmplCreateDto} from "../../core/interfaces/questions-pool-tmpl/qp-tmpl-create.dto";
+import {QuestionsPoolTmplDto} from "../../core/interfaces/questions-pool-tmpl/quest-pool-tmpl.dto";
 import {AlertService} from "../../shared/services/alert.service";
 
 @UntilDestroy()
@@ -149,7 +149,7 @@ export class TestTemplateEditComponent {
         const numOfQuestRestr = control.value.numOfQuestionsToBeGeneratedRestriction;
         const genStrategyRestr = control.value.generationStrategyRestriction;
 
-        const questionPoolDto: QuestionsPoolTmplCreateDto = {
+        const questionPoolDto: QuestionsPoolTmplDto = {
             defaultName: defaultName !== '' ? defaultName : null,
             numOfQuestionsToBeGeneratedRestriction: numOfQuestRestr != '' ? numOfQuestRestr : null,
             generationStrategyRestriction: genStrategyRestr !== '' ? genStrategyRestr : null
