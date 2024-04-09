@@ -1,7 +1,6 @@
 import {TestModel} from "../test/test.model";
 
 export interface StartedTestModel {
-
     test: TestModel,
     totalScore: number,
     userScore: number,

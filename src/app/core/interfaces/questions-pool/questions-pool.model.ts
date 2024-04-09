@@ -4,6 +4,6 @@ export interface QuestionsPoolModel extends BaseModel {
     testId: string;
     name: string;
     numOfQuestionsToBeGenerated: number;
-    templateId: string | null;
+    templateId?: string;
     generationStrategy: string;
 }

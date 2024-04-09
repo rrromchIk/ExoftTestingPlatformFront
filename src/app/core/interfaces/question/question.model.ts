@@ -5,6 +5,6 @@ export interface QuestionModel extends BaseModel {
     questionsPoolId: string;
     text: string;
     maxScore: number;
-    templateId: string | null;
+    templateId?: string;
     answers: AnswerModel[];
 }
