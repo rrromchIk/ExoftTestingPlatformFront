@@ -6,10 +6,10 @@ import {NavigationStart, Router} from "@angular/router";
     providedIn: 'root'
 })
 export class AlertService {
-    private keepAfterNavigationChange = true;
+    private keepAfterNavigationChange: boolean = true;
     private currentSnackBar: MatSnackBarRef<TextOnlySnackBar> | null = null;
 
-    constructor(private snackBar: MatSnackBar, private router: Router) {
+    constructor(private snackBar: MatSnackBar, router: Router) {
         router.events.subscribe(event => {
             if (event instanceof NavigationStart) {
                 if (this.keepAfterNavigationChange) {
@@ -24,12 +24,12 @@ export class AlertService {
         });
     }
 
-    success(message: string, keepAfterNavigationChange = true) {
+    success(message: string, keepAfterNavigationChange: boolean = true) {
         this.keepAfterNavigationChange = keepAfterNavigationChange;
         this.currentSnackBar = this.snackBar.open(message, 'Close', { duration: 6000, verticalPosition: 'bottom', panelClass: ['snackbar-success'] });
     }
 
-    error(message: string, keepAfterNavigationChange = true) {
+    error(message: string, keepAfterNavigationChange: boolean  = true) {
         this.keepAfterNavigationChange = keepAfterNavigationChange;
         this.currentSnackBar = this.snackBar.open(message, 'Close', { duration: 6000, verticalPosition: 'bottom', panelClass: ['snackbar-error'] });
     }

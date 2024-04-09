@@ -122,25 +122,25 @@ export class AuthService {
         this.router.navigate(['/login'])
     }
 
-    setCurrentUser(user: UserModel): void {
+    setCurrentUser(user: UserModel) {
         console.log("setting user to localstorage");
         console.log(user);
         this.currentUserSubject.next(user);
         localStorage.setItem('currentUser', JSON.stringify(user));
     }
 
-    setTokensPair(tokens: TokenModel): void {
+    setTokensPair(tokens: TokenModel) {
         console.log("setting tokens to localstorage");
         console.log(tokens);
         localStorage.setItem('tokensPair', JSON.stringify(tokens));
     }
 
-    getCurrentUser(): UserModel | null {
+    getCurrentUser() {
         const currentUser = localStorage.getItem('currentUser')
         return currentUser != null ? JSON.parse(currentUser) : null;
     }
 
-    getTokensPair(): TokenModel | null {
+    getTokensPair() {
         const tokens = localStorage.getItem('tokensPair');
         return tokens != null ? JSON.parse(tokens) : null;
     }
