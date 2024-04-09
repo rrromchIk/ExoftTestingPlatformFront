@@ -23,6 +23,7 @@ import {QuestionsPoolEditComponent} from "./pages/admin-main/questions-pool-edit
 import {EmailConfirmComponent} from "./pages/email-confirm/email-confirm.component";
 import {ProfileComponent} from "./pages/profile/profile.component";
 import {RegisterUserComponent} from "./pages/register-user/register-user.component";
+import {TestTemplateCreateComponent} from "./pages/test-template-create/test-template-create.component";
 
 
 const routes: Routes = [
@@ -134,6 +135,10 @@ const routes: Routes = [
             {
                 path: 'register-user',
                 component: RegisterUserComponent
+            },
+            {
+                path: 'test-template-create',
+                component: TestTemplateCreateComponent
             }
         ]
     },

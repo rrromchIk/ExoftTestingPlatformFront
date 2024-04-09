@@ -1,0 +1,78 @@
+@use '@angular/material' as mat;
+
+.content-container {
+    padding: 0;
+
+    .back-button-container {
+        margin-bottom: 5px;
+    }
+}
+
+.form-card {
+    min-width: max-content;
+    //margin-left: 8%;
+    text-align: start;
+
+    .form-card-header {
+        justify-content: start;
+        margin-bottom: 25px;
+
+        .form-card-tittle {
+            font-size: 28px;
+        }
+    }
+
+    .form-card-field {
+        margin-right: 10px;
+    }
+
+    .number-field {
+        width: 200px;
+
+        .number-field-suffix {
+            margin-right: 16px;
+        }
+
+        .number-input::-webkit-outer-spin-button,
+        .number-input::-webkit-inner-spin-button {
+            display: none;
+        }
+    }
+
+
+    .form-actions {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+
+        button[type='submit'] {
+            width: 300px;
+        }
+    }
+}
+
+
+.delete-icon {
+    margin-top: auto;
+}
+
+.nested-card {
+    max-width: max-content;
+    background-color: #F4F4F4 !important;
+    margin-bottom: 15px;
+
+    .form-card-field {
+        @include mat.all-component-densities(-4);
+    }
+
+    .nested-card-content {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .number-field {
+        width: 240px;
+    }
+}
