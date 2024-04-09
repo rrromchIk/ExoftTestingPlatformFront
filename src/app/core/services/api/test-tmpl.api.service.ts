@@ -7,6 +7,7 @@ import {TestTemplateModel} from "../../interfaces/test-template/test-template.mo
 import {environment} from "../../../../environments/environment";
 import {Filters} from "../../interfaces/filters/filters";
 import {HttpParamsHelper} from "../../helpers/http-params.helper";
+import {TestTemplateCreateDto} from "../../interfaces/test-template/test-template-create.dto";
 
 @Injectable({
     providedIn: 'root'
@@ -26,5 +27,9 @@ export class TestTmplApiService {
 
     deleteTestTemplate(testTemplateId: string) {
         return this.http.delete(this.testTemplatesEndpoint + `/${testTemplateId}`)
+    }
+
+    createTestTemplate(testTemplateCreateDto: TestTemplateCreateDto) {
+        return this.http.post(this.testTemplatesEndpoint, testTemplateCreateDto);
     }
 }
