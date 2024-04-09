@@ -6,7 +6,7 @@ import {DATE_FORMAT} from "../../core/constants/view.constants";
     name: 'dateTimeFormat'
 })
 export class DateTimeFormatPipe implements PipeTransform {
-    transform(value: any, format: string = DATE_FORMAT): any {
+    transform(value: any, format: string = DATE_FORMAT) {
         const datePipe = new DatePipe('en-US');
         return datePipe.transform(value, format);
     }

@@ -5,7 +5,7 @@ import {UserTestStatus} from "../../core/interfaces/user-test/user-test-status.e
     name: 'userTestStatusFormatter'
 })
 export class UserTestStatusPipe implements PipeTransform {
-    transform(value: any): any {
+    transform(value: any) {
         if (value === UserTestStatus.Completed) {
             return 'Completed';
         } else if(value === UserTestStatus.InProcess) {

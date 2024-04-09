@@ -11,10 +11,10 @@ import {environment} from "../../../../environments/environment";
     styleUrl: './header.component.scss'
 })
 export class HeaderComponent implements OnInit {
-    currentUser!: UserModel | null;
+    currentUser: UserModel | null;
+    profilePictureLink: string;
 
     showProfilePicture: boolean = false;
-    profilePictureLink!: string;
     showDefaultProfilePicture: boolean = false;
 
     constructor(private authService: AuthService) {}
@@ -23,7 +23,7 @@ export class HeaderComponent implements OnInit {
         this.authService.logout();
     }
 
-    ngOnInit(): void {
+    ngOnInit(){
         this.authService.currentUser$
             .pipe(untilDestroyed(this))
             .subscribe(
@@ -38,6 +38,6 @@ export class HeaderComponent implements OnInit {
                     this.showProfilePicture = false;
                 }
             }
-        )
+        );
     }
 }

@@ -13,7 +13,7 @@ export class FiltersComponent {
     @Input() sortCriterias: SortCriteria[] = [];
     @Input() selectFilters: SelectFilter[] = [];
     @Output() filterChange: EventEmitter<Filters> = new EventEmitter<Filters>();
-    filterForm!: FormGroup;
+    filterForm: FormGroup;
 
     constructor(private fb: FormBuilder) {}
 

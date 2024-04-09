@@ -10,14 +10,14 @@ import {DialogDataDto} from "../../../core/interfaces/dialog/dialog-data.dto";
 export class ConfirmationDialogComponent {
     constructor(
         public dialogRef: MatDialogRef<ConfirmationDialogComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: DialogDataDto) {
-    }
+        @Inject(MAT_DIALOG_DATA) public data: DialogDataDto
+    ) {}
 
-    onConfirmClick(): void {
+    onConfirmClick() {
         this.dialogRef.close(true);
     }
 
-    onCancelClick(): void {
+    onCancelClick() {
         this.dialogRef.close(false);
     }
 }

@@ -11,14 +11,11 @@ import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 export class LoaderComponent implements OnInit {
     showLoader: boolean = false;
 
-    constructor(private loaderService: LoaderService) {
-    }
+    constructor(private loaderService: LoaderService) {}
 
-    ngOnInit(): void {
+    ngOnInit() {
         this.loaderService.showLoading$
             .pipe(untilDestroyed(this))
-            .subscribe(
-                data => this.showLoader = data
-            )
+            .subscribe(data => this.showLoader = data);
     }
 }
