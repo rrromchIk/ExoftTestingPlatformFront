@@ -19,6 +19,7 @@ import {EmailConfirmModule} from "./pages/email-confirm/email-confirm.module";
 import {ProfileModule} from "./pages/profile/profile.module";
 import {RegisterUserModule} from "./pages/register-user/register-user.module";
 import {TestTemplateCreateModule} from "./pages/test-template-create/test-template-create.module";
+import {TestTemplateEditModule} from "./pages/test-template-edit/test-template-edit.module";
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import {TestTemplateCreateModule} from "./pages/test-template-create/test-templa
         EmailConfirmModule,
         ProfileModule,
         RegisterUserModule,
-        TestTemplateCreateModule
+        TestTemplateCreateModule,
+        TestTemplateEditModule
     ],
     providers: [
         {

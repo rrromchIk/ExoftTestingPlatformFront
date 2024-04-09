@@ -24,6 +24,7 @@ import {EmailConfirmComponent} from "./pages/email-confirm/email-confirm.compone
 import {ProfileComponent} from "./pages/profile/profile.component";
 import {RegisterUserComponent} from "./pages/register-user/register-user.component";
 import {TestTemplateCreateComponent} from "./pages/test-template-create/test-template-create.component";
+import {TestTemplateEditComponent} from "./pages/test-template-edit/test-template-edit.component";
 
 
 const routes: Routes = [
@@ -139,7 +140,11 @@ const routes: Routes = [
             {
                 path: 'test-template-create',
                 component: TestTemplateCreateComponent
-            }
+            },
+            {
+                path: 'test-templates/:id/edit',
+                component: TestTemplateEditComponent
+            },
         ]
     },
     {

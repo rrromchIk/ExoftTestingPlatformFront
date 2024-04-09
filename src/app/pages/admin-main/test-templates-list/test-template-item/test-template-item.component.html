@@ -12,7 +12,7 @@
 
     <mat-card-footer class="list-item-card-footer">
         <mat-card-actions class="list-item-card-actions">
-            <button mat-raised-button color="primary">Edit</button>
+            <button mat-raised-button color="primary" [routerLink]="[testTemplate.id, 'edit']">Edit</button>
             <button mat-raised-button color="warn" (click)="onDeleteTestTemplate(testTemplate)">Delete</button>
         </mat-card-actions>
         <div class="list-item-card-metadata">
