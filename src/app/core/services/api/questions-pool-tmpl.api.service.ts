@@ -16,9 +16,9 @@ export class QuestionsPoolTmplApiService {
         return this.http.get<QuestionsPoolTmplModel>(this.apiUrl + `/api/tests/questions-pools/templates/${questionsPoolTmplId}`);
     }
 
-    // updateQuestionsPoolTmpl(questionsPoolTmplId: string, updateQpTmplDto: QuestionsPoolUpdateDto) {
-    //     return this.http.put(this.apiUrl + `/api/tests/questions-pools/templates/${questionsPoolTmplId}`, updateQpDto);
-    // }
+    updateQuestionsPoolTmpl(questionsPoolTmplId: string, updateQpTmplDto: QuestionsPoolTmplDto) {
+        return this.http.put(this.apiUrl + `/api/tests/questions-pools/templates/${questionsPoolTmplId}`, updateQpTmplDto);
+    }
 
     createQuestionsPoolTmpl(testTmplId: string, questionsPoolTmplDto: QuestionsPoolTmplDto) {
         return this.http.post<QuestionsPoolTmplModel>(
