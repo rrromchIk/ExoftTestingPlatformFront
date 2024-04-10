@@ -88,7 +88,9 @@
                                 <input matInput [value]="question.maxScore.toString()" class="number-input" readonly>
                             </mat-form-field>
 
-                            <button mat-icon-button type="button">
+                            <button mat-icon-button
+                                    type="button"
+                                    [routerLink]="['/admin', 'question', question.id, 'edit']">
                                 <mat-icon>edit</mat-icon>
                             </button>
                             <button mat-icon-button color="warn" type="button" (click)="deleteQuestion(question)">

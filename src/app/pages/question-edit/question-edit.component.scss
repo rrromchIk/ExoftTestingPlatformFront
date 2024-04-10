@@ -1,0 +1,112 @@
+@use '@angular/material' as mat;
+
+.content-container {
+    padding: 0;
+
+    .back-button-container {
+        margin-bottom: 5px;
+    }
+}
+
+.form-card {
+    max-width: max-content;
+    text-align: start;
+
+    .form-card-header {
+        justify-content: start;
+        margin-bottom: 25px;
+
+        .form-card-tittle {
+            font-size: 28px;
+        }
+    }
+
+    .form-card-field {
+        margin-right: 10px;
+    }
+
+
+    .number-field {
+        width: 150px;
+
+        .number-field-suffix {
+            margin-right: 16px;
+        }
+
+        .number-input::-webkit-outer-spin-button,
+        .number-input::-webkit-inner-spin-button {
+            display: none;
+        }
+    }
+
+    .question-fields {
+        display: flex;
+        flex-direction: row;
+        align-items: start;
+        justify-content: start;
+
+
+        .text-area-field {
+            width: 400px;
+        }
+
+        .number-field {
+            width: 130px;
+        }
+    }
+
+
+    .form-actions {
+        display: flex;
+        flex-direction: row;
+        justify-content: start;
+
+        button[type='submit'] {
+            width: 100px;
+        }
+    }
+
+    .answer-field {
+        width: 300px
+    }
+}
+
+.nested-container {
+    padding: 10px;
+    margin-top: 20px;
+    width: max-content;
+
+    .nested-card {
+        max-width: max-content;
+        background-color: #F4F4F4 !important;
+        margin-bottom: 15px;
+
+        .form-card-field {
+            @include mat.all-component-densities(-4);
+        }
+
+        .nested-card-content {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            flex-wrap: wrap;
+
+        }
+    }
+
+
+    .new-cards {
+        margin-top: 10px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+

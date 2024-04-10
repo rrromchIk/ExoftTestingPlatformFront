@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../../environments/environment";
 import {QuestionModel} from "../../interfaces/question/question.model";
 import {QuestionCreateDto} from "../../interfaces/question/question-create.dto";
+import {QuestionUpdateDto} from "../../interfaces/question/question-update.dto";
 
 @Injectable({
     providedIn: 'root'
@@ -28,5 +29,9 @@ export class QuestionApiService {
 
     deleteQuestion(questionId: string) {
         return this.http.delete(this.questionsEndpoint + questionId);
+    }
+
+    updateQuestion(questionId: string, questionDto: QuestionUpdateDto) {
+        return this.http.put(this.questionsEndpoint + questionId, questionDto);
     }
 }

@@ -26,6 +26,7 @@ import {RegisterUserComponent} from "./pages/register-user/register-user.compone
 import {TestTemplateCreateComponent} from "./pages/test-template-create/test-template-create.component";
 import {TestTemplateEditComponent} from "./pages/test-template-edit/test-template-edit.component";
 import {QuestionsPoolTmplEditComponent} from "./pages/questions-pool-tmpl-edit/questions-pool-tmpl-edit.component";
+import {QuestionEditComponent} from "./pages/question-edit/question-edit.component";
 
 
 const routes: Routes = [
@@ -133,6 +134,10 @@ const routes: Routes = [
             {
                 path: 'questions-pool/:id/edit',
                 component: QuestionsPoolEditComponent
+            },
+            {
+                path: 'question/:id/edit',
+                component: QuestionEditComponent
             },
             {
                 path: 'register-user',
