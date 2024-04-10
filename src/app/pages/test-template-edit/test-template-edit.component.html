@@ -105,8 +105,8 @@
                                     <input matInput type="text" [value]="questionsPoolTemplate.generationStrategyRestriction || 'none'" readonly>
                                 </mat-form-field>
 
-                                <button mat-icon-button type="button">
-<!--                                        [routerLink]="['/admin/questions-pool', questionsPool.id, 'edit']">-->
+                                <button mat-icon-button type="button"
+                                        [routerLink]="['/admin/questions-pool/template', questionsPoolTemplate.id, 'edit']">
                                     <mat-icon>edit</mat-icon>
                                 </button>
                                 <button mat-icon-button color="warn" class="delete-icon" (click)="deleteQuestionsPoolTmpl(questionsPoolTemplate)">
@@ -137,8 +137,7 @@
                                             <input matInput type="number" placeholder="Num of Questions to generate"
                                                    formControlName="numOfQuestionsToBeGeneratedRestriction" class="number-input">
 
-                                            <mat-error *ngIf="control.get('numOfQuestionsToBeGeneratedRestriction')?.hasError('min') &&
-                                                !control.get('numOfQuestionsToBeGeneratedRestriction')?.hasError('required')">
+                                            <mat-error *ngIf="control.get('numOfQuestionsToBeGeneratedRestriction')?.hasError('min')">
                                                 Must be <strong>greater than {{MIN_NUMBER_OF_QUEST_TO_GENERATE}}</strong>
                                             </mat-error>
                                         </mat-form-field>
@@ -152,11 +151,6 @@
                                                     {{value}}
                                                 </mat-option>
                                             </mat-select>
-
-                                            <mat-error *ngIf="control.get('generationStrategyRestriction')?.hasError('required') &&
-                                                      control.get('generationStrategyRestriction')?.touched">
-                                                Generation strategy is <strong>required</strong>
-                                            </mat-error>
                                         </mat-form-field>
 
                                         <button mat-icon-button class="button-icon" type="button" (click)="saveQuestionPoolTmpl(i, control)">
