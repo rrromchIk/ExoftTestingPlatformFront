@@ -25,6 +25,7 @@ import {ProfileComponent} from "./pages/profile/profile.component";
 import {RegisterUserComponent} from "./pages/register-user/register-user.component";
 import {TestTemplateCreateComponent} from "./pages/test-template-create/test-template-create.component";
 import {TestTemplateEditComponent} from "./pages/test-template-edit/test-template-edit.component";
+import {QuestionsPoolTmplEditComponent} from "./pages/questions-pool-tmpl-edit/questions-pool-tmpl-edit.component";
 
 
 const routes: Routes = [
@@ -144,6 +145,10 @@ const routes: Routes = [
             {
                 path: 'test-templates/:id/edit',
                 component: TestTemplateEditComponent
+            },
+            {
+                path: 'questions-pool/template/:id/edit',
+                component: QuestionsPoolTmplEditComponent
             },
         ]
     },

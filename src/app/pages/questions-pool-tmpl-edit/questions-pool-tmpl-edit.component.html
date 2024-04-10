@@ -1,0 +1,179 @@
+<div class="content-container">
+    <div class="back-button-container">
+        <button mat-stroked-button backButton>
+            <mat-icon>arrow_back</mat-icon>
+            Back
+        </button>
+    </div>
+    <mat-card class="form-card">
+        <mat-card-header class="form-card-header">
+            <mat-card-title class="form-card-tittle">Edit questions pool template</mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+            <form [formGroup]="editPoolTmplForm" (ngSubmit)="updatePoolTemplate()">
+                <mat-form-field class="form-card-field field-bottom-margin">
+                    <mat-label>Default name</mat-label>
+                    <input matInput placeholder="Question pool name" formControlName="defaultName">
+
+                    <mat-error *ngIf="getPoolTmplFormControl('defaultName')?.hasError('maxlength')">
+                        Can not exceed <strong>{{MAX_QUESTION_POOL_NAME_LENGTH}} characters</strong>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="form-card-field number-field field-bottom-margin">
+                    <mat-label>Restriction to num of questions to generate</mat-label>
+                    <input matInput type="number" placeholder="Num of Questions to generate"
+                           formControlName="numOfQuestionsToBeGeneratedRestriction" class="number-input">
+
+                    <mat-error *ngIf="getPoolTmplFormControl('numOfQuestionsToBeGeneratedRestriction')?.hasError('min')">
+                        Must be <strong>greater than {{MIN_NUMBER_OF_QUEST_TO_GENERATE}}</strong>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="form-card-field field-bottom-margin">
+                    <mat-label>Restriction for Generation strategy</mat-label>
+                    <mat-select formControlName="generationStrategyRestriction">
+                        <mat-option value="">None</mat-option>
+                        <mat-option *ngFor="let value of GENERATION_STRATEGIES_VALUES"
+                                    [value]="value">
+                            {{value}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <div class="form-actions">
+                    <button mat-stroked-button
+                            color="warn"
+                            [disabled]="!poolTmplDataChanges"
+                            (click)="setPoolTemplateDataToFormFields()"
+                            class="button-right-margin">
+                        Reset
+                    </button>
+
+                    <button mat-raised-button
+                            color="primary"
+                            type="submit"
+                            [disabled]="!poolTmplDataChanges">
+                        Submit
+                    </button>
+                </div>
+            </form>
+
+            <div [formGroup]="questionsFormGroup" class="questions-container">
+                <h2>Question templates:</h2>
+
+                <mat-card class="question-card" *ngFor="let questionTmpl of questionTemplates; let i = index">
+                    <mat-card-content class="question-card-content">
+                        <div class="question-fields">
+                            <mat-form-field class="form-card-field field-bottom-margin text-area-field">
+                                <mat-label>Default question text</mat-label>
+                                <textarea matInput [value]="questionTmpl.defaultText || 'none'" readonly></textarea>
+                            </mat-form-field>
+
+                            <mat-form-field class="form-card-field field-bottom-margin number-field">
+                                <mat-label>Max score restriction</mat-label>
+                                <input matInput [value]="questionTmpl.maxScoreRestriction?.toString() || 'none'" class="number-input" readonly>
+                            </mat-form-field>
+
+                            <button mat-icon-button type="button">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                            <button mat-icon-button color="warn" type="button" (click)="deleteQuestionTmpl(questionTmpl)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </div>
+
+                        <div class="answers-container">
+                            <mat-card class="answers-card" *ngFor="let answerTemplate of questionTmpl.answerTemplates">
+                                <mat-card-content class="answer-card-content">
+                                    <mat-form-field class="answer-field">
+                                        <mat-label>Default answer text</mat-label>
+                                        <input matInput [value]="answerTemplate.defaultText || 'none'" readonly>
+                                    </mat-form-field>
+                                    <mat-checkbox color="primary"
+                                                  (click)="$event.preventDefault()"
+                                                  [checked]="answerTemplate.isCorrectRestriction">
+                                        Is correct restriction
+                                    </mat-checkbox>
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+
+
+                <div formArrayName="questionTemplates">
+                    <mat-card *ngFor="let question of getQuestionTmplsFormArray().controls; let i = index"
+                              [formGroupName]="i" class="question-card">
+                        <mat-card-content class="question-card-content">
+                            <div class="question-fields">
+                                <mat-form-field class="form-card-field field-bottom-margin text-area-field">
+                                    <mat-label>Question default text</mat-label>
+                                    <textarea matInput rows="3" placeholder="Write question default text"
+                                              formControlName="defaultText"></textarea>
+
+                                    <mat-error *ngIf="question.get('defaultText')?.hasError('maxlength')">
+                                        Can not exceed <strong>{{MAX_QUESTION_TEXT_LENGTH}} characters</strong>
+                                    </mat-error>
+                                </mat-form-field>
+
+                                <mat-form-field class="form-card-field field-bottom-margin number-field">
+                                    <mat-label>Max score restriction</mat-label>
+                                    <input matInput type="number" placeholder="Max score"
+                                           formControlName="maxScoreRestriction" class="number-input">
+                                    <mat-error *ngIf="question.get('maxScoreRestriction')?.hasError('min')">
+                                        Must be <strong>greater than {{MIN_QUESTION_SCORE_VALUE}}</strong>
+                                    </mat-error>
+                                </mat-form-field>
+
+                                <button mat-icon-button class="button-icon" type="submit"
+                                        (click)="saveQuestionTemplate(i, question)">
+                                    <mat-icon>save</mat-icon>
+                                </button>
+                                <button mat-icon-button color="warn" class="button-icon" type="button"
+                                        (click)="removeQuestionTmplFormGroup(i)">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            </div>
+
+                            <button mat-stroked-button type="button" (click)="addAnswerTmplFormGroup(i)">
+                                Add answer template:
+                                <mat-icon>add_circle</mat-icon>
+                            </button>
+
+                            <div class="answers-container" formArrayName="answerTemplates">
+                                <mat-card *ngFor="let answer of getAnswerTmplsFormArray(i).controls; let j = index"
+                                          [formGroupName]="j" class="answers-card">
+                                    <mat-card-content class="answer-card-content">
+                                        <mat-form-field class="answer-field">
+                                            <mat-label>Default answer text</mat-label>
+                                            <textarea matInput rows="1" placeholder="Write answer default text"
+                                                      formControlName="defaultText"></textarea>
+
+                                            <mat-error *ngIf="answer.get('defaultText')?.hasError('maxlength')">
+                                                Can not exceed <strong>{{MAX_ANSWER_TEXT_LENGTH}} characters</strong>
+                                            </mat-error>
+
+                                        </mat-form-field>
+                                        <mat-checkbox color="primary" formControlName="isCorrectRestriction">
+                                            Is correct restriction
+                                        </mat-checkbox>
+                                        <button mat-icon-button color="warn" type="button"
+                                                (click)="removeAnswerTmplFormGroup(i, j)">
+                                            <mat-icon>delete</mat-icon>
+                                        </button>
+                                    </mat-card-content>
+                                </mat-card>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+                <button mat-stroked-button type="button" (click)="addQuestionTmplFormGroup()">
+                    Add question template:
+                    <mat-icon>add_circle</mat-icon>
+                </button>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>
