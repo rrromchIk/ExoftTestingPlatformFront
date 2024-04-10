@@ -27,6 +27,6 @@ export class QuestionApiService {
     }
 
     deleteQuestion(questionId: string) {
-        return this.http.delete(`${this.apiUrl}/api/tests/questions-pools/questions/${questionId}`);
+        return this.http.delete(this.questionsEndpoint + questionId);
     }
 }
