@@ -8,6 +8,7 @@ import {ActivatedRoute} from "@angular/router";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 import {AnswerModel} from "../../core/interfaces/answer/answer.model";
 import {UserTestModel} from "../../core/interfaces/user-test/user-test.model";
+import {DateTime, Duration} from "luxon";
 
 @UntilDestroy()
 @Component({
@@ -96,12 +97,11 @@ export class PassingTestComponent implements OnInit {
     }
 
     calculateRemainingTime() {
-        const testDurationMillis = this.userTest!.test.duration * 60 * 1000;
-        const startingTimeMillis = new Date(this.userTest!.startingTime).getTime();
-        const currentTimeMillis = new Date().getTime();
-        const limitTimeMillis = startingTimeMillis + testDurationMillis;
+        const testDuration = Duration.fromObject({minutes: this.userTest?.test.duration});
+        const startingTime = DateTime.fromJSDate(new Date(this.userTest!.startingTime));
+        const limitTime = startingTime.plus(testDuration);
 
-        this.remainingTime = limitTimeMillis - currentTimeMillis;
+        this.remainingTime = limitTime.diffNow().milliseconds;
     }
 
     onNextQuestionButtonClicked() {

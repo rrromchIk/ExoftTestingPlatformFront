@@ -5,6 +5,8 @@ import {UserTestApiService} from "../../core/services/api/user-test.api.service"
 import {AuthService} from "../../shared/services/auth.service";
 import {ActivatedRoute} from "@angular/router";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
+import {DateTime, Interval} from "luxon";
+
 
 @UntilDestroy()
 @Component({
@@ -59,12 +61,31 @@ export class TestResultComponent implements OnInit {
     }
 
     getTimeSpent() {
-        const diff: number = new Date(this.testResult!.endingTime).getTime()
-            - new Date(this.testResult!.startingTime).getTime();
+        let start = DateTime.fromJSDate(
+            new Date(this.testResult!.startingTime)
+        ).startOf("second");
 
-        const minutes = Math.floor(diff / (1000 * 60));
-        const seconds = Math.floor((diff / 1000) % 60);
+        let end = DateTime.fromJSDate(
+            new Date(this.testResult!.endingTime)
+        ).startOf("second");
 
-        return `${minutes} min ${seconds} sec`
+
+        let duration = Interval.fromDateTimes(start, end).toDuration(['hours', 'minutes', 'seconds']);
+        const hours = duration.hours;
+        const minutes = duration.minutes;
+        const seconds = duration.seconds;
+
+        let resultString = "";
+        if (hours > 0) {
+            resultString += `${hours} h `
+        }
+        if (minutes > 0) {
+            resultString += `${minutes} min `;
+        }
+        if (seconds > 0) {
+            resultString += `${seconds} sec`
+        }
+
+        return resultString
     }
 }

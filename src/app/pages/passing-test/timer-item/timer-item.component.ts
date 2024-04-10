@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {interval, Subscription} from "rxjs";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
+import {DateTime, Duration, Interval} from "luxon";
 
 @UntilDestroy({checkProperties: true})
 @Component({
@@ -12,10 +13,8 @@ export class TimerItemComponent implements OnInit {
     @Input() millis: number = 0;
     @Output() timeOut: EventEmitter<void> = new EventEmitter<void>();
 
-    timerHours: string = '00';
-    timerMinutes: string = '00';
-    timerSeconds: string = '00';
     timerSubscription: Subscription | undefined;
+    timeRemaining: string;
 
     ngOnInit() {
         if (this.millis <= 0) {
@@ -25,34 +24,29 @@ export class TimerItemComponent implements OnInit {
     }
 
     startTimer() {
-        const deadline = new Date().valueOf() + this.millis;
+        const deadline = DateTime.now().plus(Duration.fromMillis(this.millis));
         this.countdownTimer(deadline);
 
-       this.timerSubscription = interval(1000)
+        this.timerSubscription = interval(1000)
             .subscribe(count => {
                 this.countdownTimer(deadline);
             });
     }
 
-    countdownTimer(deadline: number) {
+    countdownTimer(deadline: DateTime) {
         this.millis -= 1000;
-        const diff = deadline - new Date().valueOf();
 
-        const hours = Math.floor(diff / 1000 / 60 / 60) % 24;
-        const minutes = Math.floor(diff / 1000 / 60) % 60;
-        const seconds = Math.floor(diff / 1000) % 60;
-
-        if (hours === 0 && minutes === 0 && seconds === 0) {
+        if(DateTime.now() >= deadline) {
             this.timerSubscription?.unsubscribe();
             this.timeOut.emit();
+            return;
         }
 
-        this.timerHours = hours < 10 ? '0' + hours : hours.toString();
-        this.timerMinutes = minutes < 10 ? '0' + minutes : minutes.toString();
-        this.timerSeconds = seconds < 10 ? '0' + seconds : seconds.toString();
+        const remaining = deadline.diff(DateTime.now());
+        this.timeRemaining = remaining.toFormat("hh:mm:ss");
     }
 
     lessThanMinuteTimeRemaining() {
-        return this.millis < 60000;
+        return Duration.fromMillis(this.millis) < Duration.fromObject({minutes: 1});
     }
 }
