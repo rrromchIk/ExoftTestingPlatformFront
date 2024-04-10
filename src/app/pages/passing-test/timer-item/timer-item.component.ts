@@ -1,7 +1,7 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {interval, Subscription} from "rxjs";
-import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
-import {DateTime, Duration, Interval} from "luxon";
+import {UntilDestroy} from "@ngneat/until-destroy";
+import {DateTime, Duration} from "luxon";
 
 @UntilDestroy({checkProperties: true})
 @Component({
