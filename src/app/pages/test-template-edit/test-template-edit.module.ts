@@ -4,6 +4,7 @@ import {TestTemplateEditComponent} from './test-template-edit.component';
 import {AppComponentsModule} from "../../shared/modules/app-components/app-components.module";
 import {ReactiveFormsModule} from "@angular/forms";
 import {AppMaterialModule} from "../../shared/modules/app-material/app-material.module";
+import {RouterLink} from "@angular/router";
 
 @NgModule({
     declarations: [
@@ -13,7 +14,8 @@ import {AppMaterialModule} from "../../shared/modules/app-material/app-material.
         CommonModule,
         AppComponentsModule,
         AppMaterialModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        RouterLink
     ]
 })
 export class TestTemplateEditModule {
