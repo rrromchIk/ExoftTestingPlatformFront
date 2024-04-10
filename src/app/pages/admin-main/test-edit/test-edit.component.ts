@@ -20,6 +20,7 @@ import {ConfirmationDialogComponent} from "../../../shared/components/dialog/con
 import {filter} from "rxjs";
 import {MatDialog} from "@angular/material/dialog";
 import {AlertService} from "../../../shared/services/alert.service";
+import {TestUpdateDto} from "../../../core/interfaces/test/test-update.dto";
 
 @UntilDestroy()
 @Component({
@@ -111,14 +112,14 @@ export class TestEditComponent {
     updateTest() {
         if (this.editTestForm.valid) {
 
-            const testCreateDto: TestCreateDto = {
+            const testUpdateDto: TestUpdateDto = {
                 name: this.editTestForm.value.testName,
                 subject: this.editTestForm.value.subject,
                 duration: this.editTestForm.value.duration,
                 difficulty: this.editTestForm.value.difficulty,
             };
 
-            this.testEditPageService.updateTest(this.test.id, testCreateDto);
+            this.testEditPageService.updateTest(this.test.id, testUpdateDto);
         }
     }
 
