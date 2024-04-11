@@ -76,7 +76,9 @@
                                 <input matInput [value]="questionTmpl.maxScoreRestriction?.toString() || 'none'" class="number-input" readonly>
                             </mat-form-field>
 
-                            <button mat-icon-button type="button">
+                            <button mat-icon-button
+                                    type="button"
+                                    [routerLink]="['/admin', 'question-template', questionTmpl.id, 'edit']">
                                 <mat-icon>edit</mat-icon>
                             </button>
                             <button mat-icon-button color="warn" type="button" (click)="deleteQuestionTmpl(questionTmpl)">

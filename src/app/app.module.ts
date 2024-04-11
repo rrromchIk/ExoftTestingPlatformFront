@@ -22,6 +22,7 @@ import {TestTemplateCreateModule} from "./pages/test-template-create/test-templa
 import {TestTemplateEditModule} from "./pages/test-template-edit/test-template-edit.module";
 import {QuestionsPoolTmplEditModule} from "./pages/questions-pool-tmpl-edit/questions-pool-tmpl-edit.module";
 import {QuestionEditModule} from "./pages/question-edit/question-edit.module";
+import {QuestionTmplEditModule} from "./pages/question-tmpl-edit/question-tmpl-edit.module";
 
 
 @NgModule({
@@ -48,7 +49,8 @@ import {QuestionEditModule} from "./pages/question-edit/question-edit.module";
         TestTemplateCreateModule,
         TestTemplateEditModule,
         QuestionsPoolTmplEditModule,
-        QuestionEditModule
+        QuestionEditModule,
+        QuestionTmplEditModule
     ],
     providers: [
         {

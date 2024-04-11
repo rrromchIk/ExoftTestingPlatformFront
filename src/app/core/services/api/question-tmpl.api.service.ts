@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Injectable} from "@angular/core";
 import {QuestionTmplModel} from "../../interfaces/question-template/question-tmpl.model";
 import {QuestionTmplCreateDto} from "../../interfaces/question-template/question-tmpl-create.dto";
+import {QuestionTmplUpdateDto} from "../../interfaces/question-template/question-tmpl-update.dto";
 
 @Injectable({
     providedIn: "root"
@@ -29,5 +30,9 @@ export class QuestionTmplApiService {
 
     deleteQuestionTmpl(questionTmplId: string) {
         return this.http.delete(this.questionTemplatesEndpoint + questionTmplId);
+    }
+
+    updateQuestionTmpl(questionTmplId: string, questionTmplUpdateDto: QuestionTmplUpdateDto) {
+        return this.http.put(this.questionTemplatesEndpoint + questionTmplId, questionTmplUpdateDto);
     }
 }
