@@ -21,6 +21,8 @@ import {QuestionModel} from "../../../core/interfaces/question/question.model";
 import {AnswerCreateDto} from "../../../core/interfaces/answer/asnwer-create.dto";
 import {QuestionCreateDto} from "../../../core/interfaces/question/question-create.dto";
 import {AlertService} from "../../../shared/services/alert.service";
+import {QuestionsPoolTmplModel} from "../../../core/interfaces/questions-pool-tmpl/questions-pool-tmpl.model";
+import {QuestionTmplModel} from "../../../core/interfaces/question-template/question-tmpl.model";
 
 @UntilDestroy()
 @Component({
@@ -39,6 +41,9 @@ export class QuestionsPoolEditComponent {
 
     questionsPool: QuestionsPoolModel;
     questions: QuestionModel[];
+
+    poolTemplate: QuestionsPoolTmplModel | null;
+    questionTemplates: QuestionTmplModel[];
 
     editQuestionsPoolForm: FormGroup;
     questionsPoolDataChanges: boolean = false;
@@ -73,6 +78,11 @@ export class QuestionsPoolEditComponent {
                 next: (data) => {
                     if (data) {
                         this.questionsPool = data;
+                        if (data.templateId != null) {
+                            this.questionsPoolEditService.getQuestionsPoolTmplById(data.templateId);
+                            this.questionsPoolEditService.getQuestionTemplatesByPoolTmplId(data.templateId);
+                        }
+
                         this.setQuestionsPoolDataToFormFields();
 
                         const initialFormValues = {...this.editQuestionsPoolForm.value};
@@ -85,13 +95,26 @@ export class QuestionsPoolEditComponent {
                 }
             });
 
+        this.questionsPoolEditService.poolTemplate$
+            .pipe(untilDestroyed(this))
+            .subscribe(data => {
+                this.poolTemplate = data;
+            })
+
+        this.questionsPoolEditService.questionTemplates$
+            .pipe(untilDestroyed(this))
+            .subscribe(data => {
+                this.questionTemplates = data || [];
+                this.addQuestionTemplatesToForm();
+            })
+
 
         this.questionsPoolEditService.questions$
             .pipe(untilDestroyed(this))
             .subscribe({
                 next: (data) => {
-                    if(data)
-                        this.questions = data;
+                    this.questions = data || [];
+                    this.addQuestionTemplatesToForm();
                 }
             })
     }
@@ -182,7 +205,8 @@ export class QuestionsPoolEditComponent {
             const questionDto: QuestionCreateDto = {
                 text: control.value.questionText,
                 maxScore: control.value.maxScore,
-                answers: answersDto
+                answers: answersDto,
+                templateId: control.value.templateId
             };
 
             this.getQuestionsFormArray().removeAt(index);
@@ -209,5 +233,41 @@ export class QuestionsPoolEditComponent {
                 filter((result) => result),
             )
             .subscribe(() => this.questionsPoolEditService.deleteQuestion(question));
+    }
+
+    private addQuestionTemplatesToForm() {
+        this.getQuestionsFormArray().clear();
+        this.questionTemplates
+            .filter(qt => !this.questions?.some(q => q.templateId === qt.id))
+            .forEach(qt => {
+            this.getQuestionsFormArray().push(
+                this.fb.group({
+                    questionText: [
+                        qt.defaultText || '',
+                        [Validators.required, Validators.maxLength(MAX_QUESTION_TEXT_LENGTH)]
+                    ],
+                    maxScore: [
+                        qt.maxScoreRestriction || '',
+                        [Validators.required, Validators.min(MIN_QUESTION_SCORE_VALUE)]
+                    ],
+                    templateId: [
+                        qt.id || null
+                    ],
+                    answers: this.fb.array(
+                        qt.answerTemplates!.map(at =>
+                            this.fb.group({
+                                answerText: [
+                                    at.defaultText || '',
+                                    [Validators.required, Validators.maxLength(MAX_ANSWER_TEXT_LENGTH)]
+                                ],
+                                isCorrect: [
+                                    at.isCorrectRestriction,
+                                    Validators.required
+                                ]
+                            })
+                        )
+                    )
+                }))
+        })
     }
 }

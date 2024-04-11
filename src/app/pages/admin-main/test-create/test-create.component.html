@@ -8,6 +8,19 @@
     <mat-card class="form-card">
         <mat-card-header class="form-card-header">
             <mat-card-title class="form-card-tittle">Create test</mat-card-title>
+            <mat-form-field appearance="fill" class="filters-field">
+                <mat-label>From template</mat-label>
+                <mat-select [(ngModel)]="selectedTemplateId"
+                            (selectionChange)="loadTemplate()">
+                    <mat-option [value]="null">
+                        None
+                    </mat-option>
+                    <mat-option *ngFor="let template of allTemplates"
+                                [value]="template.id">
+                        {{ template.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
         </mat-card-header>
 
         <mat-card-content>
@@ -98,8 +111,12 @@
 
                                 <mat-form-field class="form-card-field number-field">
                                     <mat-label>Num of questions to generate</mat-label>
-                                    <input matInput type="number" placeholder="Num of Questions to generate"
-                                           formControlName="numOfQuestionsToBeGenerated" class="number-input">
+                                    <input matInput type="number"
+                                           placeholder="Num of Questions to generate"
+                                           formControlName="numOfQuestionsToBeGenerated"
+                                           class="number-input"
+                                           [readonly]="testTemplate?.questionsPoolTemplates?.at(i)?.numOfQuestionsToBeGeneratedRestriction != null">
+
                                     <mat-error *ngIf="control.get('numOfQuestionsToBeGenerated')?.hasError('min') &&
                                                 !control.get('numOfQuestionsToBeGenerated')?.hasError('required')">
                                         Must be <strong>greater than {{MIN_NUMBER_OF_QUEST_TO_GENERATE}}</strong>
@@ -113,7 +130,12 @@
 
                                 <mat-form-field class="form-card-field">
                                     <mat-label>Generation strategy</mat-label>
-                                    <mat-select formControlName="generationStrategy">
+                                    <input *ngIf="testTemplate?.questionsPoolTemplates?.at(i)?.generationStrategyRestriction != null"
+                                           matInput
+                                           readonly
+                                           formControlName="generationStrategy">
+                                    <mat-select *ngIf="testTemplate?.questionsPoolTemplates?.at(i)?.generationStrategyRestriction == null"
+                                        formControlName="generationStrategy">
                                         <mat-option *ngFor="let value of GENERATION_STRATEGIES_VALUES"
                                                     [value]="value">
                                             {{value}}
@@ -126,7 +148,11 @@
                                     </mat-error>
                                 </mat-form-field>
 
-                                <button mat-icon-button color="warn" class="delete-icon" (click)="removeQuestionPoolFormGroup(i)">
+                                <button *ngIf="testTemplate == null"
+                                        mat-icon-button
+                                        color="warn"
+                                        class="delete-icon"
+                                        (click)="removeQuestionPoolFormGroup(i)">
                                     <mat-icon>delete</mat-icon>
                                 </button>
                             </mat-card-content>
@@ -134,7 +160,10 @@
                     </div>
                 </div>
 
-                <button mat-stroked-button (click)="addQuestionPoolFormGroup()" type="button">Add question pool
+                <button *ngIf="testTemplate == null"
+                        mat-stroked-button
+                        (click)="addQuestionPoolFormGroup()"
+                        type="button">Add question pool
                     <mat-icon>add_circle</mat-icon>
                 </button>
 

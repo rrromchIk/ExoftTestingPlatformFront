@@ -116,11 +116,16 @@
                                     <input matInput type="text" [value]="questionsPool.generationStrategy" readonly>
                                 </mat-form-field>
 
-                                <button mat-icon-button type="button"
+                                <button mat-icon-button
+                                        type="button"
                                         [routerLink]="['/admin/questions-pool', questionsPool.id, 'edit']">
                                     <mat-icon>edit</mat-icon>
                                 </button>
-                                <button mat-icon-button color="warn" class="delete-icon" (click)="deleteQuestionsPool(questionsPool)">
+                                <button *ngIf="test?.templateId == null"
+                                        mat-icon-button
+                                        color="warn"
+                                        class="delete-icon"
+                                        (click)="deleteQuestionsPool(questionsPool)">
                                     <mat-icon>delete</mat-icon>
                                 </button>
                             </mat-card-content>
@@ -180,7 +185,11 @@
                                             <mat-icon>save</mat-icon>
                                         </button>
 
-                                        <button mat-icon-button color="warn" class="button-icon" type="button" (click)="removeQuestionPoolFormGroup(i)">
+                                        <button mat-icon-button
+                                                color="warn"
+                                                class="button-icon"
+                                                type="button"
+                                                (click)="removeQuestionPoolFormGroup(i)">
                                             <mat-icon>delete</mat-icon>
                                         </button>
                                     </mat-card-content>
@@ -190,7 +199,10 @@
                     </form>
                 </div>
 
-                <button mat-stroked-button type="button" (click)="addQuestionPoolFormGroup()">
+                <button *ngIf="test?.templateId == null"
+                        mat-stroked-button
+                        type="button"
+                        (click)="addQuestionPoolFormGroup()">
                     Add question pool
                     <mat-icon>add_circle</mat-icon>
                 </button>

@@ -23,6 +23,9 @@ import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 import {AlertService} from "../../../shared/services/alert.service";
 import {HttpStatusCode} from "@angular/common/http";
 import {Router} from "@angular/router";
+import {TestTmplShortInfoModel} from "../../../core/interfaces/test-template/test-tmpl-short-info.model";
+import {TestTmplApiService} from "../../../core/services/api/test-tmpl.api.service";
+import {TestTemplateModel} from "../../../core/interfaces/test-template/test-template.model";
 
 @UntilDestroy(this)
 @Component({
@@ -41,13 +44,22 @@ export class TestCreateComponent {
 
     createTestForm: FormGroup;
 
+    allTemplates: TestTmplShortInfoModel[];
+    testTemplate: TestTemplateModel | null = null;
+    selectedTemplateId: string;
+
     constructor(private fb: FormBuilder,
                 private testService: TestApiService,
+                private testTemplatesApiService: TestTmplApiService,
                 private alertService: AlertService,
                 private router: Router
     ) {}
 
     ngOnInit() {
+        this.testTemplatesApiService.getAllTestTmplsShortInfo()
+            .pipe(untilDestroyed(this))
+            .subscribe((data) => this.allTemplates = data);
+
         this.createTestForm = this.fb.group({
             testName: ['', [Validators.required, Validators.maxLength(MAX_TEST_NAME_LENGTH)]],
             subject: ['', [Validators.required, Validators.maxLength(MAX_TEST_SUBJECT_LENGTH)]],
@@ -80,11 +92,12 @@ export class TestCreateComponent {
     onSubmit() {
         if (this.createTestForm.valid) {
             const questionPools: QuestionPoolCreateDto[] = this.questionPoolsFormArray.controls.map(
-                control => {
+                (control, index) => {
                     return {
                         name: control.get('questionPoolName')?.value,
                         numOfQuestionsToBeGenerated: control.get('numOfQuestionsToBeGenerated')?.value,
-                        generationStrategy: control.get('generationStrategy')?.value
+                        generationStrategy: control.get('generationStrategy')?.value,
+                        templateId: this.testTemplate?.questionsPoolTemplates?.at(index)?.id
                     };
                 });
 
@@ -93,7 +106,8 @@ export class TestCreateComponent {
                 subject: this.createTestForm.value.subject,
                 duration: this.createTestForm.value.duration,
                 difficulty: this.createTestForm.value.difficulty,
-                questionsPools: questionPools
+                questionsPools: questionPools,
+                templateId: this.testTemplate?.id
             };
 
             this.testService.createTest(testCreateDto)
@@ -115,4 +129,49 @@ export class TestCreateComponent {
         }
     }
 
+
+    loadTemplate() {
+        if(this.selectedTemplateId) {
+            this.testTemplatesApiService.getTestTmplById(this.selectedTemplateId)
+                .pipe(untilDestroyed(this))
+                .subscribe((data) => {
+                    this.testTemplate = data;
+                    this.updateFormFields();
+                })
+        } else {
+            this.testTemplate = null;
+            this.updateFormFields();
+        }
+    }
+
+    updateFormFields() {
+        this.createTestForm.updateValueAndValidity();
+
+        this.createTestForm.patchValue({
+            subject: this.testTemplate?.defaultSubject || '',
+            duration: this.testTemplate?.defaultDuration || '',
+            difficulty: this.testTemplate?.defaultTestDifficulty || ''
+        });
+
+        this.questionPoolsFormArray.clear();
+
+        if(this.testTemplate?.questionsPoolTemplates) {
+            this.testTemplate.questionsPoolTemplates.forEach(qpt => {
+                this.questionPoolsFormArray.push(this.fb.group({
+                    questionPoolName: [
+                        qpt?.defaultName || '',
+                        [Validators.required, Validators.maxLength(MAX_QUESTION_POOL_NAME_LENGTH)]
+                    ],
+                    numOfQuestionsToBeGenerated: [
+                        qpt?.numOfQuestionsToBeGeneratedRestriction || '',
+                        [Validators.required, Validators.min(MIN_NUMBER_OF_QUEST_TO_GENERATE)]
+                    ],
+                    generationStrategy: [
+                        qpt?.generationStrategyRestriction || '',
+                        [Validators.required]
+                    ]
+                }))
+            })
+        }
+    }
 }

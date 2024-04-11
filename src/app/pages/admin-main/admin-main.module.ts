@@ -10,7 +10,7 @@ import {UserItemComponent} from "./users-list/user-item/user-item.component";
 import {AppMaterialModule} from "../../shared/modules/app-material/app-material.module";
 import {UserEditComponent} from "./user-edit/user-edit.component";
 import {AppComponentsModule} from "../../shared/modules/app-components/app-components.module";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { TestTemplatesListComponent } from './test-templates-list/test-templates-list.component';
 import { TestTemplateItemComponent } from './test-templates-list/test-template-item/test-template-item.component';
 import { TestCreateComponent } from './test-create/test-create.component';
@@ -37,6 +37,7 @@ import { QuestionsPoolEditComponent } from './questions-pool-edit/questions-pool
         AppMaterialModule,
         AppComponentsModule,
         ReactiveFormsModule,
+        FormsModule,
     ]
 })
 export class AdminMainModule {

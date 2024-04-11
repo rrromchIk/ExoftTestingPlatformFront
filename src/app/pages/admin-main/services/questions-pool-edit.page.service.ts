@@ -9,6 +9,10 @@ import {QuestionApiService} from "../../../core/services/api/question.api.servic
 import {QuestionModel} from "../../../core/interfaces/question/question.model";
 import {QuestionCreateDto} from "../../../core/interfaces/question/question-create.dto";
 import {HttpStatusCode} from "@angular/common/http";
+import {QuestionsPoolTmplApiService} from "../../../core/services/api/questions-pool-tmpl.api.service";
+import {QuestionsPoolTmplModel} from "../../../core/interfaces/questions-pool-tmpl/questions-pool-tmpl.model";
+import {QuestionTmplApiService} from "../../../core/services/api/question-tmpl.api.service";
+import {QuestionTmplModel} from "../../../core/interfaces/question-template/question-tmpl.model";
 
 @UntilDestroy()
 @Injectable()
@@ -19,9 +23,17 @@ export class QuestionsPoolEditPageService {
     private questionsSubject: BehaviorSubject<QuestionModel[] | null> = new BehaviorSubject<QuestionModel[] | null>(null);
     public questions$: Observable<QuestionModel[] | null> = this.questionsSubject.asObservable();
 
+    private questionTmplSubject: BehaviorSubject<QuestionsPoolTmplModel | null> = new BehaviorSubject<QuestionsPoolTmplModel | null>(null);
+    public poolTemplate$: Observable<QuestionsPoolTmplModel | null> = this.questionTmplSubject.asObservable();
+
+    private questionTmplsSubject: BehaviorSubject<QuestionTmplModel[] | null> = new BehaviorSubject<QuestionTmplModel[] | null>(null);
+    public questionTemplates$: Observable<QuestionTmplModel[] | null> = this.questionTmplsSubject.asObservable();
+
     constructor(private alertService: AlertService,
                 private questionsPoolApiService: QuestionsPoolApiService,
-                private questionsApiService: QuestionApiService) {
+                private questionsApiService: QuestionApiService,
+                private poolTmplApiService: QuestionsPoolTmplApiService,
+                private questionTmplApiService: QuestionTmplApiService) {
     }
 
     getQuestionsPoolById(questionsPoolId: string) {
@@ -117,5 +129,19 @@ export class QuestionsPoolEditPageService {
                 }
             }
         )
+    }
+
+    getQuestionsPoolTmplById(questionPoolTmplId: string) {
+        return this.poolTmplApiService.getQuestionsPoolTmplById(questionPoolTmplId)
+            .pipe(untilDestroyed(this))
+            .subscribe(data =>
+                this.questionTmplSubject.next(data)
+            );
+    }
+
+    getQuestionTemplatesByPoolTmplId(poolTemplateId: string) {
+        return this.questionTmplApiService.getQuestionTmplsByPoolTmplId(poolTemplateId)
+            .pipe(untilDestroyed(this))
+            .subscribe((data) => this.questionTmplsSubject.next(data))
     }
 }
