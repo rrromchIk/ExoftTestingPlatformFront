@@ -31,7 +31,7 @@ export class TestTmplApiService {
     }
 
     createTestTemplate(testTemplateCreateDto: TestTemplateCreateDto) {
-        return this.http.post(this.testTemplatesEndpoint, testTemplateCreateDto);
+        return this.http.post<TestTemplateModel>(this.testTemplatesEndpoint, testTemplateCreateDto);
     }
 
     getTestTmplById(testTmplId: string) {

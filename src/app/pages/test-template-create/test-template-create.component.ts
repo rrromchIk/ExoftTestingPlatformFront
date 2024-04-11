@@ -79,7 +79,7 @@ export class TestTemplateCreateComponent {
                 .subscribe({
                     next: response => {
                         this.alertService.success('Template created successfully');
-                        //this.router.navigate(['admin', 'tests', response.id, 'edit']);
+                        this.router.navigate(['admin', 'test-templates', response.id, 'edit']);
                     },
                     error: error => {
                         console.log(error);
