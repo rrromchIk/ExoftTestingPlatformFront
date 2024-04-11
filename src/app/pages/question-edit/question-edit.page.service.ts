@@ -28,14 +28,14 @@ export class QuestionEditPageService {
                     this.questionSubject.next(response);
                 },
                 error: () => {
-                    this.alertService.error("Error while getting test");
+                    this.alertService.error("Error while getting question");
                 }
             })
     }
 
 
-    updateQuestion(testId: string, questionUpdateDto: QuestionUpdateDto) {
-        this.questionApiService.updateQuestion(testId, questionUpdateDto)
+    updateQuestion(questionId: string, questionUpdateDto: QuestionUpdateDto) {
+        this.questionApiService.updateQuestion(questionId, questionUpdateDto)
             .pipe(untilDestroyed(this))
             .subscribe({
                     next: () => {
