@@ -58,7 +58,7 @@ export const EMAIL_CONFIRMED_FILTER: SelectFilter = {
 
 export const FROM_TEMPLATE_FILTER: SelectFilter = {
     filterLabel: 'Choose template',
-    filterName: 'template',
+    filterName: 'templateId',
     options: [
         { optionLabel: 'All', optionValue: '' },
     ]

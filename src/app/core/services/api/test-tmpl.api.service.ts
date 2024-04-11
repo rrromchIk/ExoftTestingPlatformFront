@@ -9,6 +9,7 @@ import {Filters} from "../../interfaces/filters/filters";
 import {HttpParamsHelper} from "../../helpers/http-params.helper";
 import {TestTemplateCreateDto} from "../../interfaces/test-template/test-template-create.dto";
 import {TestTmplUpdateDto} from "../../interfaces/test-template/test-tmpl-update.dto";
+import {TestTmplShortInfoModel} from "../../interfaces/test-template/test-tmpl-short-info.model";
 
 @Injectable({
     providedIn: 'root'
@@ -17,6 +18,10 @@ export class TestTmplApiService {
     private testTemplatesEndpoint: string = `${environment.apiUrl}/api/tests/templates`;
 
     constructor(private http: HttpClient) {}
+
+    getAllTestTmplsShortInfo() {
+        return this.http.get<TestTmplShortInfoModel[]>(`${this.testTemplatesEndpoint}/short-info`);
+    }
 
     getAllTestTemplates(pagingSettings: PagingSettings, filters: Filters): Observable<PagedListModel<TestTemplateModel>> {
         let queryParams = new HttpParams();

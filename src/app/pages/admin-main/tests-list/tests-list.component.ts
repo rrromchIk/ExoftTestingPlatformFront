@@ -19,6 +19,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {TestsPageService} from "../services/tests.page.service";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 import {filter} from "rxjs";
+import {TestTmplApiService} from "../../../core/services/api/test-tmpl.api.service";
 
 @UntilDestroy()
 @Component({
@@ -31,14 +32,26 @@ export class TestsListComponent implements OnInit {
     tests: TestModel[] = [];
     pagedList: PagedListModel<TestModel> | null = null;
 
-    selectFilters: SelectFilter[] = Array.of(DIFFICULTY_FILTER, PUBLISHED_FILTER, FROM_TEMPLATE_FILTER);
+    templatesFilter: SelectFilter = FROM_TEMPLATE_FILTER;
+    selectFilters: SelectFilter[] = Array.of(DIFFICULTY_FILTER, PUBLISHED_FILTER, this.templatesFilter);
     sortCriterias: SortCriteria[] = Array.of(DURATION_SORT_CRITERIA, CREATION_DATE_SORT_CRITERIA, MODIFICATION_DATE_SORT_CRITERIA);
 
 
-    constructor(private testsPageService: TestsPageService, private dialog: MatDialog) {}
+    constructor(private testsPageService: TestsPageService,
+                private testTmplApiService: TestTmplApiService,
+                private dialog: MatDialog) {}
 
     ngOnInit() {
         this.loadTests();
+        console.log("ngoninit")
+        this.testTmplApiService.getAllTestTmplsShortInfo()
+            .subscribe((data) => {
+                data.forEach(t => {
+                    this.templatesFilter.options.push({
+                        optionLabel: t.name, optionValue: t.id
+                    })
+                })
+            })
     }
 
     loadTests() {
