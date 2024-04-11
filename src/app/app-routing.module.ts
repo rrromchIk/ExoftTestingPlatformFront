@@ -15,7 +15,7 @@ import {UsersListComponent} from "./pages/admin-main/users-list/users-list.compo
 import {UserEditComponent} from "./pages/admin-main/user-edit/user-edit.component";
 import {TestTemplatesListComponent} from "./pages/admin-main/test-templates-list/test-templates-list.component";
 import {TestCreateComponent} from "./pages/admin-main/test-create/test-create.component";
-import {AdminGuard, AuthenticatedGuard} from "./core/guards/guards";
+import {AdminGuard, AuthenticatedGuard, PassingTestGuard} from "./core/guards/guards";
 import {NotFoundComponent} from "./pages/not-found/not-found.component";
 import {ForbiddenComponent} from "./pages/forbidden/forbidden.component";
 import {TestEditComponent} from "./pages/admin-main/test-edit/test-edit.component";
@@ -63,7 +63,7 @@ const routes: Routes = [
     {
         path: 'pass-test',
         component: PassingTestComponent,
-        canActivate: [AuthenticatedGuard]
+        canActivate: [AuthenticatedGuard, PassingTestGuard]
     },
     {
         path: 'test-result',
