@@ -1,4 +1,4 @@
-export class QuestionUpdateDto {
+export interface QuestionUpdateDto {
     text: string;
     maxScore: number;
 }
