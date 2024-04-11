@@ -17,3 +17,13 @@
         margin-right: 5px;
     }
 }
+
+.app-logo-link {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+
+    &:hover {
+        color: white;
+    }
+}
