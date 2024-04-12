@@ -10,6 +10,7 @@ import {Router} from "@angular/router";
 import {UserSignupDto} from "../../core/interfaces/user/user-signup.dto";
 import {ResetPasswordDto} from "../../core/interfaces/auth/reset-password.dto";
 import {BehaviorSubject, catchError, Observable, of, tap} from "rxjs";
+import {UserRole} from "../../core/interfaces/user/user-role.enum";
 
 @UntilDestroy()
 @Injectable({
@@ -32,7 +33,7 @@ export class AuthService {
                         this.setCurrentUser(data.userData);
                         this.setTokensPair(data.tokensPair);
 
-                        if (data.userData.role === 'Admin' || data.userData.role === 'SuperAdmin')
+                        if (data.userData.role === UserRole.Admin || data.userData.role === UserRole.SuperAdmin)
                             this.router.navigate(['/admin']);
                         else
                             this.router.navigate(['/user-main']);

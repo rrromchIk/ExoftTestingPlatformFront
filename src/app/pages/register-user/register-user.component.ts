@@ -10,6 +10,7 @@ import {Router} from "@angular/router";
 import {AuthService} from "../../shared/services/auth.service";
 import {UserModel} from "../../core/interfaces/user/user.model";
 import {Observable} from "rxjs";
+import {UserRole} from "../../core/interfaces/user/user-role.enum";
 
 @UntilDestroy()
 @Component({
@@ -18,6 +19,7 @@ import {Observable} from "rxjs";
   styleUrl: './register-user.component.scss'
 })
 export class RegisterUserComponent {
+    protected readonly UserRole = UserRole;
     hidePassword: boolean = true;
     registerUserForm: FormGroup;
     currentUser: UserModel;

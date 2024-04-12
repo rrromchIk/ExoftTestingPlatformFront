@@ -1,5 +1,8 @@
 import {SelectFilter} from "../interfaces/filters/select-filter";
 import {SortCriteria} from "../interfaces/filters/sort-criteria";
+import {UserRole} from "../interfaces/user/user-role.enum";
+import {UserTestStatus} from "../interfaces/user-test/user-test-status.enum";
+import {TestDifficulty} from "../interfaces/test/test-difficulty.enum";
 
 
 
@@ -8,9 +11,9 @@ export const DIFFICULTY_FILTER: SelectFilter = {
     filterName: 'difficulty',
     options: [
         { optionLabel: 'All', optionValue: '' },
-        { optionLabel: 'Easy', optionValue: 'easy' },
-        { optionLabel: 'Medium', optionValue: 'medium' },
-        { optionLabel: 'Hard', optionValue: 'hard' }
+        { optionLabel: 'Easy', optionValue: TestDifficulty.Easy },
+        { optionLabel: 'Medium', optionValue: TestDifficulty.Medium },
+        { optionLabel: 'Hard', optionValue: TestDifficulty.Hard }
     ]
 }
 
@@ -29,9 +32,9 @@ export const USER_TEST_STATUS_FILTER: SelectFilter = {
     filterName: 'userTestStatus',
     options: [
         { optionLabel: 'All', optionValue: '' },
-        { optionLabel: 'Not started', optionValue: 'notStarted' },
-        { optionLabel: 'In Process', optionValue: 'inProcess' },
-        { optionLabel: 'Completed', optionValue: 'completed' }
+        { optionLabel: 'Not started', optionValue: UserTestStatus.NotStarted },
+        { optionLabel: 'In Process', optionValue: UserTestStatus.InProcess },
+        { optionLabel: 'Completed', optionValue: UserTestStatus.Completed }
     ]
 }
 
@@ -40,9 +43,9 @@ export const USER_ROLE_FILTER: SelectFilter = {
     filterName: 'role',
     options: [
         { optionLabel: 'All', optionValue: '' },
-        { optionLabel: 'User', optionValue: 'user' },
-        { optionLabel: 'Admin', optionValue: 'admin' },
-        { optionLabel: 'Superadmin', optionValue: 'superAdmin' }
+        { optionLabel: 'User', optionValue: UserRole.User },
+        { optionLabel: 'Admin', optionValue: UserRole.Admin },
+        { optionLabel: 'Superadmin', optionValue: UserRole.SuperAdmin }
     ]
 }
 

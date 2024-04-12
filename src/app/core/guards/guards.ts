@@ -6,6 +6,7 @@ import {UserTestApiService} from "../services/api/user-test.api.service";
 import {catchError, map, of, throwError} from "rxjs";
 import {UserTestStatus} from "../interfaces/user-test/user-test-status.enum";
 import {HttpStatusCode} from "@angular/common/http";
+import {UserRole} from "../interfaces/user/user-role.enum";
 
 export const AdminGuard: CanActivateFn = () => {
     const authService = inject(AuthService);
@@ -14,7 +15,7 @@ export const AdminGuard: CanActivateFn = () => {
     const currentUser = authService.getCurrentUser();
 
     const userRole = currentUser?.role;
-    if (userRole === 'Admin' || userRole === 'SuperAdmin') {
+    if (userRole === UserRole.Admin || userRole === UserRole.SuperAdmin) {
         console.log("adminGuard::allowed");
 
         return true;

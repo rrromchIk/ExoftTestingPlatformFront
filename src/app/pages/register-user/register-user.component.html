@@ -97,7 +97,7 @@
                     <mat-label>User role</mat-label>
                     <mat-select formControlName="userRole">
                         <mat-option value="user">User</mat-option>
-                        <mat-option *ngIf="currentUser.role === 'SuperAdmin'" value="admin">Admin</mat-option>
+                        <mat-option *ngIf="currentUser.role === UserRole.SuperAdmin" value="admin">Admin</mat-option>
                     </mat-select>
 
                     <mat-error *ngIf="getFormControl('userRole')?.hasError('required')">

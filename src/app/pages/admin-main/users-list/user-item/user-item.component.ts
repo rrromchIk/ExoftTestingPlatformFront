@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {UserModel} from "../../../../core/interfaces/user/user.model";
 import {AuthService} from "../../../../shared/services/auth.service";
+import {UserRole} from "../../../../core/interfaces/user/user-role.enum";
 
 @Component({
     selector: 'app-user-item',
@@ -22,12 +23,14 @@ export class UserItemComponent {
 
     canModifyUser() {
         const currentUserRole = this.currentUser?.role;
-        if (currentUserRole === 'SuperAdmin') {
-            // SuperAdmin cannot edit or delete their own account
+
+        if (currentUserRole === UserRole.SuperAdmin) {
             return this.currentUser?.id !== this.user.id;
-        } else {
-            // Regular Admin can edit or delete other users, not themselves
-            return !(currentUserRole === 'Admin' && (this.user.role === 'Admin' || this.user.role === 'SuperAdmin'));
+        } else if(currentUserRole == UserRole.Admin){
+            const userToModifyIsAdminOrSuperAdmin = this.user.role === UserRole.Admin || this.user.role === UserRole.SuperAdmin;
+            return !userToModifyIsAdminOrSuperAdmin;
         }
+
+        return false;
     }
 }
