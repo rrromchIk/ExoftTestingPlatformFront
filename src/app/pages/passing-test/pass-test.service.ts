@@ -10,9 +10,7 @@ import {Router} from "@angular/router";
 import {UserTestModel} from "../../core/interfaces/user-test/user-test.model";
 
 @UntilDestroy()
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable()
 export class PassTestService {
     private userQuestionsSubject: BehaviorSubject<UserQuestionModel[] | null> = new BehaviorSubject<UserQuestionModel[] | null>(null);
     userQuestions$: Observable<UserQuestionModel[] | null> = this.userQuestionsSubject.asObservable();

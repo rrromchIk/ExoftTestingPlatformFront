@@ -14,7 +14,8 @@ import {DateTime, Duration} from "luxon";
 @Component({
     selector: 'app-passing-test',
     templateUrl: './passing-test.component.html',
-    styleUrl: './passing-test.component.scss'
+    styleUrl: './passing-test.component.scss',
+    providers: [PassTestService]
 })
 export class PassingTestComponent implements OnInit {
     userId: string;
