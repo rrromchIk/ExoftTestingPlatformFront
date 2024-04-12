@@ -1,9 +1,9 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {AdminMainComponent} from './admin-main.component';
-import {UserEditComponent} from "./user-edit/user-edit.component";
-import {TestsListComponent} from "./tests-list/tests-list.component";
-import {UsersListComponent} from "./users-list/users-list.component";
+import {UserEditComponent} from "../user-edit/user-edit.component";
+import {TestsListComponent} from "../tests-list/tests-list.component";
+import {UsersListComponent} from "../users-list/users-list.component";
 
 const routes: Routes = [
     // {

@@ -23,6 +23,13 @@ import {TestTemplateEditModule} from "./pages/test-template-edit/test-template-e
 import {QuestionsPoolTmplEditModule} from "./pages/questions-pool-tmpl-edit/questions-pool-tmpl-edit.module";
 import {QuestionEditModule} from "./pages/question-edit/question-edit.module";
 import {QuestionTmplEditModule} from "./pages/question-tmpl-edit/question-tmpl-edit.module";
+import {TestCreateModule} from "./pages/test-create/test-create.module";
+import {TestEditModule} from "./pages/test-edit/test-edit.module";
+import {UserEditModule} from "./pages/user-edit/user-edit.module";
+import {QuestionsPoolEditModule} from "./pages/questions-pool-edit/questions-pool-edit.module";
+import {TestsListModule} from "./pages/tests-list/tests-list.module";
+import {UsersListModule} from "./pages/users-list/users-list.module";
+import {TestTemplatesListModule} from "./pages/test-templates-list/test-templates-list.module";
 
 
 @NgModule({
@@ -50,7 +57,14 @@ import {QuestionTmplEditModule} from "./pages/question-tmpl-edit/question-tmpl-e
         TestTemplateEditModule,
         QuestionsPoolTmplEditModule,
         QuestionEditModule,
-        QuestionTmplEditModule
+        QuestionTmplEditModule,
+        TestCreateModule,
+        TestEditModule,
+        UserEditModule,
+        QuestionsPoolEditModule,
+        TestsListModule,
+        UsersListModule,
+        TestTemplatesListModule
     ],
     providers: [
         {
