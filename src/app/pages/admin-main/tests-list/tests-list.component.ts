@@ -43,7 +43,6 @@ export class TestsListComponent implements OnInit {
 
     ngOnInit() {
         this.loadTests();
-        console.log("ngoninit")
         this.testTmplApiService.getAllTestTmplsShortInfo()
             .subscribe((data) => {
                 data.forEach(t => {
