@@ -10,7 +10,7 @@ export class UserAnswerApiService {
 
     constructor(private http: HttpClient) {}
 
-    createUserAnswer(userId: string, answerId: string, questionId: string) {
-        return this.http.post(this.userAnswersEndpoint, {userId, answerId, questionId});
+    createUserAnswers(userAnswers: {userId: string, answerId: string, questionId: string}[]) {
+        return this.http.post(this.userAnswersEndpoint, userAnswers);
     }
 }

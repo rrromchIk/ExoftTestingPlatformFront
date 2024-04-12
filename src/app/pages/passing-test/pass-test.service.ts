@@ -95,11 +95,15 @@ export class PassTestService {
 
 
     createUserAnswers(userId: string, selectedAnswers: AnswerModel[]) {
-        for (let answer of selectedAnswers) {
-            this.userAnswerApiService.createUserAnswer(userId, answer.id, answer.questionId)
-                .pipe(untilDestroyed(this))
-                .subscribe();
-        }
+        const userAnswers = selectedAnswers.map(sa => ({
+            userId: userId,
+            answerId: sa.id,
+            questionId: sa.questionId
+        }))
+
+        this.userAnswerApiService.createUserAnswers(userAnswers)
+            .pipe(untilDestroyed(this))
+            .subscribe();
     }
 
     private generateUserQuestions(userId: string, questionsPools: QuestionsPoolDetailsModel[]): UserQuestionModel[] {
