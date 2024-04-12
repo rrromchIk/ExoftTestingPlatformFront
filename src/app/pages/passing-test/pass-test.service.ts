@@ -1,12 +1,9 @@
 import {Injectable} from "@angular/core";
 import {UserQuestionModel} from "../../core/interfaces/user-question/user-question.model";
-import {QuestionsPoolDetailsModel} from "../../core/interfaces/user-question/questions-pool-details.model";
 import {UserQuestionApiService} from "../../core/services/api/user-question.api.service";
-import {BehaviorSubject, catchError, map, Observable, switchMap, tap, throwError} from "rxjs";
+import {BehaviorSubject, forkJoin, Observable, of, switchMap} from "rxjs";
 import {UserTestApiService} from "../../core/services/api/user-test.api.service";
-import {GenerationStrategy} from "../../core/interfaces/questions-pool/generation-strategy.enum";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
-import {HttpStatusCode} from "@angular/common/http";
 import {AnswerModel} from "../../core/interfaces/answer/answer.model";
 import {UserAnswerApiService} from "../../core/services/api/user-answer.api.service";
 import {Router} from "@angular/router";
@@ -31,68 +28,26 @@ export class PassTestService {
     }
 
     startTest(userId: string, testId: string) {
-        this.userTestApiService.getUserTest(userId, testId)
+        this.getUserQuestions(userId, testId)
             .pipe(
                 untilDestroyed(this),
-                tap((userTest) => {
-                    this.userTestSubject.next(userTest);
-                }),
-                switchMap(() => this.getUserQuestionsForStartedTest(userId, testId)),
-                catchError((err) => {
-                    if (err.error.status == HttpStatusCode.NotFound) {
-                        console.log("user test not found");
-                        return this.createUserTest(userId, testId)
-                            .pipe(
-                                tap((data) => this.userTestSubject.next(data)),
-                                switchMap((data) =>
-                                    this.getUserQuestionsForNewTest(data.userId, data.test.id)
-                                        .pipe(
-                                            tap((data) =>
-                                                this.createUserQuestions(data))
-                                        )
-                                )
-                            )
-                    }
-                    return throwError(() => err);
-                }),
+                switchMap((res) => forkJoin([
+                        of(res),
+                        this.userTestApiService.getUserTest(userId, testId)
+                    ])
+                )
             )
-            .subscribe({
-                next: (data) => {
-                    this.userQuestionsSubject.next(data);
-                },
-                error: (err) => {
-                    console.log(err);
+            .subscribe(([userQuestions, userTest]) => {
+                    this.userQuestionsSubject.next(userQuestions);
+                    this.userTestSubject.next(userTest)
                 }
-            })
+            );
     }
 
 
-    createUserTest(userId: string, testId: string) {
-        return this.userTestApiService.createUserTest(userId, testId);
-    }
-
-    getUserQuestionsForNewTest(userId: string, testId: string) {
-        return this.userQuestionApiService.getQuestionsPoolDetailsForTest(testId)
-            .pipe(
-                map((questionsPools) =>
-                    this.generateUserQuestions(userId, questionsPools))
-            )
-    }
-
-    getUserQuestionsForStartedTest(userId: string, testId: string) {
+    getUserQuestions(userId: string, testId: string) {
         return this.userQuestionApiService.getUserQuestions(userId, testId);
     }
-
-    createUserQuestions(userQuestionsModel: UserQuestionModel[]) {
-        const userQuestionsToCreate = userQuestionsModel.map(uq => ({
-            userId: uq.userId,
-            questionId: uq.questionId
-        }));
-        this.userQuestionApiService.createUserQuestions(userQuestionsToCreate)
-            .pipe(untilDestroyed(this))
-            .subscribe();
-    }
-
 
     createUserAnswers(userId: string, selectedAnswers: AnswerModel[]) {
         const userAnswers = selectedAnswers.map(sa => ({
@@ -101,40 +56,10 @@ export class PassTestService {
             questionId: sa.questionId
         }))
 
-        this.userAnswerApiService.createUserAnswers(userAnswers)
-            .pipe(untilDestroyed(this))
-            .subscribe();
-    }
-
-    private generateUserQuestions(userId: string, questionsPools: QuestionsPoolDetailsModel[]): UserQuestionModel[] {
-        let concatenatedQuestions: UserQuestionModel[] = [];
-
-        for (const pool of questionsPools) {
-            if (pool.generationStrategy === GenerationStrategy.Randomly) {
-                this.shuffleArray(pool.questionsId);
-            }
-
-            const numToConcatenate = Math.min(pool.numOfQuestionsToBeGenerated, pool.questionsId.length);
-            concatenatedQuestions = concatenatedQuestions.concat(
-                pool.questionsId
-                    .slice(0, numToConcatenate)
-                    .map(questionId => ({
-                            userId: userId,
-                            questionId,
-                            isAnswered: false
-                        })
-                    )
-            );
-        }
-
-        return concatenatedQuestions;
-    }
-
-    private shuffleArray<T>(array: T[]): void {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-        }
+        if (userAnswers.length > 0)
+            this.userAnswerApiService.createUserAnswers(userAnswers)
+                .pipe(untilDestroyed(this))
+                .subscribe();
     }
 
     completeUserTest(userId: string, testId: string) {
