@@ -8,7 +8,7 @@
     <div class="filters" [formGroup]="filterForm">
         <mat-form-field appearance="fill" *ngFor="let filter of selectFilters" class="filters-field">
             <mat-label>{{ filter.filterLabel }}</mat-label>
-            <mat-select [formControlName]="filter.filterName" (selectionChange)="emitFilterChangeEvent()">
+            <mat-select [formControlName]="filter.filterName" >
                 <mat-option *ngFor="let option of filter.options"
                             [value]="option.optionValue">
                     {{ option.optionLabel }}
@@ -20,7 +20,7 @@
 
         <mat-form-field class="filters-field">
             <mat-label>Search</mat-label>
-            <input matInput type="text" placeholder="Search..." formControlName="searchTerm" (input)="emitFilterChangeEvent()">
+            <input matInput type="text" placeholder="Search..." formControlName="searchTerm">
             <mat-icon matPrefix>search</mat-icon>
             <button matSuffix mat-icon-button aria-label="Clear" (click)="clearSearchInput()">
                 <mat-icon>clear</mat-icon>

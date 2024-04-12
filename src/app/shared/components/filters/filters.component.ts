@@ -3,7 +3,10 @@ import {SortCriteria} from "../../../core/interfaces/filters/sort-criteria";
 import {SelectFilter} from "../../../core/interfaces/filters/select-filter";
 import {Filters} from "../../../core/interfaces/filters/filters";
 import {FormBuilder, FormGroup} from "@angular/forms";
+import {debounceTime, distinctUntilChanged} from "rxjs";
+import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 
+@UntilDestroy()
 @Component({
   selector: 'app-filters',
   templateUrl: './filters.component.html',
@@ -33,6 +36,16 @@ export class FiltersComponent {
         formGroupConfig['sortOrder'] = [''];
 
         this.filterForm = this.fb.group(formGroupConfig);
+
+        this.filterForm.valueChanges
+            .pipe(
+                debounceTime(300),
+                distinctUntilChanged(),
+                untilDestroyed(this)
+            )
+            .subscribe(() => {
+                this.emitFilterChangeEvent();
+            });
     }
 
     onSortButtonClick(sortColumn: string) {
@@ -66,8 +79,6 @@ export class FiltersComponent {
                 sortOrder: newSortDirection
             });
         }
-
-        this.emitFilterChangeEvent();
     }
 
     emitFilterChangeEvent() {
@@ -86,6 +97,5 @@ export class FiltersComponent {
 
     clearSearchInput() {
         this.filterForm.get('searchTerm')?.setValue('');
-        this.emitFilterChangeEvent();
     }
 }
