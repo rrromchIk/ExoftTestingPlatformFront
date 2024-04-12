@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, HostListener} from '@angular/core';
 import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute} from "@angular/router";
 import {
@@ -34,8 +34,8 @@ export class QuestionsPoolTmplEditComponent {
     protected readonly MAX_QUESTION_POOL_NAME_LENGTH: number = MAX_QUESTION_POOL_NAME_LENGTH;
     protected readonly MIN_NUMBER_OF_QUEST_TO_GENERATE: number = MIN_NUMBER_OF_QUEST_TO_GENERATE;
     protected readonly GENERATION_STRATEGIES_VALUES: string[] = GENERATION_STRATEGIES_VALUES;
-    protected readonly MAX_QUESTION_TEXT_LENGTH = MAX_QUESTION_TEXT_LENGTH;
-    protected readonly MIN_QUESTION_SCORE_VALUE = MIN_QUESTION_SCORE_VALUE;
+    protected readonly MAX_QUESTION_TEXT_LENGTH: number = MAX_QUESTION_TEXT_LENGTH;
+    protected readonly MIN_QUESTION_SCORE_VALUE: number = MIN_QUESTION_SCORE_VALUE;
     protected readonly MAX_ANSWER_TEXT_LENGTH: number = MAX_ANSWER_TEXT_LENGTH;
 
     poolTemplate: QuestionsPoolTmplModel;
@@ -218,5 +218,20 @@ export class QuestionsPoolTmplEditComponent {
                 filter((result) => result),
             )
             .subscribe(() => this.poolTmplEditPageService.deleteQuestionTmpl(question));
+    }
+
+    canDeactivate() {
+        return !this.poolTmplDataChanges && !this.questionsFormGroup.dirty;
+    }
+
+    @HostListener('window:beforeunload', ['$event'])
+    onBeforeUnload($event: BeforeUnloadEvent) {
+        if (!this.canDeactivate()) {
+            $event.preventDefault();
+            $event.returnValue = '';
+            return false;
+        }
+
+        return true;
     }
 }

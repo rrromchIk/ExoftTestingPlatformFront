@@ -1,16 +1,17 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {passwordsMatchValidator} from "../../core/helpers/form-validators";
 import {UserSignupDto} from "../../core/interfaces/user/user-signup.dto";
 import {FIRST_AND_LAST_NAMES_PATTERN, PASSWORD_PATTERN} from "../../core/constants/validation.constants";
 import {AuthService} from "../../shared/services/auth.service";
+import {CanDeactivateComponent} from "../../core/guards/guards";
 
 @Component({
     selector: 'app-signup',
     templateUrl: './signup.component.html',
     styleUrl: './signup.component.scss'
 })
-export class SignupComponent implements OnInit {
+export class SignupComponent implements OnInit, CanDeactivateComponent {
     hidePassword: boolean = true;
     signUpForm: FormGroup;
 
@@ -45,5 +46,20 @@ export class SignupComponent implements OnInit {
             }
             this.authService.signUp(userSignUpDto)
         }
+    }
+
+    canDeactivate() {
+        return !this.signUpForm.dirty;
+    }
+
+    @HostListener('window:beforeunload', ['$event'])
+    onBeforeUnload($event: BeforeUnloadEvent) {
+        if (!this.canDeactivate()) {
+            $event.preventDefault();
+            $event.returnValue = '';
+            return false;
+        }
+
+        return true;
     }
 }

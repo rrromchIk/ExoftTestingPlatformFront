@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, HostListener} from '@angular/core';
 import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 import {
@@ -20,6 +20,7 @@ import {filter} from "rxjs";
 import {MatDialog} from "@angular/material/dialog";
 import {AlertService} from "../../shared/services/alert.service";
 import {TestUpdateDto} from "../../core/interfaces/test/test-update.dto";
+import {CanDeactivateComponent} from "../../core/guards/guards";
 
 @UntilDestroy()
 @Component({
@@ -28,7 +29,7 @@ import {TestUpdateDto} from "../../core/interfaces/test/test-update.dto";
     styleUrl: './test-edit.component.scss',
     providers: [TestEditPageService]
 })
-export class TestEditComponent {
+export class TestEditComponent implements CanDeactivateComponent {
     protected readonly MAX_TEST_NAME_LENGTH: number = MAX_TEST_NAME_LENGTH;
     protected readonly MAX_TEST_SUBJECT_LENGTH: number = MAX_TEST_SUBJECT_LENGTH;
     protected readonly MIN_TEST_DURATION_VALUE: number = MIN_TEST_DURATION_VALUE;
@@ -170,5 +171,20 @@ export class TestEditComponent {
                 filter((result) => result),
             )
             .subscribe(() => this.testEditPageService.deleteQuestionsPool(questionsPool));
+    }
+
+    canDeactivate() {
+        return !this.testDataChanges;
+    }
+
+    @HostListener('window:beforeunload', ['$event'])
+    onBeforeUnload($event: BeforeUnloadEvent) {
+        if (!this.canDeactivate()) {
+            $event.preventDefault();
+            $event.returnValue = '';
+            return false;
+        }
+
+        return true;
     }
 }

@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, HostListener} from '@angular/core';
 import {
     FormArray,
     FormBuilder,
@@ -26,6 +26,7 @@ import {Router} from "@angular/router";
 import {TestTmplShortInfoModel} from "../../core/interfaces/test-template/test-tmpl-short-info.model";
 import {TestTmplApiService} from "../../core/services/api/test-tmpl.api.service";
 import {TestTemplateModel} from "../../core/interfaces/test-template/test-template.model";
+import {CanDeactivateComponent} from "../../core/guards/guards";
 
 @UntilDestroy(this)
 @Component({
@@ -33,7 +34,7 @@ import {TestTemplateModel} from "../../core/interfaces/test-template/test-templa
     templateUrl: './test-create.component.html',
     styleUrl: './test-create.component.scss'
 })
-export class TestCreateComponent {
+export class TestCreateComponent implements CanDeactivateComponent {
     protected readonly MAX_TEST_NAME_LENGTH: number = MAX_TEST_NAME_LENGTH;
     protected readonly MAX_TEST_SUBJECT_LENGTH: number = MAX_TEST_SUBJECT_LENGTH;
     protected readonly MIN_TEST_DURATION_VALUE: number = MIN_TEST_DURATION_VALUE;
@@ -173,5 +174,20 @@ export class TestCreateComponent {
                 }))
             })
         }
+    }
+
+    canDeactivate() {
+        return !this.createTestForm.dirty;
+    }
+
+    @HostListener('window:beforeunload', ['$event'])
+    onBeforeUnload($event: BeforeUnloadEvent) {
+        if (!this.canDeactivate()) {
+            $event.preventDefault();
+            $event.returnValue = '';
+            return false;
+        }
+
+        return true;
     }
 }

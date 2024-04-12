@@ -15,7 +15,7 @@ import {UsersListComponent} from "./pages/users-list/users-list.component";
 import {UserEditComponent} from "./pages/user-edit/user-edit.component";
 import {TestTemplatesListComponent} from "./pages/test-templates-list/test-templates-list.component";
 import {TestCreateComponent} from "./pages/test-create/test-create.component";
-import {AdminGuard, AuthenticatedGuard, PassingTestGuard} from "./core/guards/guards";
+import {AdminGuard, AuthenticatedGuard, CanDeactivateGuard, PassingTestGuard} from "./core/guards/guards";
 import {NotFoundComponent} from "./pages/not-found/not-found.component";
 import {ForbiddenComponent} from "./pages/forbidden/forbidden.component";
 import {TestEditComponent} from "./pages/test-edit/test-edit.component";
@@ -76,6 +76,7 @@ const routes: Routes = [
     },
     {
         path: 'signup',
+        canDeactivate: [CanDeactivateGuard],
         component: SignupComponent
     },
     {
@@ -126,38 +127,47 @@ const routes: Routes = [
             },
             {
                 path: 'test-create',
+                canDeactivate: [CanDeactivateGuard],
                 component: TestCreateComponent
             },
             {
                 path: 'tests/:id/edit',
+                canDeactivate: [CanDeactivateGuard],
                 component: TestEditComponent
             },
             {
                 path: 'questions-pool/:id/edit',
+                canDeactivate: [CanDeactivateGuard],
                 component: QuestionsPoolEditComponent
             },
             {
                 path: 'question/:id/edit',
+                canDeactivate: [CanDeactivateGuard],
                 component: QuestionEditComponent
             },
             {
                 path: 'register-user',
+                canDeactivate: [CanDeactivateGuard],
                 component: RegisterUserComponent
             },
             {
                 path: 'test-template-create',
+                canDeactivate: [CanDeactivateGuard],
                 component: TestTemplateCreateComponent
             },
             {
                 path: 'test-templates/:id/edit',
+                canDeactivate: [CanDeactivateGuard],
                 component: TestTemplateEditComponent
             },
             {
                 path: 'questions-pool/template/:id/edit',
+                canDeactivate: [CanDeactivateGuard],
                 component: QuestionsPoolTmplEditComponent
             },
             {
                 path: 'question-template/:id/edit',
+                canDeactivate: [CanDeactivateGuard],
                 component: QuestionTmplEditComponent
             }
         ]

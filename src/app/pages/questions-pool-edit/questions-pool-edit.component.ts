@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, HostListener} from '@angular/core';
 import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
@@ -23,6 +23,7 @@ import {QuestionCreateDto} from "../../core/interfaces/question/question-create.
 import {AlertService} from "../../shared/services/alert.service";
 import {QuestionsPoolTmplModel} from "../../core/interfaces/questions-pool-tmpl/questions-pool-tmpl.model";
 import {QuestionTmplModel} from "../../core/interfaces/question-template/question-tmpl.model";
+import {CanDeactivateComponent} from "../../core/guards/guards";
 
 @UntilDestroy()
 @Component({
@@ -31,7 +32,7 @@ import {QuestionTmplModel} from "../../core/interfaces/question-template/questio
     styleUrl: './questions-pool-edit.component.scss',
     providers: [QuestionsPoolEditPageService]
 })
-export class QuestionsPoolEditComponent {
+export class QuestionsPoolEditComponent implements CanDeactivateComponent {
     protected readonly MAX_QUESTION_POOL_NAME_LENGTH: number = MAX_QUESTION_POOL_NAME_LENGTH;
     protected readonly MIN_NUMBER_OF_QUEST_TO_GENERATE: number = MIN_NUMBER_OF_QUEST_TO_GENERATE;
     protected readonly MAX_QUESTION_TEXT_LENGTH: number = MAX_QUESTION_TEXT_LENGTH;
@@ -269,5 +270,20 @@ export class QuestionsPoolEditComponent {
                     )
                 }))
         })
+    }
+
+    canDeactivate() {
+        return !this.questionsPoolDataChanges && !this.questionsFormGroup.dirty;
+    }
+
+    @HostListener('window:beforeunload', ['$event'])
+    onBeforeUnload($event: BeforeUnloadEvent) {
+        if (!this.canDeactivate()) {
+            $event.preventDefault();
+            $event.returnValue = '';
+            return false;
+        }
+
+        return true;
     }
 }

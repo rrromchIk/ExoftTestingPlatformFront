@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, HostListener} from '@angular/core';
 import {QuestionModel} from "../../core/interfaces/question/question.model";
 import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute} from "@angular/router";
@@ -19,6 +19,7 @@ import {
 import {QuestionUpdateDto} from "../../core/interfaces/question/question-update.dto";
 import {AnswerCreateDto} from "../../core/interfaces/answer/asnwer-create.dto";
 import {AnswerModel} from "../../core/interfaces/answer/answer.model";
+import {CanDeactivateComponent} from "../../core/guards/guards";
 
 @UntilDestroy()
 @Component({
@@ -27,7 +28,7 @@ import {AnswerModel} from "../../core/interfaces/answer/answer.model";
     styleUrl: './question-edit.component.scss',
     providers: [QuestionEditPageService]
 })
-export class QuestionEditComponent {
+export class QuestionEditComponent implements CanDeactivateComponent {
     protected readonly MIN_QUESTION_SCORE_VALUE = MIN_QUESTION_SCORE_VALUE;
     protected readonly MAX_QUESTION_TEXT_LENGTH = MAX_QUESTION_TEXT_LENGTH;
 
@@ -152,6 +153,21 @@ export class QuestionEditComponent {
                 filter((result) => result),
             )
             .subscribe(() => this.questionEditPageService.deleteAnswer(answer));
+    }
+
+    canDeactivate() {
+        return !this.questionDataChanges && !this.answersFormGroup.dirty;
+    }
+
+    @HostListener('window:beforeunload', ['$event'])
+    onBeforeUnload($event: BeforeUnloadEvent) {
+        if (!this.canDeactivate()) {
+            $event.preventDefault();
+            $event.returnValue = '';
+            return false;
+        }
+
+        return true;
     }
 
     protected readonly MAX_ANSWER_TEXT_LENGTH = MAX_ANSWER_TEXT_LENGTH;

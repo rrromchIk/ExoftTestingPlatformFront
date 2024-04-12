@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, HostListener} from '@angular/core';
 import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
@@ -154,4 +154,18 @@ export class QuestionTmplEditComponent {
             .subscribe(() => this.questionTmplEditPageService.deleteAnswerTmpl(answer));
     }
 
+    canDeactivate() {
+        return !this.questionTmplDataChanges && !this.answerTmplsFormGroup.dirty;
+    }
+
+    @HostListener('window:beforeunload', ['$event'])
+    onBeforeUnload($event: BeforeUnloadEvent) {
+        if (!this.canDeactivate()) {
+            $event.preventDefault();
+            $event.returnValue = '';
+            return false;
+        }
+
+        return true;
+    }
 }

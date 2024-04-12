@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, HostListener} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AlertService} from "../../shared/services/alert.service";
 import {Router} from "@angular/router";
@@ -17,6 +17,7 @@ import {
 import {TestTmplApiService} from "../../core/services/api/test-tmpl.api.service";
 import {QuestionsPoolTmplDto} from "../../core/interfaces/questions-pool-tmpl/quest-pool-tmpl.dto";
 import {HttpStatusCode} from "@angular/common/http";
+import {CanDeactivateComponent} from "../../core/guards/guards";
 
 @UntilDestroy()
 @Component({
@@ -24,7 +25,7 @@ import {HttpStatusCode} from "@angular/common/http";
   templateUrl: './test-template-create.component.html',
   styleUrl: './test-template-create.component.scss'
 })
-export class TestTemplateCreateComponent {
+export class TestTemplateCreateComponent implements CanDeactivateComponent {
     protected readonly MAX_TEST_NAME_LENGTH: number = MAX_TEST_NAME_LENGTH;
     protected readonly MAX_TEST_SUBJECT_LENGTH: number = MAX_TEST_SUBJECT_LENGTH;
     protected readonly MIN_TEST_DURATION_VALUE: number = MIN_TEST_DURATION_VALUE;
@@ -121,5 +122,20 @@ export class TestTemplateCreateComponent {
             defaultTestDifficulty: defaultTestDifficulty !== '' ? defaultTestDifficulty : null,
             questionsPoolTemplates: questionPoolsTmpl
         };
+    }
+
+    canDeactivate() {
+        return !this.createTestTmplForm.dirty;
+    }
+
+    @HostListener('window:beforeunload', ['$event'])
+    onBeforeUnload($event: BeforeUnloadEvent) {
+        if (!this.canDeactivate()) {
+            $event.preventDefault();
+            $event.returnValue = '';
+            return false;
+        }
+
+        return true;
     }
 }

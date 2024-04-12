@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, HostListener} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {FIRST_AND_LAST_NAMES_PATTERN, PASSWORD_PATTERN} from "../../core/constants/validation.constants";
 import {passwordsMatchValidator} from "../../core/helpers/form-validators";
@@ -11,6 +11,7 @@ import {AuthService} from "../../shared/services/auth.service";
 import {UserModel} from "../../core/interfaces/user/user.model";
 import {Observable} from "rxjs";
 import {UserRole} from "../../core/interfaces/user/user-role.enum";
+import {CanDeactivateComponent} from "../../core/guards/guards";
 
 @UntilDestroy()
 @Component({
@@ -18,7 +19,7 @@ import {UserRole} from "../../core/interfaces/user/user-role.enum";
   templateUrl: './register-user.component.html',
   styleUrl: './register-user.component.scss'
 })
-export class RegisterUserComponent {
+export class RegisterUserComponent implements CanDeactivateComponent{
     protected readonly UserRole = UserRole;
     hidePassword: boolean = true;
     registerUserForm: FormGroup;
@@ -77,5 +78,20 @@ export class RegisterUserComponent {
                     }
                 });
         }
+    }
+
+    canDeactivate() {
+        return !this.registerUserForm.dirty;
+    }
+
+    @HostListener('window:beforeunload', ['$event'])
+    onBeforeUnload($event: BeforeUnloadEvent) {
+        if (!this.canDeactivate()) {
+            $event.preventDefault();
+            $event.returnValue = '';
+            return false;
+        }
+
+        return true;
     }
 }
