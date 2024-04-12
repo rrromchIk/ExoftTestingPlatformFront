@@ -1,12 +1,15 @@
-import {CanActivateFn, Router} from "@angular/router";
+import {CanActivateFn, CanDeactivateFn, Router} from "@angular/router";
 import {inject} from "@angular/core";
 import {AuthService} from "../../shared/services/auth.service";
 import {AlertService} from "../../shared/services/alert.service";
 import {UserTestApiService} from "../services/api/user-test.api.service";
-import {catchError, map, of, throwError} from "rxjs";
+import {catchError, map, Observable, of, throwError} from "rxjs";
 import {UserTestStatus} from "../interfaces/user-test/user-test-status.enum";
 import {HttpStatusCode} from "@angular/common/http";
 import {UserRole} from "../interfaces/user/user-role.enum";
+import {ConfirmationDialogComponent} from "../../shared/components/dialog/confirmation-dialog.component";
+import {MatDialog} from "@angular/material/dialog";
+import {DialogDataDto} from "../interfaces/dialog/dialog-data.dto";
 
 export const AdminGuard: CanActivateFn = () => {
     const authService = inject(AuthService);
@@ -76,5 +79,28 @@ export const PassingTestGuard: CanActivateFn = (route) => {
                     return throwError(() => err)
             }),
         )
+}
+
+
+export interface CanDeactivateComponent {
+    canDeactivate(): Observable<boolean> | boolean;
+}
+
+export const CanDeactivateGuard: CanDeactivateFn<CanDeactivateComponent> = (component: CanDeactivateComponent) => {
+    const canDeactivateComponent = component.canDeactivate();
+    const matDialog = inject(MatDialog);
+
+    if (!canDeactivateComponent) {
+        const dialogData: DialogDataDto = {
+            title: 'You have unsaved changes',
+            content: 'Are you sure you want to leave?'
+        };
+
+        return matDialog.open(ConfirmationDialogComponent, {
+            data: dialogData
+        }).afterClosed()
+    }
+
+    return true;
 }
 
