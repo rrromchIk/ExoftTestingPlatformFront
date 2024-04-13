@@ -70,6 +70,7 @@ export class RegisterUserComponent implements CanDeactivateComponent{
                 .pipe(untilDestroyed(this))
                 .subscribe({
                     next: (data) => {
+                        this.registerUserForm.markAsPristine();
                         this.alertService.success('User registered successfully');
                         this.router.navigate(['/admin', 'users', data.id, 'edit']);
                     },

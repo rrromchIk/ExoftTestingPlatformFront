@@ -115,6 +115,7 @@ export class TestCreateComponent implements CanDeactivateComponent {
                 .pipe(untilDestroyed(this))
                 .subscribe({
                     next: response => {
+                        this.createTestForm.markAsPristine();
                         this.alertService.success('Test created successfully');
                         this.router.navigate(['admin', 'tests', response.id, 'edit']);
                     },

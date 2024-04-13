@@ -79,6 +79,7 @@ export class TestTemplateCreateComponent implements CanDeactivateComponent {
                 .pipe(untilDestroyed(this))
                 .subscribe({
                     next: response => {
+                        this.createTestTmplForm.markAsPristine();
                         this.alertService.success('Template created successfully');
                         this.router.navigate(['admin', 'test-templates', response.id, 'edit']);
                     },

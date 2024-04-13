@@ -44,6 +44,7 @@ export class SignupComponent implements OnInit, CanDeactivateComponent {
                 email: this.signUpForm.value.email,
                 password: this.signUpForm.value.password,
             }
+            this.signUpForm.markAsPristine();
             this.authService.signUp(userSignUpDto)
         }
     }
