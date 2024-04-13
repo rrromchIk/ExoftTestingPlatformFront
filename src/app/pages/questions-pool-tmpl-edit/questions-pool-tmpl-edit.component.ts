@@ -194,6 +194,7 @@ export class QuestionsPoolTmplEditComponent {
                 answerTemplates: answerTmplsDto
             };
 
+            control.markAsPristine();
             this.getQuestionTmplsFormArray().removeAt(index);
             this.poolTmplEditPageService.createQuestionTemplate(this.poolTemplate.id, questionTmplDto);
         } else {

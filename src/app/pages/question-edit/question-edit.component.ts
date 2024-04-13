@@ -129,6 +129,7 @@ export class QuestionEditComponent implements CanDeactivateComponent {
                 isCorrect: control.value.isCorrect,
             };
 
+            control.markAsPristine();
             this.answersFormArray.removeAt(index);
             this.questionEditPageService.createAnswer(this.question.id, questionPoolDto);
         } else {

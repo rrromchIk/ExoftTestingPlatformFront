@@ -210,6 +210,7 @@ export class QuestionsPoolEditComponent implements CanDeactivateComponent {
                 templateId: control.value.templateId
             };
 
+            control.markAsPristine();
             this.getQuestionsFormArray().removeAt(index);
             this.questionsPoolEditService.createQuestion(this.questionsPool.id, questionDto);
         } else {

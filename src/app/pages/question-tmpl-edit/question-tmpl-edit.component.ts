@@ -128,6 +128,7 @@ export class QuestionTmplEditComponent {
                 isCorrectRestriction: control.value.isCorrectRestriction,
             };
 
+            control.markAsPristine();
             this.answerTmplsFormArray.removeAt(index);
             this.questionTmplEditPageService.createAnswerTmpl(this.questionTemplate.id, answerTmplDto);
         } else {
