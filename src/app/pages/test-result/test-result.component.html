@@ -98,5 +98,7 @@
         <p><strong>Time spent:</strong> {{getTimeSpent()}}</p>
         <hr>
         <p><strong>Score:</strong> {{testResult.userScore}}/{{testResult.totalScore}} ({{getScoreInPercents()}}%)</p>
+        <hr>
+        <p><strong>Ranking:</strong> You scored better than {{(userPercentileRank | async)?.toFixed(0)}}% of users</p>
     </div>
 </div>

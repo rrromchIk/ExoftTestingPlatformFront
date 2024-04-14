@@ -6,6 +6,8 @@ import {AuthService} from "../../shared/services/auth.service";
 import {ActivatedRoute} from "@angular/router";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 import {DateTime, Interval} from "luxon";
+import {StatisticApiService} from "../../core/services/api/statistic.api.service";
+import {catchError, Observable, throwError} from "rxjs";
 
 
 @UntilDestroy()
@@ -16,21 +18,27 @@ import {DateTime, Interval} from "luxon";
 })
 export class TestResultComponent implements OnInit {
     testResult: TestResultModel | null = null;
+    userPercentileRank: Observable<number>
 
     constructor(private userTestApiService: UserTestApiService,
                 private authService: AuthService,
-                private route: ActivatedRoute) {
+                private route: ActivatedRoute,
+                private statisticApiService: StatisticApiService) {
     }
 
     ngOnInit(): void {
         const testId = this.route.snapshot.queryParamMap.get('id')!;
-        this.userTestApiService.getUserTestResult(this.authService.getCurrentUser()!.id, testId)
+        const userId = this.authService.getCurrentUser()!.id;
+
+        this.userTestApiService.getUserTestResult(userId, testId)
             .pipe(untilDestroyed(this))
             .subscribe({
                 next: (data) => {
                     this.testResult = data;
                 }
             })
+
+        this.userPercentileRank = this.statisticApiService.getUserPercentileRank(userId, testId)
     }
 
     getQuestionCorrectAnswers(question: QuestionResultModel): string {
