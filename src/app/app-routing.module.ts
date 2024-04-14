@@ -28,6 +28,7 @@ import {TestTemplateEditComponent} from "./pages/test-template-edit/test-templat
 import {QuestionsPoolTmplEditComponent} from "./pages/questions-pool-tmpl-edit/questions-pool-tmpl-edit.component";
 import {QuestionEditComponent} from "./pages/question-edit/question-edit.component";
 import {QuestionTmplEditComponent} from "./pages/question-tmpl-edit/question-tmpl-edit.component";
+import {UserStatisticComponent} from "./pages/user-main/components/user-statistic/user-statistic.component";
 
 
 const routes: Routes = [
@@ -57,6 +58,10 @@ const routes: Routes = [
             {
                 path: 'started-tests',
                 component: StartedTestsListComponent
+            },
+            {
+                path: 'user-statistic',
+                component: UserStatisticComponent
             },
         ]
     },

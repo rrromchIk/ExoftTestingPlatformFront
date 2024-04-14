@@ -11,6 +11,7 @@ export class UserMainComponent {
     navLinks = [
         { path: 'all-tests', label: 'All tests' },
         { path: 'started-tests', label: 'Started tests' },
+        { path: 'user-statistic', label: 'Statistic' },
     ];
     activeLink = this.navLinks[0];
 
@@ -21,7 +22,7 @@ export class UserMainComponent {
     onTabChangedEvent(matTabChangeEvent: MatTabChangeEvent) {
         this.activeLink = this.navLinks[matTabChangeEvent.index];
         const linkToNavigate = this.activeLink.path;
-        this.router.navigate([linkToNavigate], { relativeTo: this.activatedRoute });
+        this.router.navigate([linkToNavigate], {relativeTo: this.activatedRoute});
     }
 
     setActiveLink() {
