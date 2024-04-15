@@ -70,7 +70,11 @@ export class UserStatisticComponent implements OnInit {
                     legend: {
                         display: true,
                         position: 'top',
-                        align: 'center'
+                        align: 'center',
+                        labels: {
+                            usePointStyle: true,
+                            pointStyle: 'rect'
+                        },
                     }
                 }
             }
