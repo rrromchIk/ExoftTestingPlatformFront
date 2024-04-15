@@ -1,7 +1,9 @@
 import {Component} from '@angular/core';
 import {MatTabChangeEvent} from "@angular/material/tabs";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
+import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 
+@UntilDestroy()
 @Component({
     selector: 'app-user-main',
     templateUrl: './user-main.component.html',
@@ -16,7 +18,12 @@ export class UserMainComponent {
     activeLink = this.navLinks[0];
 
     constructor(private router: Router, private activatedRoute: ActivatedRoute) {
-        this.setActiveLink()
+        this.router.events
+            .pipe(untilDestroyed(this))
+            .subscribe((event) => {
+                if(event instanceof NavigationEnd)
+                    this.setActiveLink()
+            });
     }
 
     onTabChangedEvent(matTabChangeEvent: MatTabChangeEvent) {
