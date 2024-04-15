@@ -17,7 +17,7 @@ export class StatisticApiService {
     }
 
     getTestStatistic(testId: string) {
-        return this.http.get<TestStatisticModel>(this.statisticEndpoint + `/users/${testId}`);
+        return this.http.get<TestStatisticModel>(this.statisticEndpoint + `/tests/${testId}`);
     }
 
     getUserPercentileRank(userId: string, testId: string) {
