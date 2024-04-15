@@ -30,6 +30,7 @@ import {QuestionsPoolEditModule} from "./pages/questions-pool-edit/questions-poo
 import {TestsListModule} from "./pages/tests-list/tests-list.module";
 import {UsersListModule} from "./pages/users-list/users-list.module";
 import {TestTemplatesListModule} from "./pages/test-templates-list/test-templates-list.module";
+import {TestStatisticModule} from "./pages/test-statistic/test-statistic.module";
 
 
 @NgModule({
@@ -64,7 +65,8 @@ import {TestTemplatesListModule} from "./pages/test-templates-list/test-template
         QuestionsPoolEditModule,
         TestsListModule,
         UsersListModule,
-        TestTemplatesListModule
+        TestTemplatesListModule,
+        TestStatisticModule
     ],
     providers: [
         {

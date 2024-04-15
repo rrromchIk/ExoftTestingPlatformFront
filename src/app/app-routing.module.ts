@@ -29,6 +29,7 @@ import {QuestionsPoolTmplEditComponent} from "./pages/questions-pool-tmpl-edit/q
 import {QuestionEditComponent} from "./pages/question-edit/question-edit.component";
 import {QuestionTmplEditComponent} from "./pages/question-tmpl-edit/question-tmpl-edit.component";
 import {UserStatisticComponent} from "./pages/user-main/components/user-statistic/user-statistic.component";
+import {TestStatisticComponent} from "./pages/test-statistic/test-statistic.component";
 
 
 const routes: Routes = [
@@ -141,6 +142,10 @@ const routes: Routes = [
                 component: TestEditComponent
             },
             {
+                path: 'tests/:id/statistic',
+                component: TestStatisticComponent
+            },
+            {
                 path: 'questions-pool/:id/edit',
                 canDeactivate: [CanDeactivateGuard],
                 component: QuestionsPoolEditComponent
@@ -174,7 +179,7 @@ const routes: Routes = [
                 path: 'question-template/:id/edit',
                 canDeactivate: [CanDeactivateGuard],
                 component: QuestionTmplEditComponent
-            }
+            },
         ]
     },
     {
