@@ -4,7 +4,7 @@ export interface TestStatisticModel {
     test: TestModel;
     totalAmountOfAttemptsTaken: number;
     amountOfCurrentGoingAttempts: number;
-    averageUsersTimeSpent: number;
-    averageUsersScore: number;
-    allUsersScores: number[];
+    averageUsersTimeSpentInMinutes: number;
+    averageUsersResult: number;
+    allUsersResults: number[];
 }
