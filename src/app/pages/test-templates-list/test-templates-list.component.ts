@@ -4,7 +4,6 @@ import {PagingSettings} from "../../core/interfaces/filters/paging-settings";
 import {TestTemplateModel} from "../../core/interfaces/test-template/test-template.model";
 import {SelectFilter} from "../../core/interfaces/filters/select-filter";
 import {SortCriteria} from "../../core/interfaces/filters/sort-criteria";
-import {Filters} from "../../core/interfaces/filters/filters";
 import {
     CREATION_DATE_SORT_CRITERIA,
     DIFFICULTY_FILTER,
@@ -17,13 +16,14 @@ import {ConfirmationDialogComponent} from "../../shared/components/dialog/confir
 import {TestTemplatesPageService} from "./test-templates.page.service";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 import {filter} from "rxjs";
+import {FiltersService} from "../../shared/services/filters.service";
 
 @UntilDestroy()
 @Component({
     selector: 'app-test-templates-list',
     templateUrl: './test-templates-list.component.html',
     styleUrl: './test-templates-list.component.scss',
-    providers: [TestTemplatesPageService]
+    providers: [TestTemplatesPageService, FiltersService]
 })
 export class TestTemplatesListComponent implements OnInit {
     testTemplates: TestTemplateModel[] = [];
@@ -37,16 +37,14 @@ export class TestTemplatesListComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.loadTestTemplates();
-    }
-
-    loadTestTemplates() {
-        this.testTmplsPageService.pagedListOfTestTemplates$.pipe(untilDestroyed(this)).subscribe(
-            response => {
-                this.pagedList = response;
-                this.testTemplates = response?.items || [];
-            }
-        )
+        this.testTmplsPageService.pagedListOfTestTemplates$
+            .pipe(untilDestroyed(this))
+            .subscribe(
+                response => {
+                    this.pagedList = response;
+                    this.testTemplates = response?.items || [];
+                }
+            )
     }
 
     onDeleteTestTemplate(testTemplateId: string) {
@@ -69,9 +67,5 @@ export class TestTemplatesListComponent implements OnInit {
 
     onPageChangedEvent(pagingSetting: PagingSettings) {
         this.testTmplsPageService.updatePagingSetting(pagingSetting);
-    }
-
-    onFilterChange(filters: Filters) {
-        this.testTmplsPageService.updateFilters(filters);
     }
 }

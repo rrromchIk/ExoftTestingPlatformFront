@@ -1,24 +1,25 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {SortCriteria} from "../../../core/interfaces/filters/sort-criteria";
 import {SelectFilter} from "../../../core/interfaces/filters/select-filter";
-import {Filters} from "../../../core/interfaces/filters/filters";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {debounceTime, distinctUntilChanged} from "rxjs";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
+import {FiltersService} from "../../services/filters.service";
 
 @UntilDestroy()
 @Component({
-  selector: 'app-filters',
-  templateUrl: './filters.component.html',
-  styleUrl: './filters.component.scss'
+    selector: 'app-filters',
+    templateUrl: './filters.component.html',
+    styleUrl: './filters.component.scss'
 })
 export class FiltersComponent {
     @Input() sortCriterias: SortCriteria[] = [];
     @Input() selectFilters: SelectFilter[] = [];
-    @Output() filterChange: EventEmitter<Filters> = new EventEmitter<Filters>();
     filterForm: FormGroup;
 
-    constructor(private fb: FormBuilder) {}
+    constructor(private fb: FormBuilder,
+                private filtersService: FiltersService) {
+    }
 
     ngOnInit() {
         this.initializeForm();
@@ -52,7 +53,7 @@ export class FiltersComponent {
         const previousSortColumn = this.filterForm.get('sortColumn')?.value;
         let newSortDirection: string;
 
-        if(sortColumn === previousSortColumn) {
+        if (sortColumn === previousSortColumn) {
             const currentDirection = this.filterForm.get('sortOrder')?.value;
             switch (currentDirection) {
                 case 'asc':
@@ -68,7 +69,7 @@ export class FiltersComponent {
             newSortDirection = 'asc';
         }
 
-        if(newSortDirection === '') {
+        if (newSortDirection === '') {
             this.filterForm.patchValue({
                 sortColumn: '',
                 sortOrder: newSortDirection
@@ -92,7 +93,7 @@ export class FiltersComponent {
         const sortOrder = this.filterForm.get('sortOrder')?.value;
         const searchTerm = this.filterForm.get('searchTerm')?.value;
 
-        this.filterChange.emit({ sortColumn, sortOrder, selectFilters, searchTerm });
+        this.filtersService.updateFilters({sortColumn, sortOrder, selectFilters, searchTerm});
     }
 
     clearSearchInput() {

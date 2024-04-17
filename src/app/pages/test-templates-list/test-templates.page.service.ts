@@ -7,17 +7,11 @@ import {PagedListModel} from "../../core/interfaces/paged-list.model";
 import {TestTmplApiService} from "../../core/services/api/test-tmpl.api.service";
 import {TestTemplateModel} from "../../core/interfaces/test-template/test-template.model";
 import {AlertService} from "../../shared/services/alert.service";
+import {FiltersService} from "../../shared/services/filters.service";
 
 @UntilDestroy()
 @Injectable()
 export class TestTemplatesPageService {
-    private filtersSubject: BehaviorSubject<Filters> = new BehaviorSubject<Filters>({
-        searchTerm: '',
-        sortColumn: '',
-        sortOrder: '',
-        selectFilters: {},
-    });
-
     private pagingSettingSubject: BehaviorSubject<PagingSettings> = new BehaviorSubject<PagingSettings>({
         page: 1,
         pageSize: 3
@@ -25,29 +19,17 @@ export class TestTemplatesPageService {
 
     private pagedListSubject: BehaviorSubject<PagedListModel<TestTemplateModel> | null> =
         new BehaviorSubject<PagedListModel<TestTemplateModel> | null>(null);
-    public filters$: Observable<Filters> = this.filtersSubject.asObservable();
     public pagingSetting$: Observable<PagingSettings> = this.pagingSettingSubject.asObservable();
     public pagedListOfTestTemplates$: Observable<PagedListModel<TestTemplateModel> | null> = this.pagedListSubject.asObservable();
 
     constructor(private testTemplateApiService: TestTmplApiService,
-                private alertService: AlertService) {
+                private alertService: AlertService,
+                private filtersService: FiltersService) {
         this.onFiltersAndPagingChange();
-    }
-
-    updateFilters(newFilters: Filters) {
-        this.resetPagingSettings();
-        this.filtersSubject.next(newFilters);
     }
 
     updatePagingSetting(newPagingSettings: PagingSettings) {
         this.pagingSettingSubject.next(newPagingSettings);
-    }
-
-    private resetPagingSettings() {
-        this.pagingSettingSubject.next({
-            page: 1,
-            pageSize: 3
-        });
     }
 
     deleteTestTemplate(testTmplId: string) {
@@ -75,7 +57,7 @@ export class TestTemplatesPageService {
     }
 
     private onFiltersAndPagingChange() {
-        combineLatest([this.filters$, this.pagingSetting$])
+        combineLatest([this.filtersService.filters$, this.pagingSetting$])
             .pipe(
                 untilDestroyed(this),
                 switchMap(([filters, pagedListSettings]) => {
@@ -93,7 +75,7 @@ export class TestTemplatesPageService {
                 tap((pagedList) => {
                     this.pagedListSubject.next(pagedList);
                 }),
-                catchError((error) => {
+                catchError(() => {
                     this.pagedListSubject.next(null);
                     return of(null);
                 })
@@ -101,7 +83,7 @@ export class TestTemplatesPageService {
     }
 
     private refreshTests() {
-        const currentFilters = this.filtersSubject.value;
+        const currentFilters = this.filtersService.getCurrentFilters();
         const currentPagedListSettings = this.pagingSettingSubject.value;
         this.loadTestTemplatesList(currentFilters, currentPagedListSettings).pipe(untilDestroyed(this)).subscribe();
     }

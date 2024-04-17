@@ -4,7 +4,6 @@ import {PagedListModel} from "../../core/interfaces/paged-list.model";
 import {PagingSettings} from "../../core/interfaces/filters/paging-settings";
 import {SelectFilter} from "../../core/interfaces/filters/select-filter";
 import {SortCriteria} from "../../core/interfaces/filters/sort-criteria";
-import {Filters} from "../../core/interfaces/filters/filters";
 import {
     CREATION_DATE_SORT_CRITERIA,
     DIFFICULTY_FILTER,
@@ -19,14 +18,14 @@ import {MatDialog} from "@angular/material/dialog";
 import {TestsPageService} from "./tests.page.service";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 import {filter} from "rxjs";
-import {TestTmplApiService} from "../../core/services/api/test-tmpl.api.service";
+import {FiltersService} from "../../shared/services/filters.service";
 
 @UntilDestroy()
 @Component({
     selector: 'app-tests-list',
     templateUrl: './tests-list.component.html',
     styleUrls: ['./tests-list.component.scss'],
-    providers: [TestsPageService]
+    providers: [TestsPageService, FiltersService]
 })
 export class TestsListComponent implements OnInit {
     tests: TestModel[] = [];
@@ -38,22 +37,21 @@ export class TestsListComponent implements OnInit {
 
 
     constructor(private testsPageService: TestsPageService,
-                private testTmplApiService: TestTmplApiService,
-                private dialog: MatDialog) {}
-
-    ngOnInit() {
-        this.loadTests();
-        this.testTmplApiService.getAllTestTmplsShortInfo()
-            .subscribe((data) => {
-                data.forEach(t => {
-                    this.templatesFilter.options.push({
-                        optionLabel: t.name, optionValue: t.id
-                    })
-                })
-            })
+                private dialog: MatDialog) {
     }
 
-    loadTests() {
+    ngOnInit() {
+        this.testsPageService.loadTestTmplsShortInfo()
+            .pipe(untilDestroyed(this))
+            .subscribe(
+                (data) => {
+                    data.forEach(t => {
+                        this.templatesFilter.options.push({
+                            optionLabel: t.name, optionValue: t.id
+                        })
+                    })
+                });
+
         this.testsPageService.pagedListOfTests$.pipe(untilDestroyed(this)).subscribe(
             response => {
                 this.pagedList = response;
@@ -86,9 +84,5 @@ export class TestsListComponent implements OnInit {
 
     onPageChangedEvent(pagingSetting: PagingSettings) {
         this.testsPageService.updatePagingSetting(pagingSetting);
-    }
-
-    onFilterChange(filters: Filters) {
-        this.testsPageService.updateFilters(filters);
     }
 }

@@ -1,8 +1,7 @@
 <div class="items-list">
     <app-filters
         [selectFilters]="selectFilters"
-        [sortCriterias]="sortCriterias"
-        (filterChange)="onFilterChange($event)">
+        [sortCriterias]="sortCriterias">
     </app-filters>
 
     <div *ngFor="let test of startedTests">

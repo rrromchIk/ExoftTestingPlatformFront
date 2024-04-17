@@ -7,17 +7,12 @@ import {TestModel} from "../../core/interfaces/test/test.model";
 import {TestApiService} from "../../core/services/api/test.api.service";
 import {Injectable} from "@angular/core";
 import {AlertService} from "../../shared/services/alert.service";
+import {FiltersService} from "../../shared/services/filters.service";
+import {TestTmplApiService} from "../../core/services/api/test-tmpl.api.service";
 
 @UntilDestroy()
 @Injectable()
 export class TestsPageService {
-    private filtersSubject: BehaviorSubject<Filters> = new BehaviorSubject<Filters>({
-        searchTerm: '',
-        sortColumn: '',
-        sortOrder: '',
-        selectFilters: {},
-    });
-
     private pagingSettingSubject: BehaviorSubject<PagingSettings> = new BehaviorSubject<PagingSettings>({
         page: 1,
         pageSize: 3
@@ -26,29 +21,18 @@ export class TestsPageService {
     private pagedListSubject: BehaviorSubject<PagedListModel<TestModel> | null> =
         new BehaviorSubject<PagedListModel<TestModel> | null>(null);
 
-    public filters$: Observable<Filters> = this.filtersSubject.asObservable();
     public pagingSetting$: Observable<PagingSettings> = this.pagingSettingSubject.asObservable();
     public pagedListOfTests$: Observable<PagedListModel<TestModel> | null> = this.pagedListSubject.asObservable();
 
     constructor(private testApiService: TestApiService,
-                private alertService: AlertService) {
+                private alertService: AlertService,
+                private filtersService: FiltersService,
+                private testTmplApiService: TestTmplApiService,) {
         this.onFiltersAndPagingChange();
-    }
-
-    updateFilters(newFilters: Filters) {
-        this.resetPagingSettings();
-        this.filtersSubject.next(newFilters);
     }
 
     updatePagingSetting(newPagingSettings: PagingSettings) {
         this.pagingSettingSubject.next(newPagingSettings);
-    }
-
-    private resetPagingSettings() {
-        this.pagingSettingSubject.next({
-            page: 1,
-            pageSize: 3
-        });
     }
 
     updatePublishedStatus(test: TestModel) {
@@ -88,8 +72,12 @@ export class TestsPageService {
             });
     }
 
+    loadTestTmplsShortInfo() {
+        return this.testTmplApiService.getAllTestTmplsShortInfo();
+    }
+
     private onFiltersAndPagingChange() {
-        combineLatest([this.filters$, this.pagingSetting$])
+        combineLatest([this.filtersService.filters$, this.pagingSetting$])
             .pipe(
                 untilDestroyed(this),
                 switchMap(([filters, pagedListSettings]) => {
@@ -107,7 +95,7 @@ export class TestsPageService {
                 tap((pagedList) => {
                     this.pagedListSubject.next(pagedList);
                 }),
-                catchError((error) => {
+                catchError(() => {
                     this.pagedListSubject.next(null);
                     return of(null);
                 })
@@ -115,7 +103,7 @@ export class TestsPageService {
     }
 
     private refreshTests() {
-        const currentFilters = this.filtersSubject.value;
+        const currentFilters = this.filtersService.getCurrentFilters();
         const currentPagedListSettings = this.pagingSettingSubject.value;
         this.loadTestsList(currentFilters, currentPagedListSettings).pipe(untilDestroyed(this)).subscribe();
     }

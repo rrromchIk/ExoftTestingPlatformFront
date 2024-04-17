@@ -4,7 +4,6 @@ import {PagingSettings} from "../../../../core/interfaces/filters/paging-setting
 import {StartedTestModel} from "../../../../core/interfaces/user-test/started-test.model";
 import {SelectFilter} from "../../../../core/interfaces/filters/select-filter";
 import {SortCriteria} from "../../../../core/interfaces/filters/sort-criteria";
-import {Filters} from "../../../../core/interfaces/filters/filters";
 import {
     DIFFICULTY_FILTER,
     SCORE_SORT_CRITERIA, STARTING_TIME_SORT_CRITERIA,
@@ -12,13 +11,14 @@ import {
 } from "../../../../core/constants/filters.constants";
 import {StartedTestsPageService} from "../../services/started-tests.page.service";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
+import {FiltersService} from "../../../../shared/services/filters.service";
 
 @UntilDestroy()
 @Component({
     selector: 'app-started-tests-list',
     templateUrl: './started-tests-list.component.html',
     styleUrl: './started-tests-list.component.scss',
-    providers: [StartedTestsPageService]
+    providers: [StartedTestsPageService, FiltersService]
 })
 export class StartedTestsListComponent implements OnInit {
     startedTests: StartedTestModel[] = [];
@@ -27,26 +27,21 @@ export class StartedTestsListComponent implements OnInit {
     selectFilters: SelectFilter[] = Array.of(DIFFICULTY_FILTER, USER_TEST_STATUS_FILTER);
     sortCriterias: SortCriteria[] = Array.of(STARTING_TIME_SORT_CRITERIA, SCORE_SORT_CRITERIA);
 
-    constructor(private startedTestsService: StartedTestsPageService) {}
-
-    ngOnInit(): void {
-        this.loadStartedTests();
+    constructor(private startedTestsService: StartedTestsPageService) {
     }
 
-    loadStartedTests(): void {
-        this.startedTestsService.pagedListOfStartedTests$.pipe(untilDestroyed(this)).subscribe(
-            response => {
-                this.pagedList = response;
-                this.startedTests = response?.items || [];
-            }
-        )
+    ngOnInit() {
+        this.startedTestsService.pagedListOfStartedTests$
+            .pipe(untilDestroyed(this))
+            .subscribe(
+                response => {
+                    this.pagedList = response;
+                    this.startedTests = response?.items || [];
+                }
+            )
     }
 
     onPageChangedEvent(pagingSetting: PagingSettings) {
         this.startedTestsService.updatePagingSetting(pagingSetting);
-    }
-
-    onFilterChange(filters: Filters) {
-        this.startedTestsService.updateFilters(filters);
     }
 }

@@ -7,17 +7,11 @@ import {PagedListModel} from "../../core/interfaces/paged-list.model";
 import {UserApiService} from "../../core/services/api/user.api.service";
 import {UserModel} from "../../core/interfaces/user/user.model";
 import {AlertService} from "../../shared/services/alert.service";
+import {FiltersService} from "../../shared/services/filters.service";
 
 @UntilDestroy()
 @Injectable()
 export class UsersPageService {
-    private filtersSubject: BehaviorSubject<Filters> = new BehaviorSubject<Filters>({
-        searchTerm: '',
-        sortColumn: '',
-        sortOrder: '',
-        selectFilters: {},
-    });
-
     private pagingSettingSubject: BehaviorSubject<PagingSettings> = new BehaviorSubject<PagingSettings>({
         page: 1,
         pageSize: 3
@@ -26,29 +20,22 @@ export class UsersPageService {
     private pagedListSubject: BehaviorSubject<PagedListModel<UserModel> | null> =
         new BehaviorSubject<PagedListModel<UserModel> | null>(null);
 
-    public filters$: Observable<Filters> = this.filtersSubject.asObservable();
     public pagingSetting$: Observable<PagingSettings> = this.pagingSettingSubject.asObservable();
     public pagedListOfUsers$: Observable<PagedListModel<UserModel> | null> = this.pagedListSubject.asObservable();
 
     constructor(private userApiService: UserApiService,
-                private alertService: AlertService) {
+                private alertService: AlertService,
+                private filtersService: FiltersService) {
         this.onFiltersAndPagingChange();
     }
 
-    updateFilters(newFilters: Filters) {
-        this.resetPagingSettings();
-        this.filtersSubject.next(newFilters);
-    }
+    // updateFilters(newFilters: Filters) {
+    //     this.resetPagingSettings();
+    //     this.filtersSubject.next(newFilters);
+    // }
 
     updatePagingSetting(newPagingSettings: PagingSettings) {
         this.pagingSettingSubject.next(newPagingSettings);
-    }
-
-    private resetPagingSettings() {
-        this.pagingSettingSubject.next({
-            page: 1,
-            pageSize: 3
-        });
     }
 
     deleteUser(testId: string) {
@@ -75,7 +62,7 @@ export class UsersPageService {
     }
 
     private onFiltersAndPagingChange() {
-        combineLatest([this.filters$, this.pagingSetting$])
+        combineLatest([this.filtersService.filters$, this.pagingSetting$])
             .pipe(
                 untilDestroyed(this),
                 switchMap(([filters, pagedListSettings]) => {
@@ -93,7 +80,7 @@ export class UsersPageService {
                 tap((pagedList) => {
                     this.pagedListSubject.next(pagedList);
                 }),
-                catchError((error) => {
+                catchError(() => {
                     this.pagedListSubject.next(null);
                     return of(null);
                 })
@@ -101,7 +88,7 @@ export class UsersPageService {
     }
 
     private refreshUsers() {
-        const currentFilters = this.filtersSubject.value;
+        const currentFilters = this.filtersService.getCurrentFilters();
         const currentPagedListSettings = this.pagingSettingSubject.value;
         this.loadTestsList(currentFilters, currentPagedListSettings).pipe(untilDestroyed(this)).subscribe();
     }

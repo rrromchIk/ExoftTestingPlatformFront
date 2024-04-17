@@ -4,7 +4,6 @@ import {UserModel} from "../../core/interfaces/user/user.model";
 import {PagingSettings} from "../../core/interfaces/filters/paging-settings";
 import {SelectFilter} from "../../core/interfaces/filters/select-filter";
 import {SortCriteria} from "../../core/interfaces/filters/sort-criteria";
-import {Filters} from "../../core/interfaces/filters/filters";
 import {
     CREATION_DATE_SORT_CRITERIA,
     EMAIL_CONFIRMED_FILTER, MODIFICATION_DATE_SORT_CRITERIA,
@@ -16,13 +15,14 @@ import {MatDialog} from "@angular/material/dialog";
 import {UsersPageService} from "./users.page.service";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 import {filter} from "rxjs";
+import {FiltersService} from "../../shared/services/filters.service";
 
 @UntilDestroy()
 @Component({
     selector: 'app-users-list',
     templateUrl: './users-list.component.html',
     styleUrls: ['./users-list.component.scss'],
-    providers: [UsersPageService]
+    providers: [UsersPageService, FiltersService]
 })
 export class UsersListComponent {
     pagedListOfUsers: PagedListModel<UserModel> | null = null;
@@ -36,10 +36,6 @@ export class UsersListComponent {
     }
 
     ngOnInit() {
-        this.loadUsers();
-    }
-
-    loadUsers() {
         this.usersPageService.pagedListOfUsers$.pipe(untilDestroyed(this)).subscribe(
             response => {
                 this.pagedListOfUsers = response;
@@ -47,6 +43,7 @@ export class UsersListComponent {
             }
         )
     }
+
 
     onDeleteUser(userId: string) {
         const dialogData: DialogDataDto = {
@@ -68,9 +65,5 @@ export class UsersListComponent {
 
     onPageChangedEvent(pagingSetting: PagingSettings) {
         this.usersPageService.updatePagingSetting(pagingSetting);
-    }
-
-    onFilterChange(filters: Filters) {
-        this.usersPageService.updateFilters(filters);
     }
 }
