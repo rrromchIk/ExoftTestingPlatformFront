@@ -5,6 +5,7 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 import {debounceTime, distinctUntilChanged} from "rxjs";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 import {FiltersService} from "../../services/filters.service";
+import {PagingService} from "../../services/paging.service";
 
 @UntilDestroy()
 @Component({
@@ -18,7 +19,8 @@ export class FiltersComponent {
     filterForm: FormGroup;
 
     constructor(private fb: FormBuilder,
-                private filtersService: FiltersService) {
+                private filtersService: FiltersService,
+                private pagingService: PagingService) {
     }
 
     ngOnInit() {
@@ -93,6 +95,7 @@ export class FiltersComponent {
         const sortOrder = this.filterForm.get('sortOrder')?.value;
         const searchTerm = this.filterForm.get('searchTerm')?.value;
 
+        this.pagingService.resetPagingSettings();
         this.filtersService.updateFilters({sortColumn, sortOrder, selectFilters, searchTerm});
     }
 

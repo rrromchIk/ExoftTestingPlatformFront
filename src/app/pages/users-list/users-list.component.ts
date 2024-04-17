@@ -15,13 +15,14 @@ import {UsersPageService} from "./users.page.service";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 import {filter} from "rxjs";
 import {FiltersService} from "../../shared/services/filters.service";
+import {PagingService} from "../../shared/services/paging.service";
 
 @UntilDestroy()
 @Component({
     selector: 'app-users-list',
     templateUrl: './users-list.component.html',
     styleUrls: ['./users-list.component.scss'],
-    providers: [UsersPageService, FiltersService]
+    providers: [UsersPageService, FiltersService, PagingService]
 })
 export class UsersListComponent {
     pagedListOfUsers: PagedListModel<UserModel> | null = null;

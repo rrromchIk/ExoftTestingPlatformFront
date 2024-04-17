@@ -1,6 +1,10 @@
 import {BehaviorSubject, Observable} from "rxjs";
 import {PagingSettings} from "../../core/interfaces/filters/paging-settings";
+import {Injectable} from "@angular/core";
 
+@Injectable({
+    providedIn: "root"
+})
 export class PagingService {
     private pagingSettingSubject: BehaviorSubject<PagingSettings> = new BehaviorSubject<PagingSettings>({
         page: 1,
@@ -17,7 +21,10 @@ export class PagingService {
         return this.pagingSettingSubject.getValue();
     }
 
-    resetPagingSettings(pagingSettings: PagingSettings) {
-        this.updatePagingSettings(pagingSettings);
+    resetPagingSettings() {
+        this.updatePagingSettings({
+            page: 1,
+            pageSize: 3
+        });
     }
 }
