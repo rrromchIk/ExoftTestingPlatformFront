@@ -1,11 +1,10 @@
 import {Component} from '@angular/core';
 import {Chart, registerables} from "chart.js";
 import {StatisticApiService} from "../../core/services/api/statistic.api.service";
-import {AuthService} from "../../shared/services/auth.service";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 import {ActivatedRoute} from "@angular/router";
 import {TestStatisticModel} from "../../core/interfaces/statistic/test-statistic.model";
-import {catchError, throwError} from "rxjs";
+import {ALL_TEST_RESULTS_DISTRIBUTION_CHART_COLORS} from "../../core/constants/charts.colors.constants";
 
 @UntilDestroy()
 @Component({
@@ -53,15 +52,13 @@ export class TestStatisticComponent {
             }
         }
 
-        const colors = ['#0066CC', '#4CB140', '#009596', '#F4C145', '#EC7A08'];
-
         const data = {
             labels: ['0-20%', '20-40%', '40-60%', '60-80%', '80-100%'],
             datasets: [{
                 barPercentage: 0.6,
                 label: 'Amount of tests',
                 data: counts,
-                backgroundColor: colors,
+                backgroundColor: ALL_TEST_RESULTS_DISTRIBUTION_CHART_COLORS,
                 borderWidth: 1,
             }],
         };

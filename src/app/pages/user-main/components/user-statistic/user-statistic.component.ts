@@ -4,6 +4,7 @@ import {AuthService} from "../../../../shared/services/auth.service";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 import {Chart, registerables} from "chart.js";
 import {UserStatisticModel} from "../../../../core/interfaces/statistic/user-statistic.model";
+import {USER_TEST_RESULTS_CHART_COLORS} from "../../../../core/constants/charts.colors.constants";
 
 
 @UntilDestroy()
@@ -56,11 +57,7 @@ export class UserStatisticComponent implements OnInit {
                 datasets: [{
                     label: 'Amount of tests',
                     data: counts,
-                    backgroundColor: [
-                        '#4CAF50',
-                        '#FFA500',
-                        '#3F51B5'
-                    ],
+                    backgroundColor: USER_TEST_RESULTS_CHART_COLORS,
                     hoverOffset: 4,
                 }]
             },
