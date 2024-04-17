@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {PagedListModel} from "../../core/interfaces/paged-list.model";
-import {PagingSettings} from "../../core/interfaces/filters/paging-settings";
 import {TestTemplateModel} from "../../core/interfaces/test-template/test-template.model";
 import {SelectFilter} from "../../core/interfaces/filters/select-filter";
 import {SortCriteria} from "../../core/interfaces/filters/sort-criteria";
@@ -17,13 +16,14 @@ import {TestTemplatesPageService} from "./test-templates.page.service";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 import {filter} from "rxjs";
 import {FiltersService} from "../../shared/services/filters.service";
+import {PagingService} from "../../shared/services/paging.service";
 
 @UntilDestroy()
 @Component({
     selector: 'app-test-templates-list',
     templateUrl: './test-templates-list.component.html',
     styleUrl: './test-templates-list.component.scss',
-    providers: [TestTemplatesPageService, FiltersService]
+    providers: [TestTemplatesPageService, FiltersService, PagingService]
 })
 export class TestTemplatesListComponent implements OnInit {
     testTemplates: TestTemplateModel[] = [];
@@ -63,9 +63,5 @@ export class TestTemplatesListComponent implements OnInit {
                 filter((result) => result),
             )
             .subscribe(() => this.testTmplsPageService.deleteTestTemplate(testTemplateId));
-    }
-
-    onPageChangedEvent(pagingSetting: PagingSettings) {
-        this.testTmplsPageService.updatePagingSetting(pagingSetting);
     }
 }

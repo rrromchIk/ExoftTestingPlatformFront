@@ -8,28 +8,20 @@ import {TestTmplApiService} from "../../core/services/api/test-tmpl.api.service"
 import {TestTemplateModel} from "../../core/interfaces/test-template/test-template.model";
 import {AlertService} from "../../shared/services/alert.service";
 import {FiltersService} from "../../shared/services/filters.service";
+import {PagingService} from "../../shared/services/paging.service";
 
 @UntilDestroy()
 @Injectable()
 export class TestTemplatesPageService {
-    private pagingSettingSubject: BehaviorSubject<PagingSettings> = new BehaviorSubject<PagingSettings>({
-        page: 1,
-        pageSize: 3
-    });
-
     private pagedListSubject: BehaviorSubject<PagedListModel<TestTemplateModel> | null> =
         new BehaviorSubject<PagedListModel<TestTemplateModel> | null>(null);
-    public pagingSetting$: Observable<PagingSettings> = this.pagingSettingSubject.asObservable();
     public pagedListOfTestTemplates$: Observable<PagedListModel<TestTemplateModel> | null> = this.pagedListSubject.asObservable();
 
     constructor(private testTemplateApiService: TestTmplApiService,
                 private alertService: AlertService,
-                private filtersService: FiltersService) {
+                private filtersService: FiltersService,
+                private pagingService: PagingService) {
         this.onFiltersAndPagingChange();
-    }
-
-    updatePagingSetting(newPagingSettings: PagingSettings) {
-        this.pagingSettingSubject.next(newPagingSettings);
     }
 
     deleteTestTemplate(testTmplId: string) {
@@ -44,7 +36,7 @@ export class TestTemplatesPageService {
                     ) {
                         const pageListSettings = this.pagedListSubject.value;
                         pageListSettings.page -= 1;
-                        this.pagingSettingSubject.next(pageListSettings);
+                        this.pagingService.updatePagingSettings(pageListSettings);
                     }
 
                     this.alertService.success('Test template deleted successfully');
@@ -57,7 +49,7 @@ export class TestTemplatesPageService {
     }
 
     private onFiltersAndPagingChange() {
-        combineLatest([this.filtersService.filters$, this.pagingSetting$])
+        combineLatest([this.filtersService.filters$, this.pagingService.pagingSetting$])
             .pipe(
                 untilDestroyed(this),
                 switchMap(([filters, pagedListSettings]) => {
@@ -84,7 +76,7 @@ export class TestTemplatesPageService {
 
     private refreshTests() {
         const currentFilters = this.filtersService.getCurrentFilters();
-        const currentPagedListSettings = this.pagingSettingSubject.value;
+        const currentPagedListSettings = this.pagingService.getCurrentPagingSettings();
         this.loadTestTemplatesList(currentFilters, currentPagedListSettings).pipe(untilDestroyed(this)).subscribe();
     }
 }

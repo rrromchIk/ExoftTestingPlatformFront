@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {PagedListModel} from "../../../../core/interfaces/paged-list.model";
-import {PagingSettings} from "../../../../core/interfaces/filters/paging-settings";
 import {StartedTestModel} from "../../../../core/interfaces/user-test/started-test.model";
 import {SelectFilter} from "../../../../core/interfaces/filters/select-filter";
 import {SortCriteria} from "../../../../core/interfaces/filters/sort-criteria";
@@ -12,13 +11,14 @@ import {
 import {StartedTestsPageService} from "../../services/started-tests.page.service";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 import {FiltersService} from "../../../../shared/services/filters.service";
+import {PagingService} from "../../../../shared/services/paging.service";
 
 @UntilDestroy()
 @Component({
     selector: 'app-started-tests-list',
     templateUrl: './started-tests-list.component.html',
     styleUrl: './started-tests-list.component.scss',
-    providers: [StartedTestsPageService, FiltersService]
+    providers: [StartedTestsPageService, FiltersService, PagingService]
 })
 export class StartedTestsListComponent implements OnInit {
     startedTests: StartedTestModel[] = [];
@@ -39,9 +39,5 @@ export class StartedTestsListComponent implements OnInit {
                     this.startedTests = response?.items || [];
                 }
             )
-    }
-
-    onPageChangedEvent(pagingSetting: PagingSettings) {
-        this.startedTestsService.updatePagingSetting(pagingSetting);
     }
 }

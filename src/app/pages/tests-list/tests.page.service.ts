@@ -9,31 +9,24 @@ import {Injectable} from "@angular/core";
 import {AlertService} from "../../shared/services/alert.service";
 import {FiltersService} from "../../shared/services/filters.service";
 import {TestTmplApiService} from "../../core/services/api/test-tmpl.api.service";
+import {PagingService} from "../../shared/services/paging.service";
 
 @UntilDestroy()
 @Injectable()
 export class TestsPageService {
-    private pagingSettingSubject: BehaviorSubject<PagingSettings> = new BehaviorSubject<PagingSettings>({
-        page: 1,
-        pageSize: 3
-    });
-
     private pagedListSubject: BehaviorSubject<PagedListModel<TestModel> | null> =
         new BehaviorSubject<PagedListModel<TestModel> | null>(null);
-
-    public pagingSetting$: Observable<PagingSettings> = this.pagingSettingSubject.asObservable();
     public pagedListOfTests$: Observable<PagedListModel<TestModel> | null> = this.pagedListSubject.asObservable();
 
     constructor(private testApiService: TestApiService,
                 private alertService: AlertService,
                 private filtersService: FiltersService,
-                private testTmplApiService: TestTmplApiService,) {
+                private testTmplApiService: TestTmplApiService,
+                private pagingService: PagingService) {
         this.onFiltersAndPagingChange();
     }
 
-    updatePagingSetting(newPagingSettings: PagingSettings) {
-        this.pagingSettingSubject.next(newPagingSettings);
-    }
+
 
     updatePublishedStatus(test: TestModel) {
         this.testApiService.updatePublishedStatus(test.id, !test.isPublished)
@@ -61,7 +54,7 @@ export class TestsPageService {
                     ) {
                         const pageListSettings = this.pagedListSubject.value;
                         pageListSettings.page -= 1;
-                        this.pagingSettingSubject.next(pageListSettings);
+                        this.pagingService.updatePagingSettings(pageListSettings);
                     }
                     this.alertService.success('Test deleted successfully');
                     this.refreshTests();
@@ -77,7 +70,7 @@ export class TestsPageService {
     }
 
     private onFiltersAndPagingChange() {
-        combineLatest([this.filtersService.filters$, this.pagingSetting$])
+        combineLatest([this.filtersService.filters$, this.pagingService.pagingSetting$])
             .pipe(
                 untilDestroyed(this),
                 switchMap(([filters, pagedListSettings]) => {
@@ -104,7 +97,7 @@ export class TestsPageService {
 
     private refreshTests() {
         const currentFilters = this.filtersService.getCurrentFilters();
-        const currentPagedListSettings = this.pagingSettingSubject.value;
+        const currentPagedListSettings = this.pagingService.getCurrentPagingSettings();
         this.loadTestsList(currentFilters, currentPagedListSettings).pipe(untilDestroyed(this)).subscribe();
     }
 }

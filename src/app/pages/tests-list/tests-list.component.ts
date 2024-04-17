@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {TestModel} from "../../core/interfaces/test/test.model";
 import {PagedListModel} from "../../core/interfaces/paged-list.model";
-import {PagingSettings} from "../../core/interfaces/filters/paging-settings";
 import {SelectFilter} from "../../core/interfaces/filters/select-filter";
 import {SortCriteria} from "../../core/interfaces/filters/sort-criteria";
 import {
@@ -19,13 +18,14 @@ import {TestsPageService} from "./tests.page.service";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 import {filter} from "rxjs";
 import {FiltersService} from "../../shared/services/filters.service";
+import {PagingService} from "../../shared/services/paging.service";
 
 @UntilDestroy()
 @Component({
     selector: 'app-tests-list',
     templateUrl: './tests-list.component.html',
     styleUrls: ['./tests-list.component.scss'],
-    providers: [TestsPageService, FiltersService]
+    providers: [TestsPageService, FiltersService, PagingService]
 })
 export class TestsListComponent implements OnInit {
     tests: TestModel[] = [];
@@ -34,7 +34,6 @@ export class TestsListComponent implements OnInit {
     templatesFilter: SelectFilter = FROM_TEMPLATE_FILTER;
     selectFilters: SelectFilter[] = Array.of(DIFFICULTY_FILTER, PUBLISHED_FILTER, this.templatesFilter);
     sortCriterias: SortCriteria[] = Array.of(DURATION_SORT_CRITERIA, CREATION_DATE_SORT_CRITERIA, MODIFICATION_DATE_SORT_CRITERIA);
-
 
     constructor(private testsPageService: TestsPageService,
                 private dialog: MatDialog) {
@@ -80,9 +79,5 @@ export class TestsListComponent implements OnInit {
 
     onChangePublishedStatus(test: TestModel) {
         this.testsPageService.updatePublishedStatus(test);
-    }
-
-    onPageChangedEvent(pagingSetting: PagingSettings) {
-        this.testsPageService.updatePagingSetting(pagingSetting);
     }
 }

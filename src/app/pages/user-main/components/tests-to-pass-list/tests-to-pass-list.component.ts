@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {PagedListModel} from "../../../../core/interfaces/paged-list.model";
-import {PagingSettings} from "../../../../core/interfaces/filters/paging-settings";
 import {TestToPassModel} from "../../../../core/interfaces/user-test/test-to-pass.model";
 import {SelectFilter} from "../../../../core/interfaces/filters/select-filter";
 import {SortCriteria} from "../../../../core/interfaces/filters/sort-criteria";
@@ -12,13 +11,14 @@ import {
 import {TestsToPassPageService} from "../../services/tests-to-pass.page.service";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 import {FiltersService} from "../../../../shared/services/filters.service";
+import {PagingService} from "../../../../shared/services/paging.service";
 
 @UntilDestroy()
 @Component({
     selector: 'app-tests-to-pass-list',
     templateUrl: './tests-to-pass-list.component.html',
     styleUrl: './tests-to-pass-list.component.scss',
-    providers: [TestsToPassPageService, FiltersService]
+    providers: [TestsToPassPageService, FiltersService, PagingService]
 })
 export class TestsToPassListComponent implements OnInit {
     tests: TestToPassModel[] = [];
@@ -39,9 +39,5 @@ export class TestsToPassListComponent implements OnInit {
                 this.tests = response?.items || [];
             }
         )
-    }
-
-    onPageChangedEvent(pagingSetting: PagingSettings) {
-        this.testsToPassService.updatePagingSetting(pagingSetting);
     }
 }

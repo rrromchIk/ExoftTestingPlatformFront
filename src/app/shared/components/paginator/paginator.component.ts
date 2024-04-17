@@ -1,6 +1,6 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {PageEvent} from "@angular/material/paginator";
-import {PagingSettings} from "../../../core/interfaces/filters/paging-settings";
+import {PagingService} from "../../services/paging.service";
 
 @Component({
     selector: 'app-paginator',
@@ -18,15 +18,15 @@ export class PaginatorComponent {
     @Input() showFirstLastButtons: boolean = true;
     @Input() disabled: boolean = false;
 
-
-    @Output() pageChangedEvent: EventEmitter<PagingSettings> = new EventEmitter<PagingSettings>();
+    constructor(private pagingService: PagingService) {
+    }
 
     handlePageEvent(e: PageEvent) {
         this.length = e.length;
         this.pageSize = e.pageSize;
         this.pageIndex = e.pageIndex;
 
-        this.pageChangedEvent.emit({
+        this.pagingService.updatePagingSettings({
             page: this.pageIndex + 1,
             pageSize: this.pageSize
         })

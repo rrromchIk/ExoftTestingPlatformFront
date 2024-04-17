@@ -15,33 +15,25 @@ import {UserTestApiService} from "../../../core/services/api/user-test.api.servi
 import {AuthService} from "../../../shared/services/auth.service";
 import {TestToPassModel} from "../../../core/interfaces/user-test/test-to-pass.model";
 import {FiltersService} from "../../../shared/services/filters.service";
+import {PagingService} from "../../../shared/services/paging.service";
 
 @UntilDestroy()
 @Injectable()
 export class TestsToPassPageService {
-    private pagingSettingSubject: BehaviorSubject<PagingSettings> = new BehaviorSubject<PagingSettings>({
-        page: 1,
-        pageSize: 3
-    });
-
     private pagedListSubject: BehaviorSubject<PagedListModel<TestToPassModel> | null> =
         new BehaviorSubject<PagedListModel<TestToPassModel> | null>(null);
 
-    public pagingSetting$: Observable<PagingSettings> = this.pagingSettingSubject.asObservable();
     public pagedListOfTestsToPass$: Observable<PagedListModel<TestToPassModel> | null> = this.pagedListSubject.asObservable();
 
     constructor(private userTestApiService: UserTestApiService,
                 private authService: AuthService,
-                private filtersService: FiltersService) {
+                private filtersService: FiltersService,
+                private pagingService: PagingService) {
         this.onFiltersAndPagingChange();
     }
 
-    updatePagingSetting(newPagingSettings: PagingSettings) {
-        this.pagingSettingSubject.next(newPagingSettings);
-    }
-
     private onFiltersAndPagingChange() {
-        combineLatest([this.filtersService.filters$, this.pagingSetting$])
+        combineLatest([this.filtersService.filters$, this.pagingService.pagingSetting$])
             .pipe(
                 untilDestroyed(this),
                 switchMap(([filters, pagedListSettings]) => {

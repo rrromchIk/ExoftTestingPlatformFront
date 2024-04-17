@@ -14,7 +14,5 @@
     <app-paginator *ngIf="pagedList != null"
                    [length]="pagedList.totalCount"
                    [pageIndex]="pagedList.page - 1"
-                   [pageSize]="pagedList.pageSize"
-                   (pageChangedEvent)="onPageChangedEvent($event)"
-    />
+                   [pageSize]="pagedList.pageSize"/>
 </div>

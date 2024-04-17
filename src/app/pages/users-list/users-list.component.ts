@@ -1,7 +1,6 @@
 import {Component} from '@angular/core';
 import {PagedListModel} from "../../core/interfaces/paged-list.model";
 import {UserModel} from "../../core/interfaces/user/user.model";
-import {PagingSettings} from "../../core/interfaces/filters/paging-settings";
 import {SelectFilter} from "../../core/interfaces/filters/select-filter";
 import {SortCriteria} from "../../core/interfaces/filters/sort-criteria";
 import {
@@ -44,7 +43,6 @@ export class UsersListComponent {
         )
     }
 
-
     onDeleteUser(userId: string) {
         const dialogData: DialogDataDto = {
             title: 'Confirm Action',
@@ -61,9 +59,5 @@ export class UsersListComponent {
                 filter((result) => result),
             )
             .subscribe(() => this.usersPageService.deleteUser(userId));
-    }
-
-    onPageChangedEvent(pagingSetting: PagingSettings) {
-        this.usersPageService.updatePagingSetting(pagingSetting);
     }
 }
