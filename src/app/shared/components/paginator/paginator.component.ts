@@ -11,7 +11,7 @@ export class PaginatorComponent {
     @Input() length: number = 50;
     @Input() pageSize: number = 10;
     @Input() pageIndex: number = 0;
-    @Input() pageSizeOptions: number[] = [1, 3, 5, 10];
+    @Input() pageSizeOptions: number[] = [1, 6, 18, 36];
 
     @Input() hidePageSize: boolean = false;
     @Input() showPageSizeOptions: boolean = true;

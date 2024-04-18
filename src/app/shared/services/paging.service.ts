@@ -8,7 +8,7 @@ import {Injectable} from "@angular/core";
 export class PagingService {
     private pagingSettingSubject: BehaviorSubject<PagingSettings> = new BehaviorSubject<PagingSettings>({
         page: 1,
-        pageSize: 3
+        pageSize: 6
     });
 
     public pagingSetting$: Observable<PagingSettings> = this.pagingSettingSubject.asObservable();
@@ -24,7 +24,7 @@ export class PagingService {
     resetPagingSettings() {
         this.updatePagingSettings({
             page: 1,
-            pageSize: 3
+            pageSize: 6
         });
     }
 }
