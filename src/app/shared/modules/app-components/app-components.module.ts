@@ -12,6 +12,7 @@ import {ConfirmationDialogComponent} from "../../components/dialog/confirmation-
 import {UserTestStatusPipe} from "../../pipes/user-test-status.pipe";
 import {LoaderComponent} from "../../components/loader/loader.component";
 import {RouterLink} from "@angular/router";
+import {ViewModeToggleComponent} from "../../components/view-mode-toggle/view-mode-toggle.component";
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import {RouterLink} from "@angular/router";
         FiltersComponent,
         ConfirmationDialogComponent,
         UserTestStatusPipe,
-        LoaderComponent
+        LoaderComponent,
+        ViewModeToggleComponent
     ],
     imports: [
         CommonModule,
@@ -40,7 +42,8 @@ import {RouterLink} from "@angular/router";
         DateTimeFormatPipe,
         FiltersComponent,
         UserTestStatusPipe,
-        LoaderComponent
+        LoaderComponent,
+        ViewModeToggleComponent
     ]
 })
 export class AppComponentsModule {

@@ -19,6 +19,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatSelectModule} from "@angular/material/select";
 import {MatRadioModule} from "@angular/material/radio";
 import {MatDialogModule} from "@angular/material/dialog";
+import {MatButtonToggleModule} from "@angular/material/button-toggle";
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import {MatDialogModule} from "@angular/material/dialog";
         MatCheckboxModule,
         MatSelectModule,
         MatRadioModule,
-        MatDialogModule
+        MatDialogModule,
+        MatButtonToggleModule
     ],
     providers: [
         provideAnimationsAsync(),
