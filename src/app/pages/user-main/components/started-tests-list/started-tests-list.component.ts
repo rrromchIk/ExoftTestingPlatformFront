@@ -12,6 +12,8 @@ import {StartedTestsPageService} from "../../services/started-tests.page.service
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 import {FiltersService} from "../../../../shared/services/filters.service";
 import {PagingService} from "../../../../shared/services/paging.service";
+import {Observable} from "rxjs";
+import {ViewModeService} from "../../../../shared/services/view-mode.service";
 
 @UntilDestroy()
 @Component({
@@ -27,7 +29,11 @@ export class StartedTestsListComponent implements OnInit {
     selectFilters: SelectFilter[] = Array.of(DIFFICULTY_FILTER, USER_TEST_STATUS_FILTER);
     sortCriterias: SortCriteria[] = Array.of(STARTING_TIME_SORT_CRITERIA, SCORE_SORT_CRITERIA);
 
-    constructor(private startedTestsService: StartedTestsPageService) {
+    viewMode$: Observable<string>;
+
+    constructor(private startedTestsService: StartedTestsPageService,
+                viewModeService: ViewModeService) {
+        this.viewMode$ = viewModeService.viewMode$;
     }
 
     ngOnInit() {
