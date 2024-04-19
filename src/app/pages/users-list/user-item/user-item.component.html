@@ -21,11 +21,19 @@
             <button *ngIf="canModifyUser()"
                 mat-raised-button color="warn" (click)="onDeleteUser(user)">Delete</button>
         </mat-card-actions>
+
         <div class="list-item-card-metadata">
-            <mat-card-subtitle>Created on: {{ user.createdTimestamp | dateTimeFormat }}</mat-card-subtitle>
-            <mat-card-subtitle *ngIf="user.modifiedTimestamp">
-                Last Modified: {{ user.modifiedTimestamp | dateTimeFormat }}
+            <mat-card-subtitle *ngIf="user.modifiedTimestamp; else createdOn">
+                Last Modified:<br *ngIf="(viewMode$ | async) == 'grid'">
+                {{ user.modifiedTimestamp | dateTimeFormat }}
             </mat-card-subtitle>
+
+            <ng-template #createdOn>
+                <mat-card-subtitle >
+                    Created on: <br *ngIf="(viewMode$ | async) == 'grid'">
+                    {{ user.createdTimestamp | dateTimeFormat }}
+                </mat-card-subtitle>
+            </ng-template>
         </div>
     </mat-card-footer>
 </mat-card>

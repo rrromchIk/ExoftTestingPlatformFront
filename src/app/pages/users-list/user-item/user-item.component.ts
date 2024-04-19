@@ -2,6 +2,8 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {UserModel} from "../../../core/interfaces/user/user.model";
 import {AuthService} from "../../../shared/services/auth.service";
 import {UserRole} from "../../../core/interfaces/user/user-role.enum";
+import {ViewModeService} from "../../../shared/services/view-mode.service";
+import {Observable} from "rxjs";
 
 @Component({
     selector: 'app-user-item',
@@ -13,8 +15,11 @@ export class UserItemComponent {
     @Output() deleteUserEvent: EventEmitter<string> = new EventEmitter<string>();
     currentUser: UserModel | null;
 
-    constructor(authService: AuthService) {
+    viewMode$: Observable<string>
+    constructor(authService: AuthService,
+                viewModeService: ViewModeService) {
         this.currentUser = authService.getCurrentUser();
+        this.viewMode$ = viewModeService.viewMode$;
     }
 
     onDeleteUser(user: UserModel) {

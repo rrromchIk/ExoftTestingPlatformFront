@@ -16,10 +16,17 @@
             <button mat-raised-button color="warn" (click)="onDeleteTestTemplate(testTemplate)">Delete</button>
         </mat-card-actions>
         <div class="list-item-card-metadata">
-            <mat-card-subtitle>Created
-                on: {{ testTemplate.createdTimestamp | dateTimeFormat }}</mat-card-subtitle>
-            <mat-card-subtitle *ngIf="testTemplate.modifiedTimestamp">Last
-                Modified: {{ testTemplate.modifiedTimestamp | dateTimeFormat }}</mat-card-subtitle>
+            <mat-card-subtitle *ngIf="testTemplate.modifiedTimestamp else createdOn">
+                Last Modified: <br *ngIf="(viewMode$ | async) == 'grid'">
+                {{ testTemplate.modifiedTimestamp | dateTimeFormat }}
+            </mat-card-subtitle>
+
+            <ng-template #createdOn>
+            <mat-card-subtitle>
+                Created on: <br *ngIf="(viewMode$ | async) == 'grid'">
+                {{ testTemplate.createdTimestamp | dateTimeFormat }}
+            </mat-card-subtitle>
+            </ng-template>
         </div>
     </mat-card-footer>
 </mat-card>

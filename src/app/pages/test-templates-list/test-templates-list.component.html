@@ -1,15 +1,31 @@
 <div class="items-list">
+    <div class="list-header">
+        <app-filters class="filters"
+                     [selectFilters]="selectFilters"
+                     [sortCriterias]="sortCriterias">
+        </app-filters>
 
-    <app-filters
-        [selectFilters]="selectFilters"
-        [sortCriterias]="sortCriterias">
-    </app-filters>
-
-    <div *ngFor="let testTmpl of testTemplates">
-        <app-test-template-item
-            [testTemplate]="testTmpl"
-            (deleteTestTemplateEvent)="onDeleteTestTemplate($event)"/>
+        <app-view-mode-toggle class="toggle-buttons"/>
     </div>
+
+    <div *ngIf="(viewMode$ | async) == 'list'; else gridViewMode">
+        <div *ngFor="let testTmpl of testTemplates">
+            <app-test-template-item
+                    [testTemplate]="testTmpl"
+                    (deleteTestTemplateEvent)="onDeleteTestTemplate($event)"/>
+        </div>
+    </div>
+
+    <ng-template #gridViewMode>
+        <div class="items-list-grid-container">
+            <div *ngFor="let testTmpl of testTemplates">
+                <app-test-template-item
+                        [testTemplate]="testTmpl"
+                        (deleteTestTemplateEvent)="onDeleteTestTemplate($event)"/>
+            </div>
+        </div>
+
+    </ng-template>
 
     <app-paginator *ngIf="pagedList != null"
                    [length]="pagedList.totalCount"

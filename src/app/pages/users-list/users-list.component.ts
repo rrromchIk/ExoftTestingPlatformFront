@@ -13,9 +13,10 @@ import {ConfirmationDialogComponent} from "../../shared/components/dialog/confir
 import {MatDialog} from "@angular/material/dialog";
 import {UsersPageService} from "./users.page.service";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
-import {filter} from "rxjs";
+import {filter, Observable} from "rxjs";
 import {FiltersService} from "../../shared/services/filters.service";
 import {PagingService} from "../../shared/services/paging.service";
+import {ViewModeService} from "../../shared/services/view-mode.service";
 
 @UntilDestroy()
 @Component({
@@ -31,8 +32,12 @@ export class UsersListComponent {
     selectFilters: SelectFilter[] = Array.of(USER_ROLE_FILTER, EMAIL_CONFIRMED_FILTER);
     sortCriterias: SortCriteria[] = Array.of(CREATION_DATE_SORT_CRITERIA, MODIFICATION_DATE_SORT_CRITERIA);
 
+    viewMode$: Observable<string>;
+
     constructor(private usersPageService: UsersPageService,
-                private dialog: MatDialog) {
+                private dialog: MatDialog,
+                viewModeService: ViewModeService) {
+        this.viewMode$ = viewModeService.viewMode$;
     }
 
     ngOnInit() {
