@@ -26,8 +26,8 @@
         </mat-card-actions>
 
         <div class="list-item-card-metadata">
-            <mat-card-subtitle>Created
-                on: {{ testToPass.createdTimestamp | dateTimeFormat }}</mat-card-subtitle>
+            <mat-card-subtitle>Created on: <br *ngIf="(viewMode$ | async) == 'grid'">
+                {{ testToPass.createdTimestamp | dateTimeFormat }}</mat-card-subtitle>
         </div>
     </mat-card-footer>
 </mat-card>
