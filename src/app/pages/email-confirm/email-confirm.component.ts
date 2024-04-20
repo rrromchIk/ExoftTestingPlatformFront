@@ -49,6 +49,7 @@ export class EmailConfirmComponent implements OnInit {
                             }
                         })
                 } else {
+                    this.confirmationSuccess = false;
                     this.alertService.error('Invalid link')
                 }
             });
