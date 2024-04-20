@@ -9,7 +9,7 @@
 
         <button *ngIf="test.templateId"
                 mat-raised-button
-                class="orange-button"
+                class="tertiary-button"
                 [routerLink]="['/admin', 'test-templates', test.templateId, 'edit']">
             <mat-icon>bookmark</mat-icon>
             From template
@@ -32,13 +32,13 @@
                 Edit
             </button>
             <button mat-raised-button color="warn" (click)="onDeleteTest(test)">Delete</button>
-            <button *ngIf="!test.isPublished; else published" mat-raised-button class="green-button"
+            <button *ngIf="!test.isPublished; else published" mat-raised-button class="secondary-button"
                     (click)="onUpdatePublishedStatus(test)">
                 Publish
                 <mat-icon>public</mat-icon>
             </button>
             <ng-template #published>
-                <button mat-raised-button class="green-button"
+                <button mat-raised-button class="secondary-button"
                         (click)="onUpdatePublishedStatus(test)">
                     Hide
                     <mat-icon>public</mat-icon>

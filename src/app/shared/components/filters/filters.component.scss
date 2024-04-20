@@ -1,4 +1,5 @@
 @use '@angular/material' as mat;
+@import "../../../../variables";
 
 .filters-container {
     margin-bottom: 10px;
@@ -28,7 +29,7 @@
 
 
 .sort-bar {
-    background-color: #F4F4F4 !important;
+    background-color: $secondary-white !important;
 
     .sort-bar-content {
         padding: 5px 10px;

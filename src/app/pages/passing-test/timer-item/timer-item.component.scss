@@ -1,3 +1,5 @@
+@import "../../../../variables";
+
 .timer-container {
     display: flex;
     font-size: 18px;
@@ -8,6 +10,6 @@
 }
 
 .timer-warn {
-    color: red;
-    border-color: red;
+    color: $warn;
+    border-color: $warn;
 }

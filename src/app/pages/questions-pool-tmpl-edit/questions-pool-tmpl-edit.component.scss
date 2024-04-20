@@ -1,4 +1,5 @@
 @use '@angular/material' as mat;
+@import "../../../variables";
 
 .content-container {
     padding: 0 0 40px 0;
@@ -52,7 +53,7 @@
 
     .question-card {
         max-width: max-content;
-        background-color: #F4F4F4 !important;
+        background-color: $secondary-white !important;
         margin-bottom: 15px;
 
         .question-card-content {
@@ -83,7 +84,7 @@
 
             .answers-card {
                 margin-top: 10px;
-                background-color: #FFFFFF !important;
+                background-color: $primary-white !important;
 
                 .answer-card-content {
                     display: flex;

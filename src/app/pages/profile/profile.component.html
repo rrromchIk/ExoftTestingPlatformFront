@@ -51,7 +51,7 @@
                         <mat-icon *ngIf="user && user.emailConfirmed" matSuffix>verified_user</mat-icon>
                     </mat-form-field>
 
-                    <button *ngIf="user && !user.emailConfirmed" mat-button class="green-button"
+                    <button *ngIf="user && !user.emailConfirmed" mat-button class="secondary-button"
                             (click)="onVerifyEmailButtonClicked()">
                         Verify email
                     </button>

@@ -1,3 +1,5 @@
+@import "../../../../variables";
+
 .spacer {
     flex: 1 1 auto;
 }
@@ -19,11 +21,11 @@
 }
 
 .app-logo-link {
-    color: white;
+    color: $primary-white;
     text-decoration: none;
     cursor: pointer;
 
     &:hover {
-        color: white;
+        color: $primary-white;
     }
 }

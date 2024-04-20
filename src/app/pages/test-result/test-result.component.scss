@@ -1,4 +1,5 @@
 @use '../../../../node_modules/@angular/material/index' as mat;
+@import "../../../variables";
 
 .page-container {
     padding: 50px 20px 0 20px;
@@ -50,15 +51,15 @@
 
 
         .answered-wrong {
-            background-color: red;
+            background-color: $question-wrong;
         }
 
         .answered-correct {
-            background-color: green;
+            background-color: $question-correct;
         }
 
         .answered-partially-correct {
-            background-color: orange;
+            background-color: $question-partially-correct;
         }
     }
 }
@@ -70,7 +71,7 @@
     font-size: 16px;
     width: max-content;
     height: max-content;
-    white-space: nowrap; /* Prevent text wrapping */
+    white-space: nowrap;
 
     p {
         &:last-child {
@@ -134,11 +135,7 @@
         flex-direction: row;
         justify-content: start;
         align-items: center;
-        background-color: #F4F4F4 !important;
+        background-color: $secondary-white !important;
         padding: 10px;
-
-        .correct-answers-container {
-
-        }
     }
 }

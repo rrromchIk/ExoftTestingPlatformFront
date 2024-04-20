@@ -1,4 +1,5 @@
 @use '../../../../node_modules/@angular/material/index' as mat;
+@import "../../../variables";
 
 .content-container {
     padding: 0;
@@ -57,7 +58,7 @@
 
     .nested-card {
         max-width: max-content;
-        background-color: #F4F4F4 !important;
+        background-color: $secondary-white !important;
         margin-bottom: 15px;
 
         .form-card-field {
@@ -77,6 +78,10 @@
 
         .button-icon {
             margin-top: auto;
+        }
+
+        &:hover {
+            background-color: $tertiary-white !important;
         }
     }
 

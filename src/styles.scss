@@ -1,17 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
 @use '@angular/material' as mat;
+@import "variables.scss";
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-.green-button {
-    background-color: #4CAF50 !important;
-    color: white !important;
+.secondary-button {
+    background-color: $secondary !important;
+    color: $primary-white !important;
 }
 
-.orange-button {
-    background-color: orange !important;
-    color: white !important;
+.tertiary-button {
+    background-color: $accent !important;
+    color: $primary-white !important;
 }
 
 .items-list {
@@ -35,17 +36,18 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
         gap: 20px;
+
+        .list-item-card {
+            margin-bottom: 0;
+        }
     }
 }
 
 
-
-
 .list-item-card {
-    border: 1px solid #ccc;
     padding: 10px 10px 10px 20px;
     margin-bottom: 20px;
-    //opacity: 94%;
+    height: max-content;
 
     &:hover {
         transform: scale(1.01);
@@ -160,16 +162,44 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 
 .link {
-    color: #007bff;
+    color: $link-default;
     text-decoration: none;
     cursor: pointer;
 
     &:hover {
         text-decoration: underline;
-        color: #0056b3;
+        color: $link-hover;
     }
 }
 
 .back-button-container {
     margin-bottom: 20px;
+}
+
+.error-page-container {
+    padding: 10% 1rem;
+
+    .error-page-content {
+        max-width: 400px;
+        margin: 0 auto;
+        text-align: center;
+        color: $error-font-color;
+
+        h1 {
+            font-size: 100px;
+            font-weight: 500;
+            margin-bottom: 40px;
+        }
+
+        h2 {
+            font-size: 24px;
+            font-weight: 500;
+            margin-bottom: 0;
+        }
+
+        h3 {
+            font-size: 14px;
+            font-weight: 200;
+        }
+    }
 }

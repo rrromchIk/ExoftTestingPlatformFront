@@ -1,4 +1,5 @@
 @use '@angular/material' as mat;
+@import "../../../variables";
 
 .content-container {
     padding: 0 0 40px 0;
@@ -78,7 +79,7 @@
 
     .nested-card {
         max-width: max-content;
-        background-color: #F4F4F4 !important;
+        background-color: $secondary-white !important;
         margin-bottom: 15px;
 
         .form-card-field {

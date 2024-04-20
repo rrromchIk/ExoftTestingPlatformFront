@@ -1,4 +1,5 @@
 @use '../../../../node_modules/@angular/material/index' as mat;
+@import "../../../variables";
 
 .page-container {
     padding: 50px 20px 0 20px;
@@ -45,7 +46,7 @@
         }
 
         .answered {
-            background-color: #6A727D;
+            background-color: $question-answered;
         }
 
         .active {
@@ -56,7 +57,7 @@
     .link {
         display: inline-block;
         margin: 5px;
-        color: #1D75C5;
+        color: $link-dark;
     }
 }
 
