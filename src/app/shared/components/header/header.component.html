@@ -1,0 +1,31 @@
+<mat-toolbar color="primary">
+    <span><a class="app-logo-link" routerLink="/user-main">Testing platform</a></span>
+    <span class="spacer"></span>
+
+    <div class="header-actions">
+        <button *ngIf="currentUser != null" mat-raised-button (click)="logOut()">
+            Logout
+            <mat-icon iconPositionEnd>exit_to_app</mat-icon>
+        </button>
+        <button *ngIf="currentUser == null" mat-raised-button [routerLink]="['/login']">
+            Login
+        </button>
+        <button *ngIf="currentUser == null" mat-stroked-button [routerLink]="['/signup']">
+            Sign up
+        </button>
+    </div>
+
+    <img *ngIf="!showDefaultProfilePicture && showProfilePicture"
+         [src]="profilePictureLink"
+         class="current-user-image"
+         (error)="showDefaultProfilePicture = true"
+         alt="userAvatar"
+         [routerLink]="['/profile']"/>
+
+    <img *ngIf="showDefaultProfilePicture && showProfilePicture"
+         src="./assets/images/default-avatar.png"
+         class="current-user-image"
+         alt="userAvatar"
+         [routerLink]="['/profile']"/>
+
+</mat-toolbar>

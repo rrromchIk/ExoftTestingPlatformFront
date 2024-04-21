@@ -1,0 +1,212 @@
+<div class="content-container">
+    <div class="back-button-container">
+        <button mat-stroked-button backButton>
+            <mat-icon>arrow_back</mat-icon>
+            Back
+        </button>
+    </div>
+    <mat-card class="form-card">
+        <mat-card-header class="form-card-header">
+            <mat-card-title class="form-card-tittle">Edit test</mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+            <form [formGroup]="editTestForm" (ngSubmit)="updateTest()">
+                <mat-form-field class="form-card-field field-bottom-margin">
+                    <mat-label>Test name</mat-label>
+                    <input matInput placeholder="Test name" formControlName="testName">
+
+                    <mat-error *ngIf="getFormControl('testName')?.hasError('maxlength') &&
+                                !getFormControl('testName')?.hasError('required')">
+                        Can not exceed <strong>{{MAX_TEST_NAME_LENGTH}} characters</strong>
+                    </mat-error>
+
+                    <mat-error *ngIf="getFormControl('testName')?.hasError('required')">
+                        Test name <strong>required</strong>
+                    </mat-error>
+
+                    <mat-error *ngIf="getFormControl('testName')?.hasError('conflict') &&
+                                !getFormControl('testName')?.hasError('required')">
+                        Test name is already taken.
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="form-card-field field-bottom-margin">
+                    <mat-label>Subject</mat-label>
+                    <input matInput placeholder="Subject" formControlName="subject">
+
+                    <mat-error *ngIf="getFormControl('subject')?.hasError('maxlength') &&
+                                !getFormControl('subject')?.hasError('required')">
+                        Can not exceed <strong>{{MAX_TEST_SUBJECT_LENGTH}} characters</strong>
+                    </mat-error>
+
+                    <mat-error *ngIf="getFormControl('subject')?.hasError('required')">
+                        Subject is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="form-card-field field-bottom-margin number-field">
+                    <mat-label>Duration</mat-label>
+                    <input matInput type="number" placeholder="Duration" formControlName="duration" class="number-input">
+                    <span class="number-field-suffix" matSuffix>min</span>
+
+                    <mat-error *ngIf="getFormControl('duration')?.hasError('min') &&
+                                !getFormControl('duration')?.hasError('required')">
+                        Must be <strong>greater than {{MIN_TEST_DURATION_VALUE}}</strong>
+                    </mat-error>
+
+                    <mat-error *ngIf="getFormControl('duration')?.hasError('required')">
+                        Duration is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="form-card-field field-bottom-margin">
+                    <mat-label>Difficulty</mat-label>
+                    <mat-select formControlName="difficulty">
+                        <mat-option *ngFor="let value of DIFFICULTY_VALUES"
+                                    [value]="value">
+                            {{value}}
+                        </mat-option>
+                    </mat-select>
+
+                    <mat-error *ngIf="getFormControl('difficulty')?.hasError('required')">
+                        Difficulty is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+
+                <div class="form-actions">
+                    <button mat-stroked-button
+                            color="warn"
+                            [disabled]="!testDataChanges"
+                            (click)="setTestDataToFormFields()"
+                            class="button-right-margin">
+                        Reset
+                    </button>
+
+                    <button mat-raised-button
+                            color="primary"
+                            type="submit"
+                            [disabled]="!testDataChanges">
+                        Submit
+                    </button>
+
+                </div>
+            </form>
+
+            <div class="nested-container">
+                <h2>Questions pools:</h2>
+
+                <div class="existing-cards" *ngIf="test">
+                    <div *ngFor="let questionsPool of test.questionsPools">
+                        <mat-card class="nested-card">
+                            <mat-card-content class="nested-card-content">
+                                <mat-form-field class="form-card-field" >
+                                    <mat-label>Question pool name</mat-label>
+                                    <input matInput [value]="questionsPool.name" readonly>
+                                </mat-form-field>
+
+                                <mat-form-field class="form-card-field number-field">
+                                    <mat-label>Num of questions to generate</mat-label>
+                                    <input matInput type="text" [value]="questionsPool.numOfQuestionsToBeGenerated.toString()" readonly>
+
+                                </mat-form-field>
+
+                                <mat-form-field class="form-card-field">
+                                    <mat-label>Generation strategy</mat-label>
+                                    <input matInput type="text" [value]="questionsPool.generationStrategy" readonly>
+                                </mat-form-field>
+
+                                <button mat-icon-button
+                                        type="button"
+                                        [routerLink]="['/admin/questions-pool', questionsPool.id, 'edit']">
+                                    <mat-icon>edit</mat-icon>
+                                </button>
+                                <button *ngIf="test?.templateId == null"
+                                        mat-icon-button
+                                        color="warn"
+                                        class="delete-icon"
+                                        (click)="deleteQuestionsPool(questionsPool)">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+                </div>
+
+                <div class="new-cards">
+                    <form [formGroup]="questionsPoolFormGroup">
+                        <div formArrayName="questionPools">
+                            <div *ngFor="let control of questionPoolsFormArray.controls; let i = index" [formGroupName]="i">
+                                <mat-card class="nested-card">
+                                    <mat-card-content class="nested-card-content">
+                                        <mat-form-field class="form-card-field">
+                                            <mat-label>Question pool name</mat-label>
+                                            <input matInput placeholder="Question pool name" formControlName="questionPoolName">
+
+                                            <mat-error *ngIf="control.get('questionPoolName')?.hasError('maxlength') &&
+                                                            !control.get('questionPoolName')?.hasError('required')">
+                                                Can not exceed <strong>{{MAX_QUESTION_POOL_NAME_LENGTH}} characters</strong>
+                                            </mat-error>
+
+                                            <mat-error *ngIf="control.get('questionPoolName')?.hasError('required')">
+                                                Question pool name <strong>required</strong>
+                                            </mat-error>
+                                        </mat-form-field>
+
+                                        <mat-form-field class="form-card-field number-field">
+                                            <mat-label>Num of questions to generate</mat-label>
+                                            <input matInput type="number" placeholder="Num of Questions to generate"
+                                                   formControlName="numOfQuestionsToBeGenerated" class="number-input">
+                                            <mat-error *ngIf="control.get('numOfQuestionsToBeGenerated')?.hasError('min') &&
+                                                !control.get('numOfQuestionsToBeGenerated')?.hasError('required')">
+                                                Must be <strong>greater than {{MIN_NUMBER_OF_QUEST_TO_GENERATE}}</strong>
+                                            </mat-error>
+
+                                            <mat-error *ngIf="control.get('numOfQuestionsToBeGenerated')?.hasError('required')">
+                                                Field is <strong>required</strong>
+                                            </mat-error>
+                                        </mat-form-field>
+
+                                        <mat-form-field class="form-card-field">
+                                            <mat-label>Generation strategy</mat-label>
+                                            <mat-select formControlName="generationStrategy">
+                                                <mat-option *ngFor="let value of GENERATION_STRATEGIES_VALUES"
+                                                            [value]="value">
+                                                    {{value}}
+                                                </mat-option>
+                                            </mat-select>
+
+                                            <mat-error *ngIf="control.get('generationStrategy')?.hasError('required')">
+                                                Generation strategy is <strong>required</strong>
+                                            </mat-error>
+                                        </mat-form-field>
+
+                                        <button mat-icon-button class="button-icon" type="button" (click)="saveQuestionPool(i, control)">
+                                            <mat-icon>save</mat-icon>
+                                        </button>
+
+                                        <button mat-icon-button
+                                                color="warn"
+                                                class="button-icon"
+                                                type="button"
+                                                (click)="removeQuestionPoolFormGroup(i)">
+                                            <mat-icon>delete</mat-icon>
+                                        </button>
+                                    </mat-card-content>
+                                </mat-card>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <button *ngIf="test?.templateId == null"
+                        mat-stroked-button
+                        type="button"
+                        (click)="addQuestionPoolFormGroup()">
+                    Add question pool
+                    <mat-icon>add_circle</mat-icon>
+                </button>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>

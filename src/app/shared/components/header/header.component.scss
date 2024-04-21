@@ -1,0 +1,31 @@
+@import "../../../../variables";
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+.current-user-image {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: none;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.header-actions {
+    button:not(:last-child) {
+        margin-right: 5px;
+    }
+}
+
+.app-logo-link {
+    color: $primary-white;
+    text-decoration: none;
+    cursor: pointer;
+
+    &:hover {
+        color: $primary-white;
+    }
+}

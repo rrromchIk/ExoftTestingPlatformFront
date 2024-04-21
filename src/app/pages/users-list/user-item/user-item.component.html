@@ -1,0 +1,41 @@
+<mat-card class="list-item-card">
+    <mat-card-header class="list-item-card-header">
+        <mat-card-title>{{ user.email }}</mat-card-title>
+    </mat-card-header>
+
+    <mat-divider class="list-item-card-divider"></mat-divider>
+    <mat-card-content class="list-item-card-content">
+        <p><strong>First name:</strong> {{ user.firstName }}</p>
+        <p><strong>Last name:</strong> {{ user.lastName }}</p>
+        <p><strong>Role:</strong> {{ user.role }}</p>
+        <p><strong>Email confirmed:</strong> {{ user.emailConfirmed }}</p>
+    </mat-card-content>
+    <mat-card-footer class="list-item-card-footer">
+        <mat-card-actions class="list-item-card-actions">
+            <button *ngIf="canModifyUser()"
+                mat-raised-button
+                    color="primary"
+                    [routerLink]="[user.id, 'edit']">
+                Edit
+            </button>
+            <button *ngIf="canModifyUser()"
+                mat-raised-button color="warn" (click)="onDeleteUser(user)">Delete</button>
+        </mat-card-actions>
+
+        <div class="list-item-card-metadata">
+            <mat-card-subtitle *ngIf="user.modifiedTimestamp; else createdOn">
+                Last Modified:<br *ngIf="(viewMode$ | async) == 'grid'">
+                {{ user.modifiedTimestamp | dateTimeFormat }}
+            </mat-card-subtitle>
+
+            <ng-template #createdOn>
+                <mat-card-subtitle >
+                    Created on: <br *ngIf="(viewMode$ | async) == 'grid'">
+                    {{ user.createdTimestamp | dateTimeFormat }}
+                </mat-card-subtitle>
+            </ng-template>
+        </div>
+    </mat-card-footer>
+</mat-card>
+
+

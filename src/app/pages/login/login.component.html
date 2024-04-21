@@ -1,0 +1,46 @@
+<div class="page-content">
+    <mat-card class="form-card">
+        <mat-card-header class="form-card-header">
+            <mat-card-title class="form-card-tittle">Login</mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                <mat-form-field class="form-card-field full-width-field field-bottom-margin">
+                    <mat-label>Email</mat-label>
+                    <input matInput placeholder="example@gmail.com" formControlName="email">
+
+                    <mat-error *ngIf="getFormControl('email')?.hasError('email') &&
+                                !getFormControl('email')?.hasError('required')">
+                        Please enter a valid email address
+                    </mat-error>
+
+                    <mat-error *ngIf="getFormControl('email')?.hasError('required')">
+                        Email is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="form-card-field full-width-field field-bottom-margin">
+                    <mat-label>Password</mat-label>
+                    <input matInput [type]="hidePassword ? 'password' : 'text'" placeholder="Password" formControlName="password">
+
+                    <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'"
+                            [attr.aria-pressed]="hidePassword" type="button" >
+                        <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+
+                    <mat-error *ngIf="getFormControl('password')?.invalid">
+                        Password is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+
+                <button mat-raised-button color="primary" type="submit" class="full-width-button">Login</button>
+
+                <div class="form-card-hints">
+                    <p>Don't have an account? <a class="link" routerLink="/signup">Sign up</a></p>
+                    <p>Forgot your password? <a class="link" routerLink="/forgot-password">Reset</a></p>
+                </div>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>

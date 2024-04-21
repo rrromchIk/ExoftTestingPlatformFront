@@ -1,0 +1,43 @@
+@use '@angular/material' as mat;
+@import "../../../../variables";
+
+.filters-container {
+    margin-bottom: 10px;
+}
+
+.filters {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    margin-bottom: 10px;
+
+    .filters-field {
+        @include mat.all-component-densities(-1);
+
+        &:not(:last-child) {
+            width: 200px;
+            margin-right: 10px;
+        }
+    }
+}
+
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+
+.sort-bar {
+    background-color: $secondary-white !important;
+
+    .sort-bar-content {
+        padding: 5px 10px;
+    }
+
+    .sort-criteria {
+        color: black;
+        font-weight: 430;
+        margin: 0 10px 0 10px;
+    }
+}

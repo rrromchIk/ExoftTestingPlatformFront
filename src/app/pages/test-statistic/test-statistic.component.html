@@ -1,0 +1,38 @@
+<div class="page-container">
+    <div class="back-button-container">
+        <button mat-stroked-button backButton>
+            <mat-icon>arrow_back</mat-icon>
+            Back
+        </button>
+    </div>
+
+    <div class="statistics" *ngIf="testStatistic != null">
+        <div class="stat-card">
+            <h2>Total attempts taken</h2>
+            <p>{{ testStatistic.totalAmountOfAttemptsTaken }}</p>
+        </div>
+        <div class="stat-card">
+            <h2>Current going attempts</h2>
+            <p>{{ testStatistic.amountOfCurrentGoingAttempts }}</p>
+        </div>
+        <div class="stat-card">
+            <h2>Average users result</h2>
+            <p>{{ testStatistic.averageUsersResult }}%</p>
+        </div>
+        <div class="stat-card">
+            <h2>Average users time spent</h2>
+            <p>{{ testStatistic.averageUsersTimeSpentInMinutes.toFixed(2) }} min</p>
+        </div>
+    </div>
+
+    <div class="chart-container">
+        <h2>Tests results distribution</h2>
+        <canvas id="canvas">{{ chart }}</canvas>
+    </div>
+</div>
+
+
+
+
+
+

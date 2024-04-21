@@ -1,0 +1,104 @@
+<div class="page-container" *ngIf="testResult !== null">
+    <mat-card class="questions-nav-container">
+        <div class="questions-nav-items">
+            <div *ngFor="let question of testResult.questionsResults; let i = index"
+                 class="question-nav-item"
+                 [routerLink]="'/test-result'"
+                 [queryParams]="{id: testResult.testId}"
+                 [fragment]="'question' + (i + 1)">
+
+                <div class="question-nav-item-number">
+                    {{ i + 1 }}
+                </div>
+                <div class="question-nav-item-state"
+                     [ngClass]="{
+                            'answered-wrong': isQuestionWrongAnswered(question),
+                            'answered-correct': isQuestionCorrectAnswered(question),
+                            'answered-partially-correct': isQuestionPartiallyCorrectAnswered(question)
+                     }">
+                </div>
+            </div>
+        </div>
+    </mat-card>
+
+
+    <div class="questions-result-container">
+        <mat-card class="question-card" *ngFor="let questionResult of testResult.questionsResults; let i = index"
+                  id="question{{ i + 1 }}">
+            <mat-card-header class="question-card-header">
+                <mat-card-title>Question {{i + 1}}</mat-card-title>
+
+
+                <p>Score: {{questionResult.userScore}}/{{questionResult.maxScore}}</p>
+            </mat-card-header>
+
+            <mat-divider/>
+            <mat-card-content class="question-card-content">
+                <div class="question-text">
+                    <span>{{questionResult.questionText}}</span>
+                </div>
+
+                <div class="answers-container">
+                    <div *ngIf="!isMultipleChoice(questionResult)">
+                        <p>Choose one answer:</p>
+                        <div *ngFor="let answer of questionResult.answersResults; let i = index" class="answer-item">
+                            <mat-radio-group [name]="questionResult.id">
+                                <mat-radio-button color="primary"
+                                                  class="answer-field"
+                                                  (click)="$event.preventDefault()"
+                                                  [checked]="answer.isUserAnswerSelected"
+                                                  [value]="answer.answerText">
+                                    {{i + 1}}. {{ answer.answerText }}
+                                </mat-radio-button>
+                            </mat-radio-group>
+
+                            <img *ngIf="answer.isUserAnswerSelected && answer.isCorrect"
+                                 width="24" height="24" src="../../../assets/images/correct-mark.png">
+
+                            <img *ngIf="answer.isUserAnswerSelected && !answer.isCorrect"
+                                 width="16" height="16" src="../../../assets/images/wrong-mark.png">
+                        </div>
+                    </div>
+
+                    <div *ngIf="isMultipleChoice(questionResult)">
+                        <p>Choose correct answers:</p>
+
+                        <div *ngFor="let answer of questionResult.answersResults;" class="answer-item">
+                            <mat-checkbox color="primary"
+                                          class="answer-field"
+                                          (click)="$event.preventDefault()"
+                                          [checked]="answer.isUserAnswerSelected">
+                                {{i + 1}}. {{answer.answerText }}
+                            </mat-checkbox>
+
+                            <img *ngIf="answer.isUserAnswerSelected && answer.isCorrect"
+                                 width="24" height="24" src="../../../assets/images/correct-mark.png">
+
+                            <img *ngIf="answer.isUserAnswerSelected && !answer.isCorrect"
+                                 width="16" height="16" src="../../../assets/images/wrong-mark.png">
+                        </div>
+                    </div>
+                </div>
+            </mat-card-content>
+            <mat-card-footer>
+                <div class="question-card-footer">
+                    <div class="correct-answers-container">
+                        Correct answers: {{getQuestionCorrectAnswers(questionResult)}}
+                    </div>
+                </div>
+            </mat-card-footer>
+        </mat-card>
+    </div>
+
+    <div class="test-result-container">
+        <p><strong>Starting time:</strong> {{testResult.startingTime | dateTimeFormat}}</p>
+        <hr>
+        <p><strong>Ending time:</strong> {{testResult.endingTime | dateTimeFormat}}</p>
+        <hr>
+        <p><strong>Time spent:</strong> {{getTimeSpent()}}</p>
+        <hr>
+        <p><strong>Score:</strong> {{testResult.userScore}}/{{testResult.totalScore}} ({{getScoreInPercents()}}%)</p>
+        <hr>
+        <p><strong>Ranking:</strong> You scored better than {{(userPercentileRank | async)?.toFixed(0)}}% of users</p>
+    </div>
+</div>

@@ -1,0 +1,35 @@
+<div class="page-container">
+    <div class="statistics" *ngIf="userStatistic != null">
+        <div class="stat-card">
+            <h2>Started Tests</h2>
+            <p>{{ userStatistic.amountOfStartedTests }}</p>
+        </div>
+        <div class="stat-card">
+            <h2>Completed Tests</h2>
+            <p>{{ userStatistic.amountOfCompletedTests }}</p>
+        </div>
+        <div class="stat-card">
+            <h2>In Process Tests</h2>
+            <p>{{ userStatistic.amountOfInProcessTests }}</p>
+        </div>
+        <div class="stat-card">
+            <h2>Average Results</h2>
+            <p>{{ userStatistic.averageResult?.toFixed(2) }}%</p>
+        </div>
+        <div class="stat-card">
+            <h2>Total time spent on tests</h2>
+            <p>≈ {{ userStatistic.totalTimeSpentInMinutes }} min</p>
+        </div>
+    </div>
+
+    <div class="chart-container">
+        <h2>Tests results distribution</h2>
+        <canvas id="canvas" >{{ chart }}</canvas>
+    </div>
+</div>
+
+
+
+
+
+

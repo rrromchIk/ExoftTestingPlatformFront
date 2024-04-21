@@ -1,0 +1,150 @@
+<div class="content-container">
+    <div class="back-button-container">
+        <button mat-stroked-button backButton>
+            <mat-icon>arrow_back</mat-icon>
+            Back
+        </button>
+    </div>
+    <mat-card class="form-card">
+        <mat-card-header class="form-card-header">
+            <mat-card-title class="form-card-tittle">Edit question</mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+            <form [formGroup]="editQuestionForm" (ngSubmit)="updateQuestion()">
+                <div class="question-fields">
+                    <mat-form-field class="form-card-field field-bottom-margin text-area-field">
+                        <mat-label>Question text</mat-label>
+                        <textarea matInput
+                                  rows="3"
+                                  placeholder="Write question"
+                                  formControlName="questionText">
+                        </textarea>
+
+                        <mat-error *ngIf="getFormControl('questionText')?.hasError('maxlength') &&
+                                      !getFormControl('questionText')?.hasError('required')">
+                            Can not exceed <strong>{{MAX_QUESTION_TEXT_LENGTH}} characters</strong>
+                        </mat-error>
+
+                        <mat-error *ngIf="getFormControl('questionText')?.hasError('required') &&
+                                      getFormControl('questionText')?.touched">
+                            Question text is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="form-card-field field-bottom-margin number-field">
+                        <mat-label>Max score</mat-label>
+                        <input matInput
+                               class="number-input"
+                               type="number"
+                               placeholder="Max score"
+                               formControlName="maxScore">
+                        <mat-error *ngIf="getFormControl('maxScore')?.hasError('min') &&
+                                     !getFormControl('maxScore')?.hasError('required')">
+                            Must be <strong>greater than {{MIN_QUESTION_SCORE_VALUE}}</strong>
+                        </mat-error>
+
+                        <mat-error *ngIf="getFormControl('maxScore')?.hasError('required')">
+                            Field is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+
+                <div class="form-actions">
+                    <button mat-stroked-button
+                            color="warn"
+                            [disabled]="!questionDataChanges"
+                            (click)="setQuestionDataToFormFields()"
+                            class="button-right-margin">
+                        Reset
+                    </button>
+
+                    <button mat-raised-button
+                            color="primary"
+                            type="submit"
+                            [disabled]="!questionDataChanges">
+                        Submit
+                    </button>
+                </div>
+            </form>
+
+            <div class="nested-container">
+                <h2>Answers:</h2>
+
+                <div class="existing-cards" *ngIf="question">
+                    <mat-card class="nested-card" *ngFor="let answer of question.answers">
+                        <mat-card-content class="nested-card-content">
+                            <mat-form-field class="form-card-field answer-field">
+                                <mat-label>Answer text</mat-label>
+                                <input matInput [value]="answer.text" readonly>
+                            </mat-form-field>
+                            <mat-checkbox color="primary"
+                                          (click)="$event.preventDefault()"
+                                          [checked]="answer.isCorrect">
+                            </mat-checkbox>
+
+                            <button mat-icon-button
+                                    color="warn"
+                                    class="delete-icon"
+                                    (click)="deleteAnswer(answer)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </mat-card-content>
+                    </mat-card>
+
+                </div>
+
+                <div class="new-cards">
+                    <form [formGroup]="answersFormGroup">
+                        <div formArrayName="answers">
+                            <div *ngFor="let answer of answersFormArray.controls; let i = index"
+                                 [formGroupName]="i">
+                                <mat-card class="nested-card">
+                                    <mat-card-content class="nested-card-content">
+                                        <mat-form-field class="form-card-field answer-field">
+                                            <mat-label>Answer text</mat-label>
+                                            <textarea matInput rows="1"
+                                                      placeholder="Write answer"
+                                                      formControlName="answerText">
+                                            </textarea>
+
+                                            <mat-error *ngIf="answer.get('answerText')?.hasError('maxlength') &&
+                                                             !answer.get('answerText')?.hasError('required')">
+                                                Can not exceed <strong>{{MAX_ANSWER_TEXT_LENGTH}} characters</strong>
+                                            </mat-error>
+
+                                            <mat-error *ngIf="answer.get('answerText')?.hasError('required')">
+                                                Answer text is <strong>required</strong>
+                                            </mat-error>
+                                        </mat-form-field>
+
+                                        <mat-checkbox color="primary"
+                                                      formControlName="isCorrect">
+                                        </mat-checkbox>
+
+                                        <button mat-icon-button class="button-icon" type="submit"
+                                                (click)="saveAnswer(i, answer)">
+                                            <mat-icon>save</mat-icon>
+                                        </button>
+                                        <button mat-icon-button
+                                                color="warn"
+                                                type="button"
+                                                (click)="removeAnswerFormGroup(i)">
+                                            <mat-icon>delete</mat-icon>
+                                        </button>
+                                    </mat-card-content>
+                                </mat-card>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <button mat-stroked-button type="button" (click)="addAnswerFormGroup()">
+                    Add answer
+                    <mat-icon>add_circle</mat-icon>
+                </button>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>

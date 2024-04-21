@@ -1,0 +1,33 @@
+<mat-card class="list-item-card">
+    <mat-card-header class="list-item-card-header">
+        <mat-card-title>{{ testToPass.name }}</mat-card-title>
+    </mat-card-header>
+
+    <mat-divider class="list-item-card-divider"></mat-divider>
+    <mat-card-content class="list-item-card-content">
+        <p><strong>Subject:</strong> {{ testToPass.subject }}</p>
+        <p><strong>Difficulty:</strong> {{ testToPass.difficulty }}</p>
+        <p><strong>Duration:</strong> {{ testToPass.duration }} min</p>
+        <p><strong>Status:</strong> {{ testToPass.userTestStatus | userTestStatusFormatter}}</p>
+    </mat-card-content>
+
+    <mat-card-footer class="list-item-card-footer">
+        <mat-card-actions [ngSwitch]="testToPass.userTestStatus" class="list-item-card-actions">
+            <button *ngSwitchCase="UserTestStatus.NotStarted" mat-raised-button class="secondary-button"
+                    (click)="onPassTest(testToPass)">
+                Start
+            </button>
+            <button *ngSwitchCase="UserTestStatus.InProcess" mat-raised-button color="primary" (click)="onPassTest(testToPass)">
+                Continue
+            </button>
+            <button *ngSwitchCase="UserTestStatus.Completed" mat-raised-button disabled="true">
+                Completed
+            </button>
+        </mat-card-actions>
+
+        <div class="list-item-card-metadata">
+            <mat-card-subtitle>Created on: <br *ngIf="(viewMode$ | async) == 'grid'">
+                {{ testToPass.createdTimestamp | dateTimeFormat }}</mat-card-subtitle>
+        </div>
+    </mat-card-footer>
+</mat-card>

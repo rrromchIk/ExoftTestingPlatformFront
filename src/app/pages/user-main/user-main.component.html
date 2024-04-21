@@ -1,0 +1,11 @@
+<div class="page-content">
+    <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" animationDuration="0ms"
+                   [selectedIndex]="navLinks.indexOf(activeLink)"
+                    (selectedTabChange)="onTabChangedEvent($event)">
+        <mat-tab [label]="link.label"
+                 *ngFor="let link of navLinks">
+        </mat-tab>
+    </mat-tab-group>
+
+    <router-outlet></router-outlet>
+</div>
