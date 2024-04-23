@@ -14,14 +14,22 @@
         </p>
         <p>
             <strong>Result:</strong>
-            {{ (startedTest.userScore + '/' +startedTest.totalScore)| testCompletionFormatter: startedTest.userTestStatus}}
+            {{ (startedTest.userScore + '/' + startedTest.totalScore)| testCompletionFormatter: startedTest.userTestStatus}}
         </p>
     </mat-card-content>
 
-    <mat-card-footer *ngIf="startedTest.userTestStatus == 'Completed'">
+    <mat-card-footer >
         <div class="list-item-card-footer">
-            <mat-card-actions class="list-item-card-actions">
-                <button mat-raised-button color="primary"
+            <mat-card-actions [ngSwitch]="startedTest.userTestStatus" class="list-item-card-actions">
+                <button *ngSwitchCase="UserTestStatus.InProcess"
+                        mat-raised-button
+                        color="primary"
+                        (click)="onPassTest(startedTest.test)">
+                    Continue
+                </button>
+                <button *ngSwitchCase="UserTestStatus.Completed"
+                        mat-raised-button
+                        color="primary"
                         (click)="checkOutResult(startedTest)">
                     Check out results
                 </button>
