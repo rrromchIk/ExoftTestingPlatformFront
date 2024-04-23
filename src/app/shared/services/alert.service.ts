@@ -14,7 +14,6 @@ export class AlertService {
             if (event instanceof NavigationStart) {
                 if (this.keepAfterNavigationChange) {
 
-                    // only keep for many location changes
                     this.keepAfterNavigationChange = true;
                 } else {
                     if(this.currentSnackBar)
