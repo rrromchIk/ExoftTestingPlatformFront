@@ -100,7 +100,7 @@ export class ProfileComponent implements OnInit {
     }
 
     openChangePasswordDialog() {
-        this.dialog.open(ChangePasswordDialogComponent);
+        this.dialog.open(ChangePasswordDialogComponent, { disableClose: true });
     }
 
     onImageUploadedEvent(file: File) {

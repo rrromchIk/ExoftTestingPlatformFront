@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {MatDialogRef} from "@angular/material/dialog";
+import {Component, HostListener, OnInit} from '@angular/core';
+import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {ConfirmationDialogComponent} from "../../../shared/components/dialog/confirmation-dialog.component";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {PASSWORD_PATTERN} from "../../../core/constants/validation.constants";
@@ -8,6 +8,8 @@ import {ChangePasswordDto} from "../../../core/interfaces/auth/change-password.d
 import {AuthApiService} from "../../../core/services/api/auth.api.service";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 import {AlertService} from "../../../shared/services/alert.service";
+import {DialogDataDto} from "../../../core/interfaces/dialog/dialog-data.dto";
+import {filter} from "rxjs";
 
 @UntilDestroy()
 @Component({
@@ -23,7 +25,8 @@ export class ChangePasswordDialogComponent implements OnInit {
         public dialogRef: MatDialogRef<ConfirmationDialogComponent>,
         private fb: FormBuilder,
         private authApiService: AuthApiService,
-        private alertService: AlertService) {
+        private alertService: AlertService,
+        private dialog: MatDialog,) {
     }
 
     ngOnInit(): void {
@@ -36,7 +39,24 @@ export class ChangePasswordDialogComponent implements OnInit {
     }
 
     onCancelClick(): void {
-        this.dialogRef.close(false);
+        if(this.changePasswordForm.dirty) {
+            const dialogData: DialogDataDto = {
+                title: 'You have unsaved changes',
+                content: 'Are you sure you want to leave?'
+            };
+
+            this.dialog.open(ConfirmationDialogComponent, {
+                data: dialogData
+            })
+                .afterClosed()
+                .pipe(
+                    untilDestroyed(this),
+                    filter((result) => result),
+                )
+                .subscribe(() => this.dialogRef.close(false));
+        } else {
+            this.dialogRef.close(false)
+        }
     }
 
     getFormControl(name: string) {
@@ -54,7 +74,7 @@ export class ChangePasswordDialogComponent implements OnInit {
                 .pipe(untilDestroyed(this))
                 .subscribe({
                     next: () => {
-                        this.alertService.success('Password change successfully');
+                        this.alertService.success('Password changed successfully');
                         this.changePasswordForm.reset();
                     },
                     error: (err) => {
@@ -65,5 +85,16 @@ export class ChangePasswordDialogComponent implements OnInit {
             this.changePasswordForm.markAsDirty();
             this.changePasswordForm.updateValueAndValidity();
         }
+    }
+
+    @HostListener('window:beforeunload', ['$event'])
+    onBeforeUnload($event: BeforeUnloadEvent) {
+        if (this.changePasswordForm.dirty) {
+            $event.preventDefault();
+            $event.returnValue = '';
+            return false;
+        }
+
+        return true;
     }
 }
