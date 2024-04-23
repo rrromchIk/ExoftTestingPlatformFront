@@ -8,6 +8,8 @@ import {QuestionUpdateDto} from "../../core/interfaces/question/question-update.
 import {AnswerCreateDto} from "../../core/interfaces/answer/asnwer-create.dto";
 import {AnswerApiService} from "../../core/services/api/answer.api.service";
 import {AnswerModel} from "../../core/interfaces/answer/answer.model";
+import {QuestionTmplApiService} from "../../core/services/api/question-tmpl.api.service";
+import {QuestionTmplModel} from "../../core/interfaces/question-template/question-tmpl.model";
 
 @UntilDestroy()
 @Injectable()
@@ -15,9 +17,13 @@ export class QuestionEditPageService {
     private questionSubject: BehaviorSubject<QuestionModel | null> = new BehaviorSubject<QuestionModel | null>(null);
     public question$: Observable<QuestionModel | null> = this.questionSubject.asObservable();
 
+    private questionTmplSubject: BehaviorSubject<QuestionTmplModel | null> = new BehaviorSubject<QuestionTmplModel | null>(null);
+    public questionTmpl$: Observable<QuestionTmplModel | null> = this.questionTmplSubject.asObservable();
+
     constructor(private alertService: AlertService,
                 private questionApiService: QuestionApiService,
-                private answerApiService: AnswerApiService) {
+                private answerApiService: AnswerApiService,
+                private questionTmplApiService: QuestionTmplApiService) {
     }
 
     getQuestionById(questionId: string) {
@@ -97,5 +103,11 @@ export class QuestionEditPageService {
                     this.alertService.error("Unable to delete answer");
                 }
             })
+    }
+
+    getQuestionTmplById(questionTmplId: string) {
+        this.questionTmplApiService.getQuestionTmplById(questionTmplId)
+            .pipe(untilDestroyed(this))
+            .subscribe((data) => this.questionTmplSubject.next(data))
     }
 }
