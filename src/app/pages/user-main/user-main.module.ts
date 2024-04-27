@@ -7,10 +7,10 @@ import {AppComponentsModule} from "../../shared/modules/app-components/app-compo
 import { TestToPassItemComponent } from './components/tests-to-pass-list/test-to-pass-item/test-to-pass-item.component';
 import { StartedTestsListComponent } from './components/started-tests-list/started-tests-list.component';
 import { StartedTestItemComponent } from './components/started-tests-list/started-test-item/started-test-item.component';
-import {UserMainRoutingModule} from "./user-main-routing.module";
 import {ReactiveFormsModule} from "@angular/forms";
 import {TestCompletionPipe} from "./pipes/test-completion-status.pipe";
 import { UserStatisticComponent } from './components/user-statistic/user-statistic.component';
+import {RouterLink, RouterOutlet} from "@angular/router";
 
 @NgModule({
     declarations: [
@@ -24,7 +24,8 @@ import { UserStatisticComponent } from './components/user-statistic/user-statist
     ],
     imports: [
         CommonModule,
-        UserMainRoutingModule,
+        RouterLink,
+        RouterOutlet,
         AppMaterialModule,
         AppComponentsModule,
         ReactiveFormsModule,
