@@ -199,7 +199,8 @@ export class QuestionsPoolEditComponent implements CanDeactivateComponent {
                 control => {
                     return {
                         text: control.get('answerText')?.value,
-                        isCorrect: control.get('isCorrect')?.value
+                        isCorrect: control.get('isCorrect')?.value,
+                        templateId: control.get('templateId')?.value
                     };
                 });
 
@@ -265,7 +266,10 @@ export class QuestionsPoolEditComponent implements CanDeactivateComponent {
                                 isCorrect: [
                                     at.isCorrectRestriction,
                                     Validators.required
-                                ]
+                                ],
+                                templateId: [
+                                    at.id || null
+                                ],
                             })
                         )
                     )

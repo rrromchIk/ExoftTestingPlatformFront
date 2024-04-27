@@ -98,8 +98,7 @@
                                 <input matInput [value]="question.maxScore.toString()" class="number-input" readonly>
                             </mat-form-field>
 
-                            <button *ngIf="poolTemplate == null"
-                                    mat-icon-button
+                            <button mat-icon-button
                                     type="button"
                                     [routerLink]="['/admin', 'question', question.id, 'edit']">
                                 <mat-icon>edit</mat-icon>
@@ -117,7 +116,7 @@
                                 <mat-card-content class="answer-card-content">
                                     <mat-form-field class="answer-field">
                                         <mat-label>Answer text</mat-label>
-                                        <input matInput [value]="answer.text" readonly>
+                                        <textarea matInput rows="1" [value]="answer.text" readonly></textarea>
                                     </mat-form-field>
                                     <mat-checkbox color="primary"
                                                   (click)="$event.preventDefault()"

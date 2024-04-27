@@ -20,6 +20,7 @@ import {QuestionUpdateDto} from "../../core/interfaces/question/question-update.
 import {AnswerCreateDto} from "../../core/interfaces/answer/asnwer-create.dto";
 import {AnswerModel} from "../../core/interfaces/answer/answer.model";
 import {CanDeactivateComponent} from "../../core/guards/guards";
+import {QuestionTmplModel} from "../../core/interfaces/question-template/question-tmpl.model";
 
 @UntilDestroy()
 @Component({
@@ -35,6 +36,8 @@ export class QuestionEditComponent implements CanDeactivateComponent {
     question: QuestionModel
     editQuestionForm: FormGroup;
     questionDataChanges: boolean = false;
+
+    questionTemplate: QuestionTmplModel | null;
 
     answersFormGroup: FormGroup;
 
@@ -65,7 +68,11 @@ export class QuestionEditComponent implements CanDeactivateComponent {
                 next: (data) => {
                     if(data) {
                         this.question = data;
+                        if (data.templateId != null) {
+                            this.questionEditPageService.getQuestionTmplById(data.templateId);
+                        }
 
+                        this.addAnswersTemplatesToForm();
                         this.setQuestionDataToFormFields();
 
                         const initialFormValues = { ...this.editQuestionForm.value };
@@ -77,6 +84,14 @@ export class QuestionEditComponent implements CanDeactivateComponent {
                     }
                 }
             });
+
+        this.questionEditPageService.questionTmpl$
+            .pipe(untilDestroyed(this))
+            .subscribe(data => {
+                this.questionTemplate = data;
+                this.addAnswersTemplatesToForm();
+            })
+
     }
 
     getFormControl(name: string) {
@@ -154,6 +169,27 @@ export class QuestionEditComponent implements CanDeactivateComponent {
                 filter((result) => result),
             )
             .subscribe(() => this.questionEditPageService.deleteAnswer(answer));
+    }
+
+    addAnswersTemplatesToForm() {
+        this.answersFormArray.clear();
+        if(this.questionTemplate) {
+            this.questionTemplate.answerTemplates!
+                .filter(at => !this.question.answers?.some(a => a.templateId === at.id))
+                .forEach(at => {
+                    this.answersFormArray.push(
+                        this.fb.group({
+                            answerText: [
+                                at.defaultText || '',
+                                [Validators.required, Validators.maxLength(MAX_ANSWER_TEXT_LENGTH)]],
+                            isCorrect: [
+                                at.isCorrectRestriction,
+                                Validators.required
+                            ]
+                        }))
+                })
+        }
+
     }
 
     canDeactivate() {

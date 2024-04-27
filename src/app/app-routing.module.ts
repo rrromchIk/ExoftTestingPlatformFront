@@ -38,10 +38,6 @@ const routes: Routes = [
         redirectTo: '/login',
         pathMatch: 'full'
     },
-    // {
-    //     path: 'user-main',
-    //     loadChildren: () => import('./user-main/user-main.module').then(m => m.UserMainModule)
-    // },
     {
         path: 'user-main',
         component: UserMainComponent,
@@ -101,10 +97,6 @@ const routes: Routes = [
         path: 'profile',
         component: ProfileComponent
     },
-    // {
-    //     path: 'admin',
-    //     loadChildren: () => import('./admin-main/admin-main.module').then(m => m.AdminMainModule)
-    // },
     {
         path: 'admin',
         component: AdminMainComponent,

@@ -38,7 +38,8 @@
                                class="number-input"
                                type="number"
                                placeholder="Max score"
-                               formControlName="maxScore">
+                               formControlName="maxScore"
+                               [readonly]="questionTemplate?.maxScoreRestriction != null">
                         <mat-error *ngIf="getFormControl('maxScore')?.hasError('min') &&
                                      !getFormControl('maxScore')?.hasError('required')">
                             Must be <strong>greater than {{MIN_QUESTION_SCORE_VALUE}}</strong>
@@ -92,7 +93,6 @@
                             </button>
                         </mat-card-content>
                     </mat-card>
-
                 </div>
 
                 <div class="new-cards">
@@ -120,14 +120,16 @@
                                         </mat-form-field>
 
                                         <mat-checkbox color="primary"
-                                                      formControlName="isCorrect">
+                                                      formControlName="isCorrect"
+                                                      (click)="questionTemplate != null ? $event.preventDefault() : $event">
                                         </mat-checkbox>
 
                                         <button mat-icon-button class="button-icon" type="submit"
                                                 (click)="saveAnswer(i, answer)">
                                             <mat-icon>save</mat-icon>
                                         </button>
-                                        <button mat-icon-button
+                                        <button *ngIf="questionTemplate == null"
+                                                mat-icon-button
                                                 color="warn"
                                                 type="button"
                                                 (click)="removeAnswerFormGroup(i)">
@@ -140,7 +142,10 @@
                     </form>
                 </div>
 
-                <button mat-stroked-button type="button" (click)="addAnswerFormGroup()">
+                <button *ngIf="questionTemplate == null"
+                        mat-stroked-button
+                        type="button"
+                        (click)="addAnswerFormGroup()">
                     Add answer
                     <mat-icon>add_circle</mat-icon>
                 </button>
